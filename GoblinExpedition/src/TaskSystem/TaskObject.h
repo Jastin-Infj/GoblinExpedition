@@ -113,7 +113,7 @@ public:
 	///<returns>
 	///‰Šú‰»ˆ—I—¹ true
 	///</returns>
-	virtual bool Init(std::pair<std::string, std::string>*);
+	virtual bool Init(std::pair<std::string, std::string>&);
 
 	///<summary>
 	///XVˆ—

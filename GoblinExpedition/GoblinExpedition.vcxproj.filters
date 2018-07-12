@@ -76,10 +76,46 @@
     <Filter Include="リソース ファイル\Example\Well">
       <UniqueIdentifier>{eb86b9be-05b8-45c6-89c8-f91a5437157c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Assets">
+      <UniqueIdentifier>{3b3eb175-deb4-4dab-b303-6458962effb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Assets\Player">
+      <UniqueIdentifier>{6b4cc2d1-d399-4b1f-a388-6bfa3432b362}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Assets\Enemy">
+      <UniqueIdentifier>{54c4f41a-4bfa-48cf-b63a-3db4a5870f6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Task">
+      <UniqueIdentifier>{e42b8614-613d-4a82-9d29-b6e39aa678b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Task\Title">
+      <UniqueIdentifier>{a026ec20-a982-4953-a475-a5d71fa962ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Task\Game">
+      <UniqueIdentifier>{adcadf58-17c6-4f85-b70f-fc4d2feb881c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Task\Result">
+      <UniqueIdentifier>{b74ae1e2-531d-4d36-996a-db5639ce72b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\TaskSystem">
+      <UniqueIdentifier>{c537b78a-cd0f-4126-8820-b23673488051}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="src\TaskSystem\TaskObject.cpp">
+      <Filter>ソース ファイル\TaskSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TaskSystem\TaskSystem.cpp">
+      <Filter>ソース ファイル\TaskSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Task\SceceTask.cpp">
+      <Filter>ソース ファイル\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="Winmain.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TaskSystem\Task_Example.cpp">
+      <Filter>ソース ファイル\Task</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -275,7 +311,7 @@
     </None>
     <None Include="Engine\Shaders\D3D11\DeferredMesh_Shadow.vs">
       <Filter>リソース ファイル\Engine\Shaders\D3D11</Filter>
-    </None>    
+    </None>
     <None Include="Engine\Shaders\D3D11\DeferredMesh_Textured.ps">
       <Filter>リソース ファイル\Engine\Shaders\D3D11</Filter>
     </None>
@@ -379,7 +415,7 @@
     </Text>
     <Text Include="Example\Shaders\Wave2DPointSprites.hlsl">
       <Filter>リソース ファイル\Example\Shaders</Filter>
-    </Text>   
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Example\Sound.mp3">
@@ -393,5 +429,19 @@
     <Font Include="Example\YomogiFont.ttf">
       <Filter>リソース ファイル\Example</Filter>
     </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\TaskSystem\TaskObject.h">
+      <Filter>ソース ファイル\TaskSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TaskSystem\TaskSystem.h">
+      <Filter>ソース ファイル\TaskSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task\SceceTask.h">
+      <Filter>ソース ファイル\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TaskSystem\Task_Example.h">
+      <Filter>ソース ファイル\Task</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

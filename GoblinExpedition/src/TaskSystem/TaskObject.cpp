@@ -43,8 +43,9 @@ std::pair<std::string,std::string> TaskObject::getTaskname()const
 	return this->taskname;
 }
 /*‰Šú‰»ˆ—‚ğs‚¢‚Ü‚·*/
-bool TaskObject::Init(std::pair<std::string, std::string>* taskname_)
+bool TaskObject::Init(std::pair<std::string, std::string>& taskname_)
 {
+	this->setTaskName(taskname_);
 	std::cout << this->taskname.second << "init()" << std::endl;
 	return true;
 }
