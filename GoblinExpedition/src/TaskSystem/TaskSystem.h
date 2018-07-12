@@ -45,7 +45,7 @@ public:
 	///<returns>
 	///‚È‚µ
 	///</returns>
-	void Add(std::pair<std::pair<std::string, std::string>, TaskObject::SP>*);
+	void Add(const TaskObject::SP&);
 
 
 	///<summary>

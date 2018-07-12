@@ -27,9 +27,12 @@ void TaskSystem::UpDate()
 	}
 }
 /*オブジェクトをシステムに仮登録します*/
-void TaskSystem::Add(std::pair<std::pair<std::string,std::string>,TaskObject::SP>* addobject)
+void TaskSystem::Add(const TaskObject::SP& addobject)
 {
-	this->addobjects.push_back(*addobject);
+	std::pair<std::pair<std::string, std::string>, TaskObject::SP> object;
+	object.first = addobject->getTaskname();
+	object.second = addobject;
+	this->addobjects.push_back(object);
 }
 /*登録予定のオブジェクトを登録します*/
 void TaskSystem::TaskApplication()

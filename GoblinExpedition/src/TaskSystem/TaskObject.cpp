@@ -100,11 +100,3 @@ bool TaskObject::getisPause()const
 {
 	return this->isPause;
 }
-/* 自分自身のオブジェクトを返します */
-std::pair<std::pair<std::string, std::string>, TaskObject::SP> TaskObject::getObjectMe(const TaskObject::SP& obj)const
-{
-	std::pair<std::pair<std::string,std::string>,TaskObject::SP> object;
-	object.first = this->taskname;
-	object.second = obj;
-	return object;
-}

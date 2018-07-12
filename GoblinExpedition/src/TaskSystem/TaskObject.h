@@ -170,12 +170,6 @@ public:
 
 
 	///<summary>
-	///オブジェクトのポインタ返します
-	///</summary>
-	std::pair<std::pair<std::string, std::string>, TaskObject::SP> getObjectMe(const TaskObject::SP&)const;
-
-
-	///<summary>
 	///次回のタスクが生成できる状況かを返します
 	///</summary>
 	bool getNextTask()const;
@@ -204,6 +198,7 @@ public:
 	///なし
 	///</returns>
 	void setPause(const bool);
+
 
 private:
 

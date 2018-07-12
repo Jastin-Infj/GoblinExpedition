@@ -51,7 +51,7 @@ TaskObjectExample::SP TaskObjectExample::Create(std::pair<std::string, std::stri
 		}
 		if (flag)
 		{
-			taskSystem->Add(&to->getObjectMe(to));
+			taskSystem->Add(to);
 		}
 	}
 	return nullptr;

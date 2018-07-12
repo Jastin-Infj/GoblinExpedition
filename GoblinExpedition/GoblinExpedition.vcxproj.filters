@@ -115,7 +115,7 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\TaskSystem\Task_Example.cpp">
-      <Filter>ソース ファイル\Task</Filter>
+      <Filter>ソース ファイル\TaskSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -441,7 +441,7 @@
       <Filter>ソース ファイル\Task</Filter>
     </ClInclude>
     <ClInclude Include="src\TaskSystem\Task_Example.h">
-      <Filter>ソース ファイル\Task</Filter>
+      <Filter>ソース ファイル\TaskSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
