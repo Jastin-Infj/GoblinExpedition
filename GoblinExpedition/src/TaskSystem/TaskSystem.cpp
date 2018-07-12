@@ -34,6 +34,11 @@ void TaskSystem::Add(const TaskObject::SP& addobject)
 	object.second = addobject;
 	this->addobjects.push_back(object);
 }
+/*•`‰æ—Dæ‡ˆÊ‚ğƒVƒXƒeƒ€‚É“o˜^‚µ‚Ü‚·*/
+void TaskSystem::AddOrder(const DrawOrder& order)
+{
+	this->orders.push_back(order);
+}
 /*“o˜^—\’è‚ÌƒIƒuƒWƒFƒNƒg‚ğ“o˜^‚µ‚Ü‚·*/
 void TaskSystem::TaskApplication()
 {

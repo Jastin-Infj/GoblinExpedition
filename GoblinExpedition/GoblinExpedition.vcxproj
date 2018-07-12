@@ -162,6 +162,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ResoruceManager\ResourceManager.cpp" />
     <ClCompile Include="src\TaskSystem\Task_Example.cpp" />
     <ClCompile Include="src\Task\SceceTask.cpp" />
     <ClCompile Include="Winmain.cpp" />
@@ -281,6 +282,8 @@
     <Font Include="Example\YomogiFont.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Image.h" />
+    <ClInclude Include="src\ResoruceManager\ResourceManager.h" />
     <ClInclude Include="src\TaskSystem\TaskObject.h" />
     <ClInclude Include="src\TaskSystem\TaskSystem.h" />
     <ClInclude Include="src\TaskSystem\Task_Example.h" />

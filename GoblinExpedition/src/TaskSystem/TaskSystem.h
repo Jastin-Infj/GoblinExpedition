@@ -49,6 +49,12 @@ public:
 
 
 	///<summary>
+	///描画順位をシステムに登録します
+	///</summary>
+	void AddOrder(const DrawOrder&);
+
+
+	///<summary>
 	///登録しているオブジェクトのタスク名を表示します
 	///</summary>
 	///<returns>
@@ -190,8 +196,22 @@ public:
 
 
 private:
-	std::vector<std::pair<std::pair<std::string,std::string>,TaskObject::SP>> taskobjects;			//登録しているオブジェクト
-	std::vector<std::pair<std::pair<std::string, std::string>, TaskObject::SP>> addobjects;			//登録予定のオブジェクト
+	///<summary>
+	///登録しているオブジェクト
+	///</summary>
+	std::vector<std::pair<std::pair<std::string,std::string>,TaskObject::SP>> taskobjects;
+
+
+	///<summary>
+	///登録予定のオブジェクト
+	///</summary>
+	std::vector<std::pair<std::pair<std::string, std::string>, TaskObject::SP>> addobjects;
+
+
+	///<summary>
+	///描画順をシステムに登録します
+	///</summary>
+	std::vector<DrawOrder> orders;
 
 
 	///<summary>
@@ -238,7 +258,7 @@ private:
 	///</returns>
 	bool AddObjectCheck()const;
 
-
+	
 	///<summary>
 	///登録オブジェクトから消去予定のオブジェクトがないかを判定します
 	///</summary>
@@ -246,6 +266,7 @@ private:
 	///存在する true 存在しない false
 	///</returns>
 	bool CheckKillTask()const;
+
 
 };
 extern TaskSystem* taskSystem;

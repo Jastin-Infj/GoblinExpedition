@@ -100,3 +100,8 @@ bool TaskObject::getisPause()const
 {
 	return this->isPause;
 }
+/*•`‰æ—Dæ‡ˆÊ‚ğİ’è‚µ‚Ü‚·*/
+void TaskObject::setDrawOrder(float& order)
+{
+	DrawOrder::setDrawOrder(order);
+}

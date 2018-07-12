@@ -100,6 +100,12 @@
     <Filter Include="ソース ファイル\TaskSystem">
       <UniqueIdentifier>{c537b78a-cd0f-4126-8820-b23673488051}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Assets\Component">
+      <UniqueIdentifier>{c2b79806-56e2-48ab-8dea-debf7dd299fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ResoruceManager">
+      <UniqueIdentifier>{7d018194-5ec4-49d7-89d8-b798939b4f5c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\TaskSystem\TaskObject.cpp">
@@ -116,6 +122,9 @@
     </ClCompile>
     <ClCompile Include="src\TaskSystem\Task_Example.cpp">
       <Filter>ソース ファイル\TaskSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ResoruceManager\ResourceManager.cpp">
+      <Filter>ソース ファイル\ResoruceManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -442,6 +451,12 @@
     </ClInclude>
     <ClInclude Include="src\TaskSystem\Task_Example.h">
       <Filter>ソース ファイル\TaskSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>ソース ファイル\Assets\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ResoruceManager\ResourceManager.h">
+      <Filter>ソース ファイル\ResoruceManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

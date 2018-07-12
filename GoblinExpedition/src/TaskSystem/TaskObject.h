@@ -1,13 +1,8 @@
 #pragma once
+#include "../ResoruceManager/ResourceManager.h"
 #include <vector>
 #include <memory>
 
-///<summary>
-///
-///</summary>
-///<returns>
-///
-///</returns>
 
 ///<summary>
 ///タスクを消滅させるクラス
@@ -67,7 +62,7 @@ private:
 ///<summary>
 ///新しいオブジェクトを生成するクラス
 ///</summary>
-class TaskObject : private KillTaskSystem
+class TaskObject : private KillTaskSystem , private DrawOrder
 {
 public:
 ///メンバ変数
@@ -198,6 +193,13 @@ public:
 	///なし
 	///</returns>
 	void setPause(const bool);
+
+
+	///<summary>
+	///<para>描画優先順位を設定します</para>
+	///<para>範囲: 0.0f～1.0f </para>
+	///</summary>
+	void setDrawOrder(float&);
 
 
 private:
