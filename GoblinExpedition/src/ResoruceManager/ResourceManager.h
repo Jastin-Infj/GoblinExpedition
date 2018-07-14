@@ -99,6 +99,18 @@ public:
 	void DeleteResource();
 
 
+	///<summary>
+	///登録してあるテクスチャを全て削除をします
+	///</summary>
+	void DeleteTextrue();
+
+
+	///<summary>
+	///登録してあるサウンドを全て削除をします
+	///</summary>
+	void DeleteSound();
+
+
 private:
 	///<summary>
 	///登録しているテクスチャ

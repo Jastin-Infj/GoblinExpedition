@@ -209,7 +209,7 @@ private:
 
 
 	///<summary>
-	///•`‰æ‡‚ğƒVƒXƒeƒ€‚É“o˜^‚µ‚Ü‚·
+	///•`‰æ‡—Dæ‡ˆÊ
 	///</summary>
 	std::vector<DrawOrder> orders;
 
@@ -267,6 +267,11 @@ private:
 	///</returns>
 	bool CheckKillTask()const;
 
+
+	///<summary>
+	///•`‰æ‚Ì—Dæ‡ˆÊ‚ğ•À‚Ñ‘Ö‚¦‚µ‚Ü‚·
+	///<summary>
+	void OrderSort();
 
 };
 extern TaskSystem* taskSystem;

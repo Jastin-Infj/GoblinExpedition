@@ -56,6 +56,11 @@ void TaskSystem::TaskApplication()
 	/*“o˜^—\’è‚µ‚½ƒIƒuƒWƒFƒNƒgƒf[ƒ^‚ð‘S‚ÄÁ‹Ž‚·‚é*/
 	addobjects.clear();
 }
+/*•`‰æ—Dæ‡ˆÊ‚ð•À‚Ñ‘Ö‚¦‚µ‚Ü‚·*/
+void TaskSystem::OrderSort()
+{
+	
+}
 /*“o˜^‚³‚ê‚Ä‚¢‚éƒIƒuƒWƒFƒNƒg‚ª‚ ‚é‚©‚ð”»’è‚µ‚Ü‚·*/
 bool TaskSystem::AddObjectCheck()const
 {
@@ -100,12 +105,12 @@ void TaskSystem::T_UpDate()
 /*“o˜^‚µ‚Ä‚¢‚éƒIƒuƒWƒFƒNƒg‚Ì•`‰æˆ—‚ðs‚¢‚Ü‚·*/
 void TaskSystem::T_Render()
 {
-	for (auto it = this->taskobjects.begin(); it != this->taskobjects.end(); ++it)
+	for (size_t i = 0; i < this->taskobjects.size(); ++i)
 	{
-		/*Á‹Ž‚³‚ê‚Ä‚¢‚È‚¢ê‡*/
-		if ((*it).second->getKillCounter() == 0 && !(*it).second->getisPause())
+		/*•`‰æ—Dæ‡ˆÊ‚ð•À‚Ñ‘Ö‚¦‚µ‚Ä•`‰æ‚·‚é‡”Ô‚ð•ÏX‚·‚é*/
+		if (this->taskobjects[this->orders[i].getDrawOrder()].second->getKillCounter() == 0 && this->taskobjects[this->orders[i].getDrawOrder()].second->getisPause())
 		{
-			(*it).second->Render();
+			this->taskobjects[this->orders[i].getDrawOrder()].second->Render();
 		}
 	}
 }

@@ -43,6 +43,7 @@ ResourceManager::~ResourceManager()
 #if (_DEBUG)
 	std::cout << "~ResourceManager()" << std::endl;
 #endif // (_DEBUG)
+	this->DeleteResource();
 }
 /*テクスチャをシステムに登録します*/
 void ResourceManager::setTextrue(const std::string& texname_,Textrue* image_)
@@ -101,9 +102,19 @@ Sound* ResourceManager::getSound(const std::string& texname_)const
 	}
 	return nullptr;
 }
+/* 登録してあるテクスチャを削除します */
+void ResourceManager::DeleteTextrue()
+{
+	this->textrues.clear();
+}
+/*登録してあるサウンドを削除をします*/
+void ResourceManager::DeleteSound()
+{
+	this->sounds.clear();
+}
 /*リソースを全削除をします*/
 void ResourceManager::DeleteResource()
 {
-	this->textrues.clear();
-	this->sounds.clear();
+	this->DeleteTextrue();
+	this->DeleteSound();
 }
