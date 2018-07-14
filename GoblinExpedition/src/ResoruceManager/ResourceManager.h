@@ -1,9 +1,8 @@
 #pragma once
-
 #include <vector>
 
 class Textrue {};
-class Sound {};
+class Sound_ {};
 
 
 ///<summary>
@@ -28,13 +27,25 @@ public:
 	///<para>描画優先度を設定します</para>
 	///<para>0.0f ～ デフォルト(1.0f)</para>
 	///</summary>
-	void setDrawOrder(float&);
+	void setDrawOrder(float);
 
 
 	///<summary>
 	///描画の優先度を返します
+	///</summary>
+	const float getDrawOrder()const;
+
+	
 	///<summary>
-	float getDrawOrder()const;
+	///描画IDを設定します
+	///</summary>
+	void setDrawOrderID(int&);
+
+
+	///<summary>
+	///描画IDを返します
+	///</summary>
+	int getDrawOrderID()const;
 
 
 private:
@@ -42,6 +53,12 @@ private:
 	///描画順の優先度 範囲: 0.0 ～ 1.0
 	///</summary>
 	float order;
+
+
+	///<summary>
+	///タスク描画ID
+	///</summary>
+	int id;
 };
 
 
@@ -72,7 +89,7 @@ public:
 	///<summary>
 	///サウンドをシステムに登録します
 	///</summary>
-	void setSound(const std::string&, Sound*);
+	void setSound(const std::string&, Sound_*);
 
 
 	///<summary>
@@ -90,7 +107,7 @@ public:
 	///<returns>
 	///サウンド名と一致したサウンドのポインタ
 	///</returns>
-	Sound* getSound(const std::string&)const;
+	Sound_* getSound(const std::string&)const;
 
 
 	///<summary>
@@ -121,5 +138,5 @@ private:
 	///<summary>
 	///登録されているサウンド
 	///</summary>
-	std::vector<std::pair<std::string, Sound*>>   sounds;
+	std::vector<std::pair<std::string, Sound_*>>   sounds;
 };

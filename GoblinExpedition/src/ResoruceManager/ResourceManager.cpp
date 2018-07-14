@@ -17,16 +17,33 @@ DrawOrder::~DrawOrder()
 #endif // (_DEBUG)
 }
 /*•`‰æ‡‚ğİ’è‚µ‚Ü‚·*/
-void DrawOrder::setDrawOrder(float& order_)
+void DrawOrder::setDrawOrder(float order_)
 {
+	if (order_ >= 1.0f)
+	{
+		order_ = 1.0f;
+	}
+	else if (order_ < 0.0f)
+	{
+		order_ = 0.0f;
+	}
 	this->order = order_;
 }
 /*•`‰æ‡‚ğ•Ô‚µ‚Ü‚·*/
-float DrawOrder::getDrawOrder()const
+const float DrawOrder::getDrawOrder()const
 {
 	return this->order;
 }
-
+/*•`‰æID‚ğİ’è‚µ‚Ü‚·*/
+void DrawOrder::setDrawOrderID(int& orderid_)
+{
+	this->id = orderid_;
+}
+/*•`‰æID‚ğ•Ô‚µ‚Ü‚·*/
+int DrawOrder::getDrawOrderID()const
+{
+	return this->id;
+}
 
 
 /* ƒRƒ“ƒXƒgƒ‰ƒNƒ^ */
@@ -63,7 +80,7 @@ void ResourceManager::setTextrue(const std::string& texname_,Textrue* image_)
 	this->textrues.push_back(textrue);
 }
 /*ƒTƒEƒ“ƒh‚ğƒVƒXƒeƒ€‚É“o˜^‚µ‚Ü‚·*/
-void ResourceManager::setSound(const std::string& soundname_, Sound* sound_)
+void ResourceManager::setSound(const std::string& soundname_, Sound_* sound_)
 {
 	for (auto it = this->sounds.begin(); it != this->sounds.end(); ++it)
 	{
@@ -73,7 +90,7 @@ void ResourceManager::setSound(const std::string& soundname_, Sound* sound_)
 		}
 	}
 
-	std::pair<std::string, Sound*>  sound;
+	std::pair<std::string, Sound_*>  sound;
 	sound.first = soundname_;
 	sound.second = sound_;
 	this->sounds.push_back(sound);
@@ -91,7 +108,7 @@ Textrue* ResourceManager::getTextrue(const std::string& texname_)const
 	return nullptr;
 }
 /*“o˜^‚µ‚Ä‚ ‚éƒTƒEƒ“ƒh‚©‚çw’è‚³‚ê‚½ƒTƒEƒ“ƒh‚ğ•Ô‚µ‚Ü‚·*/
-Sound* ResourceManager::getSound(const std::string& texname_)const
+Sound_* ResourceManager::getSound(const std::string& texname_)const
 {
 	for (auto it = this->sounds.begin(); it != this->sounds.end(); ++it)
 	{

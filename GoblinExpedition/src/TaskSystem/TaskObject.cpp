@@ -46,6 +46,7 @@ std::pair<std::string,std::string> TaskObject::getTaskname()const
 bool TaskObject::Init(std::pair<std::string, std::string>& taskname_)
 {
 	this->setTaskName(taskname_);
+	this->setDrawOrder(0.7f);
 	std::cout << this->taskname.second << "init()" << std::endl;
 	return true;
 }
@@ -101,7 +102,13 @@ bool TaskObject::getisPause()const
 	return this->isPause;
 }
 /*•`‰æ—Dæ‡ˆÊ‚ğİ’è‚µ‚Ü‚·*/
-void TaskObject::setDrawOrder(float& order)
+void TaskObject::setDrawOrder(float order_)
 {
-	DrawOrder::setDrawOrder(order);
+	DrawOrder::setDrawOrder(order_);
 }
+/*•`‰æ—Dæ‡ˆÊ‚ğ•Ô‚µ‚Ü‚·*/
+const float TaskObject::getDrawOrder()const
+{
+	return DrawOrder::getDrawOrder();
+}
+/*•`‰æID‚ğİ’è‚µ‚Ü‚·*/

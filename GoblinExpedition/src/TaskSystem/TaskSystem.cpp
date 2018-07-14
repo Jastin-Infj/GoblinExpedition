@@ -24,6 +24,8 @@ void TaskSystem::UpDate()
 		this->TaskApplication();
 		/*削除予定のタスクを削除する*/
 		this->T_Destory();
+		/*描画順を入れ替えて描画する*/
+		this->setOrder();
 	}
 }
 /*オブジェクトをシステムに仮登録します*/
@@ -35,9 +37,31 @@ void TaskSystem::Add(const TaskObject::SP& addobject)
 	this->addobjects.push_back(object);
 }
 /*描画優先順位をシステムに登録します*/
-void TaskSystem::AddOrder(const DrawOrder& order)
+void TaskSystem::setOrder()
 {
-	this->orders.push_back(order);
+	/*描画順位を設定します*/
+	this->orders.resize(this->taskobjects.size());
+	/*各オブジェクトに設定されている優先順位をsystemに登録します*/
+	for (int i = 0; i < this->taskobjects.size(); ++i)
+	{
+		/*登録タスクに描画IDを設定します*/
+		this->orders[i].setDrawOrderID(i);
+		this->orders[i].setDrawOrder(this->taskobjects[i].second->getDrawOrder());
+	}
+	/*描画順に合わせてidとorderを並び替える*/
+	for (int i = 0; i < this->taskobjects.size(); ++i)
+	{
+		for (int j = i; j < this->taskobjects.size(); ++j)
+		{
+			/*描画優先順位の値を比較する*/
+			if (this->orders[i].getDrawOrder() > this->orders[j].getDrawOrder())
+			{
+				DrawOrder temp = this->orders[i];
+				this->orders[i] = this->orders[j];
+				this->orders[j] = temp;
+			}
+		}
+	}
 }
 /*登録予定のオブジェクトを登録します*/
 void TaskSystem::TaskApplication()
@@ -55,11 +79,6 @@ void TaskSystem::TaskApplication()
 	}
 	/*登録予定したオブジェクトデータを全て消去する*/
 	addobjects.clear();
-}
-/*描画優先順位を並び替えします*/
-void TaskSystem::OrderSort()
-{
-	
 }
 /*登録されているオブジェクトがあるかを判定します*/
 bool TaskSystem::AddObjectCheck()const
@@ -108,9 +127,9 @@ void TaskSystem::T_Render()
 	for (size_t i = 0; i < this->taskobjects.size(); ++i)
 	{
 		/*描画優先順位を並び替えして描画する順番を変更する*/
-		if (this->taskobjects[this->orders[i].getDrawOrder()].second->getKillCounter() == 0 && this->taskobjects[this->orders[i].getDrawOrder()].second->getisPause())
+		if (this->taskobjects[this->orders[i].getDrawOrderID()].second->getKillCounter() == 0 && this->taskobjects[this->orders[i].getDrawOrderID()].second->getisPause())
 		{
-			this->taskobjects[this->orders[i].getDrawOrder()].second->Render();
+			this->taskobjects[this->orders[i].getDrawOrderID()].second->Render();
 		}
 	}
 }

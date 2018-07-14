@@ -49,9 +49,9 @@ public:
 
 
 	///<summary>
-	///•`‰æ‡ˆÊ‚ğƒVƒXƒeƒ€‚É“o˜^‚µ‚Ü‚·
+	///•`‰æ‡ˆÊ‚ğİ’è‚µ‚Ü‚·
 	///</summary>
-	void AddOrder(const DrawOrder&);
+	void setOrder();
 
 
 	///<summary>
@@ -267,11 +267,6 @@ private:
 	///</returns>
 	bool CheckKillTask()const;
 
-
-	///<summary>
-	///•`‰æ‚Ì—Dæ‡ˆÊ‚ğ•À‚Ñ‘Ö‚¦‚µ‚Ü‚·
-	///<summary>
-	void OrderSort();
 
 };
 extern TaskSystem* taskSystem;

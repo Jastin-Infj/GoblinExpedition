@@ -48,6 +48,7 @@ public:
 	///</summary>
 	int getKillcount()const;
 
+
 private:
 
 	///ƒƒ“ƒo•Ï”
@@ -199,7 +200,13 @@ public:
 	///<para>•`‰æ—Dæ‡ˆÊ‚ğİ’è‚µ‚Ü‚·</para>
 	///<para>”ÍˆÍ: 0.0f`1.0f </para>
 	///</summary>
-	void setDrawOrder(float&);
+	void setDrawOrder(float);
+
+
+	///<summary>
+	///•`‰æ—Dæ‡ˆÊ‚ğ•Ô‚µ‚Ü‚·
+	///</summary>
+	const float getDrawOrder()const;
 
 
 private:
@@ -222,9 +229,6 @@ private:
 	///</summary>
 	bool isPause;
 
-
 ///ƒƒ“ƒoŠÖ”
-	
-
 
 };
