@@ -123,6 +123,9 @@
     <ClCompile Include="src\Assets\CharaBace.cpp">
       <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
+    <ClCompile Include="src\Task\Task_Game.cpp">
+      <Filter>ソース ファイル\Task\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
@@ -460,6 +463,9 @@
     </ClInclude>
     <ClInclude Include="src\Assets\CharaBace.h">
       <Filter>ソース ファイル\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task\Task_Game.h">
+      <Filter>ソース ファイル\Task\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

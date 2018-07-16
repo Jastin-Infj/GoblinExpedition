@@ -19,7 +19,7 @@ CharaBace::~CharaBace()
 	this->Finalize();
 }
 /*初期化処理をします*/
-bool CharaBace::Init(std::pair<std::string, std::string>& taskname_, Type type_, Point& pos, Point& scale_,float order)
+bool CharaBace::Init(const std::pair<std::string, std::string>& taskname_, Type type_, Point& pos, Point& scale_,float order)
 {
 	__super::setTaskName(taskname_);
 
@@ -59,11 +59,8 @@ void CharaBace::Render()
 	Rect src = this->draw->getSrcBace();
 	/*描画をする*/
 	{
-		this->draw->Draw();
+		this->draw->Draw(this->draw->getDrawBace(),this->draw->getSrcBace());
 	}
-	
-	
-	std::cout << "描画" << std::endl;
 }
 bool CharaBace::Finalize()
 {
@@ -74,7 +71,7 @@ bool CharaBace::Finalize()
 	return true;
 }
 /*オブジェクトの生成*/
-CharaBace::SP CharaBace::Create(std::pair<std::string, std::string>& taskname, Type type, Point pos, Point scale, float order, bool flag)
+CharaBace::SP CharaBace::Create(const std::pair<std::string, std::string>& taskname, Type type, Point pos, Point scale, float order, bool flag)
 {
 	CharaBace::SP to = CharaBace::SP(new CharaBace());
 	if (to)
@@ -107,7 +104,7 @@ Texture CharaBace::getResoruceManagerTexture()const
 		/* UI */
 	case Type::UI:
 		//画像元矩形の生成
-
+		
 		//テクスチャの貼り付け
 		return rm->getTexture("ライフ");
 		break;
@@ -121,9 +118,9 @@ Texture CharaBace::getResoruceManagerTexture()const
 		/* 敵 */
 	case Type::Enemy:
 		//画像元矩形の生成
-
+		this->draw->setDrawSrc(0, 0, 64, 64);
 		//テクスチャの貼り付け
-		return rm->getTexture("敵");
+		return rm->getTexture("ゴブリン");
 		break;
 		/* アイテム */
 	case Type::Item:

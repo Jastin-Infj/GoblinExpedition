@@ -32,14 +32,14 @@ public:
 	///<para>グループ名・タスク名 , 対象オブジェクト , 初期座標位置 , 描画サイズ , 描画優先順位 </para>
 	///<returns>初期化　成功/失敗 true : false</returns>
 	///</summary>
-	bool Init(std::pair<std::string, std::string>& taskname, Type type, Point& pos, Point& scale,float order);
+	bool Init(const std::pair<std::string, std::string>& taskname, Type type, Point& pos, Point& scale,float order);
 
 
 	///<summary>
 	///<para>オブジェクトの生成をします</para>
 	///<para>グループ名・タスク名 , 描画する対象,初期座標位置 ,描画するサイズ ,(タスクシステムに登録するか true : false) </para>
 	///</summary>
-	static CharaBace::SP Create(std::pair<std::string, std::string>& taskname, Type type, Point pos, Point scale, float order, bool flag = true);
+	static CharaBace::SP Create(const std::pair<std::string, std::string>& taskname, Type type, Point pos, Point scale, float order, bool flag = true);
 
 
 private:

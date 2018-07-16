@@ -18,7 +18,7 @@ public:
 	///<para>コンストラクタ</para>
 	///<para>引数: s3d::Rect(描画座標xy,描画サイズxy),s3d::Rect(画像元座標,画像元1つ分サイズ)</para>
 	///</summary>
-	explicit DrawInterFace(s3d::Rect& draw, s3d::Rect& src)
+	explicit DrawInterFace(const s3d::Rect& draw, const s3d::Rect& src)
 	{
 		this->drawbace = draw;
 		this->srcbace = src;
@@ -29,7 +29,7 @@ public:
 	///<para>描画するための矩形を生成します</para>
 	///<para>s3d::Rect(描画座標 , 描画サイズ)</para>
 	///</summary>
-	void setDrawBace(s3d::Rect& draw)
+	void setDrawBace(const s3d::Rect& draw)
 	{
 		this->drawbace = draw;
 	}
@@ -49,7 +49,7 @@ public:
 	///<para>描画するための矩形を生成します</para>
 	///<para>引数:　Point(描画座標), Point(描画サイズ)</para>
 	///</summary>
-	void setDrawBace(Point& pos , Point size)
+	void setDrawBace(const Point& pos ,const Point size)
 	{
 		this->drawbace = { pos , size };
 	}
@@ -69,7 +69,7 @@ public:
 	///<para>画像元の矩形を生成します</para>
 	///<para>引数: s3d::Rect(画像元座標 x y,画像元1つ分サイズ x y)</para>
 	///</summary>
-	void setDrawSrc(s3d::Rect& src)
+	void setDrawSrc(const s3d::Rect& src)
 	{
 		this->srcbace = src;
 	}
@@ -109,9 +109,9 @@ public:
 	///<para>描画をします</para>
 	///<para>描画位置・サイズ , 画像元位置・サイズ</para>
 	///</summary>
-	void Draw(s3d::Rect& draw_, s3d::Rect& src_)
+	void Draw(const s3d::Rect& draw_, const s3d::Rect& src_)
 	{
-		
+		s3d::Rect(draw_)(this->image(src_)).draw();
 	}
 
 
@@ -119,9 +119,9 @@ public:
 	///<para>描画をします</para>
 	///<para>描画位置 , 描画サイズ , 画像元位置・サイズ</para>
 	///</summary>
-	void Draw()
+	void Draw(const Point& pos ,const Point& size ,const s3d::Rect& src_)
 	{
-		this->image.draw();
+		s3d::Rect(pos, size)(this->image(src_)).draw();
 	}
 
 	

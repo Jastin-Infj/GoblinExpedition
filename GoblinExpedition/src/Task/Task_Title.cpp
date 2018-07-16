@@ -1,5 +1,6 @@
 #include "Task_Title.h"
 #include "../TaskSystem/TaskSystem.h"
+
 #include <iostream>
 /* コンストラクタ */
 Title::Title()
@@ -17,13 +18,14 @@ Title::~Title()
 
 }
 /* 初期化処理 */
-bool Title::Init(std::pair<std::string,std::string>& taskname_)
+bool Title::Init(const std::pair<std::string,std::string>& taskname_)
 {
 	__super::setTaskName(taskname_);
-	this->setDrawOrder(0.9f);
+	this->setDrawOrder(1.0f);
 
 	//追加したいオブジェクトをここに記述する
 
+	
 
 	return true;
 }
@@ -38,7 +40,7 @@ bool Title::Finalize()
 	return true;
 }
 /*オブジェクトを生成します*/
-TaskObject::SP Title::Create(std::pair<std::string, std::string>& taskname, bool flag)
+TaskObject::SP Title::Create(const std::pair<std::string, std::string>& taskname, bool flag)
 {
 	TaskObject::SP to = TaskObject::SP(new Title());
 	if (to)

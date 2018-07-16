@@ -1,24 +1,24 @@
 #pragma once
 #include "../TaskSystem/TaskObject.h"
-class Title : public TaskObject
+class Game : public TaskObject
 {
 public:
 	///<summary>
 	///コンストラクタ
 	///</summary>
-	Title();
+	Game();
 
 
 	///<summary>
 	///デストラクタ
 	///</summary>
-	virtual ~Title();
+	virtual ~Game();
 
 	
 	///<summary>
-	///<para>初期化処理</para>
+	///<para>初期化処理<para>
 	///引数:グループ名・タスク名
-	///</summary>
+	///<summary>
 	///<param name = "taskname">グループ名・タスク名</param>
 	bool Init(const std::pair<std::string, std::string>& taskname)override;
 

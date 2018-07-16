@@ -110,7 +110,7 @@ public:
 	///<returns>
 	///初期化処理終了 true
 	///</returns>
-	virtual bool Init(std::pair<std::string, std::string>&);
+	virtual bool Init(const std::pair<std::string, std::string>&);
 
 	///<summary>
 	///更新処理
@@ -163,7 +163,7 @@ public:
 	///<summary>
 	///グループ名・タスク名をセットします
 	///</summary>
-	void setTaskName(std::pair<std::string, std::string>&);
+	void setTaskName(const std::pair<std::string, std::string>&);
 
 
 	///<summary>

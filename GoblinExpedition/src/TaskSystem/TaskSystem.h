@@ -76,7 +76,7 @@ public:
 	///タスク名・グループ名を検索して、オブジェクト単体を取得します
 	///</summary>
 	template <class T>
-	std::shared_ptr<T> GetTask(std::pair<std::string, std::string>& taskname_)
+	std::shared_ptr<T> GetTask(const std::pair<std::string, std::string>& taskname_)
 	{
 		for (auto it = this->taskobjects.begin(); it != this->taskobjects.end(); ++it)
 		{
@@ -96,7 +96,7 @@ public:
 	///グループ名を検索して、オブジェクト単体を取得します
 	///</summary>
 	template <class T>
-	std::shared_ptr<T> GetTask_GroupName(std::string& groupname_)
+	std::shared_ptr<T> GetTask_GroupName(const std::string& groupname_)
 	{
 		for (auto it = this->taskobjects.begin(); it != this->taskobjects.end(); ++it)
 		{
@@ -117,7 +117,7 @@ public:
 	///タスク名を検索して、オブジェクト単体を取得します
 	///</summary>
 	template <class T>
-	std::shared_ptr<T> GetTask_TaskName(std::string& taskname_)
+	std::shared_ptr<T> GetTask_TaskName(const std::string& taskname_)
 	{
 		for (auto it = this->taskobjects.begin(); it != this->taskobjects.end(); ++it)
 		{
@@ -137,7 +137,7 @@ public:
 	///タスク名・グループ名を検索して、オブジェクト複数を取得します
 	///</summary>
 	template<class T>
-	std::shared_ptr<std::vector<std::shared_ptr<T>>> GetTasks(std::pair<std::string, std::string>& taskname_)
+	std::shared_ptr<std::vector<std::shared_ptr<T>>> GetTasks(const std::pair<std::string, std::string>& taskname_)
 	{
 		std::shared_ptr<std::vector<std::shared_ptr<T>>> searchObjects = std::shared_ptr<std::vector<std::shared_ptr<T>>>(new std::vector<std::shared_ptr<T>>());
 		for (auto it = this->taskobjects.begin(); it != this->taskobjects.end(); ++it)
@@ -158,7 +158,7 @@ public:
 	///グループ名を検索して、オブジェクト複数を取得します
 	///</summary>
 	template<class T>
-	std::shared_ptr<std::vector<std::shared_ptr<T>>> GetTasks_GroupName(std::string& groupname_)
+	std::shared_ptr<std::vector<std::shared_ptr<T>>> GetTasks_GroupName(const std::string& groupname_)
 	{
 		std::shared_ptr<std::vector<std::shared_ptr<T>>> searchObjects = std::shared_ptr<std::vector<std::shared_ptr<T>>>(new std::vector<std::shared_ptr<T>>());
 		for (auto it = this->taskobjects.begin(); it != this->taskobjects.end(); ++it)
@@ -178,7 +178,7 @@ public:
 	///タスク名を検索して、オブジェクト複数を取得します
 	///</summary>
 	template<class T>
-	std::shared_ptr<std::vector<std::shared_ptr<T>>> GetTasks_TaskName(std::string& taskname_)
+	std::shared_ptr<std::vector<std::shared_ptr<T>>> GetTasks_TaskName(const std::string& taskname_)
 	{
 		std::shared_ptr<std::vector<std::shared_ptr<T>>> searchObjects = std::shared_ptr<std::vector<std::shared_ptr<T>>>(new std::vector<std::shared_ptr<T>>());
 		for (auto it = this->taskobjects.begin(); it != this->taskobjects.end(); ++it)

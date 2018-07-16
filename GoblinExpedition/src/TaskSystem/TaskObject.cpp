@@ -43,7 +43,7 @@ std::pair<std::string,std::string> TaskObject::getTaskname()const
 	return this->taskname;
 }
 /*初期化処理を行います*/
-bool TaskObject::Init(std::pair<std::string, std::string>& taskname_)
+bool TaskObject::Init(const std::pair<std::string, std::string>& taskname_)
 {
 	this->setTaskName(taskname_);
 	this->setDrawOrder();
@@ -82,7 +82,7 @@ bool TaskObject::getNextTask()const
 	return this->NextTask;
 }
 /*グループ名・タスク名をセットします */
-void TaskObject::setTaskName(std::pair<std::string, std::string>& taskname_)
+void TaskObject::setTaskName(const std::pair<std::string, std::string>& taskname_)
 {
 	this->taskname = taskname_;
 }
