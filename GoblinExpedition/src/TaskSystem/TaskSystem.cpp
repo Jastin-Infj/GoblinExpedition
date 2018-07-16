@@ -1,4 +1,5 @@
 #include "TaskSystem.h"
+#include "../ResourceManager/ResourceManager.h"
 #include <iostream>
 #include <string>
 
@@ -54,7 +55,7 @@ void TaskSystem::setOrder()
 		for (int j = i; j < this->taskobjects.size(); ++j)
 		{
 			/*•`‰æ—Dæ‡ˆÊ‚Ì’l‚ğ”äŠr‚·‚é*/
-			if (this->orders[i].getDrawOrder() > this->orders[j].getDrawOrder())
+			if (this->taskobjects[i].second->getDrawOrder() > this->taskobjects[j].second->getDrawOrder())
 			{
 				DrawOrder temp = this->orders[i];
 				this->orders[i] = this->orders[j];
@@ -71,7 +72,6 @@ void TaskSystem::TaskApplication()
 		std::pair<std::pair<std::string, std::string>, TaskObject::SP> addobject;
 		addobject = (*it);
 
-		/*Ÿ‰ñ‚Í‚±‚±‚©‚çˆ—*/
 		if (addobject.second->getNextTask())
 		{
 			this->taskobjects.push_back(addobject);
@@ -124,10 +124,10 @@ void TaskSystem::T_UpDate()
 /*“o˜^‚µ‚Ä‚¢‚éƒIƒuƒWƒFƒNƒg‚Ì•`‰æˆ—‚ğs‚¢‚Ü‚·*/
 void TaskSystem::T_Render()
 {
-	for (size_t i = 0; i < this->taskobjects.size(); ++i)
+	for (int i = 0; i < this->taskobjects.size(); ++i)
 	{
 		/*•`‰æ—Dæ‡ˆÊ‚ğ•À‚Ñ‘Ö‚¦‚µ‚Ä•`‰æ‚·‚é‡”Ô‚ğ•ÏX‚·‚é*/
-		if (this->taskobjects[this->orders[i].getDrawOrderID()].second->getKillCounter() == 0 && this->taskobjects[this->orders[i].getDrawOrderID()].second->getisPause())
+		if (this->taskobjects[this->orders[i].getDrawOrderID()].second->getKillCounter() == 0 && !this->taskobjects[this->orders[i].getDrawOrderID()].second->getisPause())
 		{
 			this->taskobjects[this->orders[i].getDrawOrderID()].second->Render();
 		}

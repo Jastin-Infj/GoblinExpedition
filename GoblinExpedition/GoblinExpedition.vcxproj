@@ -76,7 +76,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\game\Desktop\GoblinExpedition\GoblinExpedition\include\Inc;$(SIV3D_20160812)\Inc;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\takum\Desktop\GoblinExpedition\GoblinExpedition\include\Inc;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\game\Desktop\GoblinExpedition\GoblinExpedition\include\Lib;$(SIV3D_20160812)\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -86,7 +86,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\game\Desktop\GoblinExpedition\GoblinExpedition\include\Inc;$(SIV3D_20160812)\Inc;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\takum\Desktop\GoblinExpedition\GoblinExpedition\include\Inc;C:\Users\game\Desktop\GoblinExpedition\GoblinExpedition\include\Inc;$(SIV3D_20160812)\Inc;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\game\Desktop\GoblinExpedition\GoblinExpedition\include\Lib;$(SIV3D_20160812)\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -162,12 +162,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\ResoruceManager\ResourceManager.cpp" />
-    <ClCompile Include="src\TaskSystem\Task_Example.cpp" />
-    <ClCompile Include="src\Task\SceceTask.cpp" />
-    <ClCompile Include="Winmain.cpp" />
+    <ClCompile Include="src\Assets\CharaBace.cpp" />
+    <ClCompile Include="src\ResourceManager\ResourceManager.cpp" />
     <ClCompile Include="src\TaskSystem\TaskObject.cpp" />
     <ClCompile Include="src\TaskSystem\TaskSystem.cpp" />
+    <ClCompile Include="src\Task\SceceTask.cpp" />
+    <ClCompile Include="src\Task\Task_Title.cpp" />
+    <ClCompile Include="Winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />
@@ -282,12 +283,14 @@
     <Font Include="Example\YomogiFont.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Image.h" />
-    <ClInclude Include="src\ResoruceManager\ResourceManager.h" />
+    <ClInclude Include="src\Assets\CharaBace.h" />
+    <ClInclude Include="src\InterFace\DrawInterFace.hpp" />
+    <ClInclude Include="src\InterFace\ObjectType.h" />
+    <ClInclude Include="src\ResourceManager\ResourceManager.h" />
     <ClInclude Include="src\TaskSystem\TaskObject.h" />
     <ClInclude Include="src\TaskSystem\TaskSystem.h" />
-    <ClInclude Include="src\TaskSystem\Task_Example.h" />
     <ClInclude Include="src\Task\SceceTask.h" />
+    <ClInclude Include="src\Task\Task_Title.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

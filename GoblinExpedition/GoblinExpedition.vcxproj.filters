@@ -79,12 +79,6 @@
     <Filter Include="ソース ファイル\Assets">
       <UniqueIdentifier>{3b3eb175-deb4-4dab-b303-6458962effb2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Assets\Player">
-      <UniqueIdentifier>{6b4cc2d1-d399-4b1f-a388-6bfa3432b362}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Assets\Enemy">
-      <UniqueIdentifier>{54c4f41a-4bfa-48cf-b63a-3db4a5870f6a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Task">
       <UniqueIdentifier>{e42b8614-613d-4a82-9d29-b6e39aa678b1}</UniqueIdentifier>
     </Filter>
@@ -100,31 +94,34 @@
     <Filter Include="ソース ファイル\TaskSystem">
       <UniqueIdentifier>{c537b78a-cd0f-4126-8820-b23673488051}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Assets\Component">
-      <UniqueIdentifier>{c2b79806-56e2-48ab-8dea-debf7dd299fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\ResoruceManager">
+    <Filter Include="ソース ファイル\ResourceManager">
       <UniqueIdentifier>{7d018194-5ec4-49d7-89d8-b798939b4f5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InterFace">
+      <UniqueIdentifier>{559929a8-45b6-41aa-88be-95477acf4b18}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\TaskSystem\TaskObject.cpp">
-      <Filter>ソース ファイル\TaskSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TaskSystem\TaskSystem.cpp">
-      <Filter>ソース ファイル\TaskSystem</Filter>
-    </ClCompile>
     <ClCompile Include="src\Task\SceceTask.cpp">
       <Filter>ソース ファイル\Task</Filter>
     </ClCompile>
     <ClCompile Include="Winmain.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TaskSystem\Task_Example.cpp">
+    <ClCompile Include="src\TaskSystem\TaskObject.cpp">
       <Filter>ソース ファイル\TaskSystem</Filter>
     </ClCompile>
-    <ClCompile Include="src\ResoruceManager\ResourceManager.cpp">
-      <Filter>ソース ファイル\ResoruceManager</Filter>
+    <ClCompile Include="src\TaskSystem\TaskSystem.cpp">
+      <Filter>ソース ファイル\TaskSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ResourceManager\ResourceManager.cpp">
+      <Filter>ソース ファイル\ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Task\Task_Title.cpp">
+      <Filter>ソース ファイル\Task\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Assets\CharaBace.cpp">
+      <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -440,23 +437,29 @@
     </Font>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Task\SceceTask.h">
+      <Filter>ソース ファイル\Task</Filter>
+    </ClInclude>
     <ClInclude Include="src\TaskSystem\TaskObject.h">
       <Filter>ソース ファイル\TaskSystem</Filter>
     </ClInclude>
     <ClInclude Include="src\TaskSystem\TaskSystem.h">
       <Filter>ソース ファイル\TaskSystem</Filter>
     </ClInclude>
-    <ClInclude Include="src\Task\SceceTask.h">
-      <Filter>ソース ファイル\Task</Filter>
+    <ClInclude Include="src\ResourceManager\ResourceManager.h">
+      <Filter>ソース ファイル\ResourceManager</Filter>
     </ClInclude>
-    <ClInclude Include="src\TaskSystem\Task_Example.h">
-      <Filter>ソース ファイル\TaskSystem</Filter>
+    <ClInclude Include="src\InterFace\DrawInterFace.hpp">
+      <Filter>ソース ファイル\InterFace</Filter>
     </ClInclude>
-    <ClInclude Include="Image.h">
-      <Filter>ソース ファイル\Assets\Component</Filter>
+    <ClInclude Include="src\Task\Task_Title.h">
+      <Filter>ソース ファイル\Task\Title</Filter>
     </ClInclude>
-    <ClInclude Include="src\ResoruceManager\ResourceManager.h">
-      <Filter>ソース ファイル\ResoruceManager</Filter>
+    <ClInclude Include="src\InterFace\ObjectType.h">
+      <Filter>ソース ファイル\InterFace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Assets\CharaBace.h">
+      <Filter>ソース ファイル\Assets</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,14 +1,16 @@
 #pragma once
+#include <Siv3D.hpp>
 #include <vector>
 
-class Textrue {};
-class Sound_ {};
+
+//class Texture {};
+//class Sound {};
 
 
 ///<summary>
 ///描画順を設定するクラス
 ///</summary>
-class DrawOrder
+class DrawOrder 
 {
 public:
 	///<summary>
@@ -83,13 +85,13 @@ public:
 	///<summary>
 	///テクスチャをシステムに登録します
 	///</summary>
-	void setTextrue(const std::string& ,Textrue*);
+	void setTexture(const std::string& ,const Texture&);
 
 
 	///<summary>
 	///サウンドをシステムに登録します
 	///</summary>
-	void setSound(const std::string&, Sound_*);
+	void setSound(const std::string&, const Sound&);
 
 
 	///<summary>
@@ -98,7 +100,7 @@ public:
 	///<returns>
 	///テクスチャ名と一致したテクスチャのポインタ
 	///</returns>
-	Textrue* getTextrue(const std::string&)const;
+	Texture getTexture(const std::string&)const;
 
 
 	///<summary>
@@ -107,7 +109,7 @@ public:
 	///<returns>
 	///サウンド名と一致したサウンドのポインタ
 	///</returns>
-	Sound_* getSound(const std::string&)const;
+	Sound getSound(const std::string&)const;
 
 
 	///<summary>
@@ -127,16 +129,23 @@ public:
 	///</summary>
 	void DeleteSound();
 
+///Siv3Dのみ適応
+	///<summary>
+	///<para>Textureを描画する</para>
+	///<para>テクスチャ名</para>
+	///</summary>
+	void DrawManager(const std::string&);
 
 private:
 	///<summary>
 	///登録しているテクスチャ
 	///</summary>
-	std::vector<std::pair<std::string, Textrue*>> textrues;
+	std::vector<std::pair<std::string, Texture>> textrues;
 
 
 	///<summary>
 	///登録されているサウンド
 	///</summary>
-	std::vector<std::pair<std::string, Sound_*>>   sounds;
+	std::vector<std::pair<std::string, Sound>>   sounds;
 };
+extern ResourceManager* rm;		//ResourceManager

@@ -1,5 +1,5 @@
 #pragma once
-#include "../ResoruceManager/ResourceManager.h"
+#include "../ResourceManager/ResourceManager.h"
 #include <vector>
 #include <memory>
 
@@ -57,13 +57,14 @@ private:
 	///キルカウンタ
 	///</summary>
 	int killcount;
+
 };
 
 
 ///<summary>
 ///新しいオブジェクトを生成するクラス
 ///</summary>
-class TaskObject : private KillTaskSystem , private DrawOrder
+class TaskObject : private KillTaskSystem
 {
 public:
 ///メンバ変数
@@ -117,7 +118,7 @@ public:
 	///<returns>
 	///なし
 	///</returns>
-	virtual void UpDate();
+	virtual void UpDate() = 0;
 
 
 	///<summary>
@@ -135,7 +136,7 @@ public:
 	///<returns>
 	///解放処理終了　true
 	///</returns>
-	virtual bool Finalize();
+	virtual bool Finalize() = 0;
 
 
 	///<summary>
@@ -197,10 +198,10 @@ public:
 
 
 	///<summary>
-	///<para>描画優先順位を設定します</para>
-	///<para>範囲: 0.0f～1.0f </para>
+	///<para>描画優先順位を設定します　高いほどレイヤーは上になります</para>
+	///<para>範囲: 0.0f～1.0f(デフォルト値)</para>
 	///</summary>
-	void setDrawOrder(float);
+	void setDrawOrder(float = 1.0f);
 
 
 	///<summary>
@@ -228,6 +229,13 @@ private:
 	///<para>ポーズ中:true ポーズしていない:false</para>
 	///</summary>
 	bool isPause;
+
+
+	///<summary>
+	///描画優先順位
+	///</summary>
+	float priority;
+
 
 ///メンバ関数
 

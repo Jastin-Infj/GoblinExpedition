@@ -14,9 +14,10 @@
 #include "src\TaskSystem\TaskObject.h"
 #include "src\TaskSystem\TaskSystem.h"
 #include "src\Task\SceceTask.h"
+#include "src/ResourceManager/ResourceManager.h"
 
 TaskSystem* taskSystem;
-
+ResourceManager* rm;
 
 
 void Main()
@@ -30,11 +31,14 @@ void Main()
 #endif
 
 	taskSystem = new TaskSystem();
+	rm = new ResourceManager();
 
 	/*初期時にタスクを生成します*/
 	TaskStartCreate();
 	/*ライブラリによる初期化を行います*/
 	Init();
+
+	
 
 	/*ウィンドウを表示させる*/
 	while (System::Update())
@@ -46,9 +50,10 @@ void Main()
 	/*コンソール画面を閉じる*/
 	s3d::Console::Close();
 #endif
-
 	delete taskSystem;
+	delete rm;
 	taskSystem = nullptr;
+	rm = nullptr;
 
 	/*ウィンドウを閉じる*/
 	System::Exit();

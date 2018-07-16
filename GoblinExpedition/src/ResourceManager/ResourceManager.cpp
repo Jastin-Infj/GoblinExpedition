@@ -63,7 +63,7 @@ ResourceManager::~ResourceManager()
 	this->DeleteResource();
 }
 /*テクスチャをシステムに登録します*/
-void ResourceManager::setTextrue(const std::string& texname_,Textrue* image_)
+void ResourceManager::setTexture(const std::string& texname_,const Texture& image_)
 {
 	/*既存の名前があった場合は関数を終了させる*/
 	for (auto it = this->textrues.begin(); it != this->textrues.end(); ++it)
@@ -74,13 +74,13 @@ void ResourceManager::setTextrue(const std::string& texname_,Textrue* image_)
 		}
 	}
 
-	std::pair<std::string, Textrue*> textrue;
+	std::pair<std::string, Texture> textrue;
 	textrue.first = texname_;
 	textrue.second = image_;
 	this->textrues.push_back(textrue);
 }
 /*サウンドをシステムに登録します*/
-void ResourceManager::setSound(const std::string& soundname_, Sound_* sound_)
+void ResourceManager::setSound(const std::string& soundname_,const Sound& sound_)
 {
 	for (auto it = this->sounds.begin(); it != this->sounds.end(); ++it)
 	{
@@ -90,13 +90,13 @@ void ResourceManager::setSound(const std::string& soundname_, Sound_* sound_)
 		}
 	}
 
-	std::pair<std::string, Sound_*>  sound;
+	std::pair<std::string, Sound>  sound;
 	sound.first = soundname_;
 	sound.second = sound_;
 	this->sounds.push_back(sound);
 }
 /*登録してあるテクスチャから指定されたテクスチャを返します*/
-Textrue* ResourceManager::getTextrue(const std::string& texname_)const
+Texture ResourceManager::getTexture(const std::string& texname_)const
 {
 	for (auto it = this->textrues.begin(); it != this->textrues.end(); ++it)
 	{
@@ -105,10 +105,10 @@ Textrue* ResourceManager::getTextrue(const std::string& texname_)const
 			return (*it).second;
 		}
 	}
-	return nullptr;
+	return Texture();
 }
 /*登録してあるサウンドから指定されたサウンドを返します*/
-Sound_* ResourceManager::getSound(const std::string& texname_)const
+Sound ResourceManager::getSound(const std::string& texname_)const
 {
 	for (auto it = this->sounds.begin(); it != this->sounds.end(); ++it)
 	{
@@ -117,7 +117,8 @@ Sound_* ResourceManager::getSound(const std::string& texname_)const
 			return (*it).second;
 		}
 	}
-	return nullptr;
+	/*空のサウンドを返す*/
+	return Sound();
 }
 /* 登録してあるテクスチャを削除します */
 void ResourceManager::DeleteTextrue()
@@ -134,4 +135,15 @@ void ResourceManager::DeleteResource()
 {
 	this->DeleteTextrue();
 	this->DeleteSound();
+}
+/*Siv3D版　タスク名を検索し、描画をします*/
+void ResourceManager::DrawManager(const std::string& taskname)
+{
+	for (auto it = this->textrues.begin(); it != this->textrues.end(); ++it)
+	{
+		if ((*it).first == taskname)
+		{
+			(*it).second.draw();
+		}
+	}
 }
