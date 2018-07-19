@@ -286,6 +286,7 @@
   <ItemGroup>
     <ClInclude Include="src\Assets\CharaBace.h" />
     <ClInclude Include="src\InterFace\DrawInterFace.hpp" />
+    <ClInclude Include="src\InterFace\MoveInterFace.hpp" />
     <ClInclude Include="src\InterFace\ObjectType.h" />
     <ClInclude Include="src\ResourceManager\ResourceManager.h" />
     <ClInclude Include="src\TaskSystem\TaskObject.h" />

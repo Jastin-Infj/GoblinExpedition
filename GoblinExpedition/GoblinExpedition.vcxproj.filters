@@ -467,5 +467,8 @@
     <ClInclude Include="src\Task\Task_Game.h">
       <Filter>ソース ファイル\Task\Game</Filter>
     </ClInclude>
+    <ClInclude Include="src\InterFace\MoveInterFace.hpp">
+      <Filter>ソース ファイル\InterFace</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

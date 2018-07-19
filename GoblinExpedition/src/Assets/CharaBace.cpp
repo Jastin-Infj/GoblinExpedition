@@ -46,7 +46,10 @@ bool CharaBace::Init(const std::pair<std::string, std::string>& taskname_, Type 
 	return true;
 }
 /*更新処理*/
-void CharaBace::UpDate() {}
+void CharaBace::UpDate() 
+{
+	
+}
 /*描画処理*/
 void CharaBace::Render()
 {
@@ -76,13 +79,17 @@ CharaBace::SP CharaBace::Create(const std::pair<std::string, std::string>& taskn
 	CharaBace::SP to = CharaBace::SP(new CharaBace());
 	if (to)
 	{
+		/*自分のアドレス値を渡す*/
 		to->me = to;
+		/*各値の初期化値を設定*/
 		if (!to->Init(taskname,type,pos,scale,order))
 		{
+			/*初期化が成功しなければ削除*/
 			to->Kill();
 		}
 		if (flag)
 		{
+			/*システムに登録*/
 			taskSystem->Add(to);
 		}
 		return to;
@@ -134,4 +141,9 @@ Texture CharaBace::getResoruceManagerTexture()const
 	}
 	/*空のテクスチャ*/
 	return Texture();
+}
+/*オブジェクトタイプがBackであるかを判定します*/
+constexpr bool CharaBace::TypeCheck(const Type& type_ , const Type& target)const
+{
+	return type_ == target ? true : false;
 }

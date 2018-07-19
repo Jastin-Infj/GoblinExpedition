@@ -8,6 +8,7 @@ enum Type
 	Back,		//背景
 	UI,			//UI
 	Player,		//プレイヤ
+	Mouse,		//マウス
 	Enemy,		//敵
 	Item,		//アイテム
 };

@@ -72,5 +72,15 @@ private:
 	///<returns>テクスチャのアドレス値</returns>
 	Texture getResoruceManagerTexture()const;
 
+
+	///<summary>
+	///<para>ターゲットが引数のタイプかを判定します</para>
+	///<para>一致　true : 不一致　 false</para>
+	///<param name = "type">オブジェクトのタイプ</param>
+	///<param name = "checktype">判定するオブジェクトのタイプ</param>
+	///<returns>タイプの一致している/していない true : false</returns>
+	constexpr bool TypeCheck(const Type& type , const Type& checktype )const;
+
+
 //=================================================================================================
 };
