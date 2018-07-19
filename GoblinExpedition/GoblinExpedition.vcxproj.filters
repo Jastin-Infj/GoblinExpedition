@@ -105,9 +105,6 @@
     <ClCompile Include="src\Task\SceceTask.cpp">
       <Filter>ソース ファイル\Task</Filter>
     </ClCompile>
-    <ClCompile Include="Winmain.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="src\TaskSystem\TaskObject.cpp">
       <Filter>ソース ファイル\TaskSystem</Filter>
     </ClCompile>
@@ -125,6 +122,9 @@
     </ClCompile>
     <ClCompile Include="src\Task\Task_Game.cpp">
       <Filter>ソース ファイル\Task\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Winmain.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

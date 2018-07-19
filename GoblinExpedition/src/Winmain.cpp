@@ -11,10 +11,10 @@
 #include <iostream>
 #include <string>
 
-#include "src\TaskSystem\TaskObject.h"
-#include "src\TaskSystem\TaskSystem.h"
-#include "src\Task\SceceTask.h"
-#include "src/ResourceManager/ResourceManager.h"
+#include "TaskSystem\TaskObject.h"
+#include "TaskSystem\TaskSystem.h"
+#include "Task\SceceTask.h"
+#include "ResourceManager/ResourceManager.h"
 
 TaskSystem* taskSystem;
 ResourceManager* rm;
