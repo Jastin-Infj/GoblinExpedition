@@ -10,7 +10,7 @@
 
 
 
-開発環境　VirialStdio2017 EnterPrice/Pro
+開発環境　VisualStdio2017 EnterPrice
 
 動作環境
 
