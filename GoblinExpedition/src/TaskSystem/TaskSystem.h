@@ -38,14 +38,14 @@ public:
 	///</returns>
 	void UpDate();
 
-
-	///<summary>
-	///オブジェクトをシステムに仮登録します
-	///</summary>
-	///<returns>
-	///なし
-	///</returns>
-	void Add(const TaskObject::SP&);
+	
+	/// <summary>
+	/// オブジェクトをタスクシステムに登録します
+	/// </summary>
+	/// <param name="createobject">
+	/// 登録したいオブジェクト
+	/// </param>
+	void Add(const TaskObject::SP& createobject);
 
 
 	///<summary>
@@ -57,24 +57,24 @@ public:
 	///<summary>
 	///登録しているオブジェクトのタスク名を表示します
 	///</summary>
-	///<returns>
-	///なし
-	///</returns>
 	void TasknameOutput()const;
 
 
 	///<summary>
 	///登録されているオブジェクトを全部消去を行います
 	///</summary>
-	///<returns>
-	///なし
-	///</returns>
 	void TaskObjectDelete();
 	
 
-	///<summary>
-	///タスク名・グループ名を検索して、オブジェクト単体を取得します
-	///</summary>
+	/// <summary>
+	/// タスク名・グループ名を検索して、オブジェクト単体を取得します
+	/// </summary>
+	/// <param name="taskname_">
+	/// 検索ワード
+	/// </param>
+	/// <returns>
+	/// 検索ワードと一致したスマートポインタ
+	/// </returns>
 	template <class T>
 	std::shared_ptr<T> GetTask(const std::pair<std::string, std::string>& taskname_)
 	{
@@ -91,10 +91,16 @@ public:
 		return nullptr;
 	}
 
-
-	///<summary>
-	///グループ名を検索して、オブジェクト単体を取得します
-	///</summary>
+	
+	/// <summary>
+	/// グループ名を検索して、オブジェクト単体を取得します
+	/// </summary>
+	/// <param name="groupname_">
+	/// 検索するグループ名
+	/// </param>
+	/// <returns>
+	/// グループ名が一致したスマートポインタ
+	/// </returns>
 	template <class T>
 	std::shared_ptr<T> GetTask_GroupName(const std::string& groupname_)
 	{
@@ -112,10 +118,15 @@ public:
 	}
 
 
-
-	///<summary>
-	///タスク名を検索して、オブジェクト単体を取得します
-	///</summary>
+	/// <summary>
+	/// タスク名を検索して、オブジェクト単体を取得します
+	/// </summary>
+	/// <param name="taskname_">
+	/// 検索するタスク名
+	/// </param>
+	/// <returns>
+	/// 一致したオブジェクトのスマートポインタ
+	/// </returns>
 	template <class T>
 	std::shared_ptr<T> GetTask_TaskName(const std::string& taskname_)
 	{
@@ -132,10 +143,16 @@ public:
 		return nullptr;
 	}
 
-
-	///<summary>
+	
+	/// <summary>
 	///タスク名・グループ名を検索して、オブジェクト複数を取得します
-	///</summary>
+	/// </summary>
+	/// <param name="taskname_">
+	/// 検索したい（グループ名・タスク名）
+	/// </param>
+	/// <returns>
+	/// 一致したオブジェクト全体
+	/// </returns>
 	template<class T>
 	std::shared_ptr<std::vector<std::shared_ptr<T>>> GetTasks(const std::pair<std::string, std::string>& taskname_)
 	{
@@ -154,9 +171,15 @@ public:
 	}
 
 
-	///<summary>
-	///グループ名を検索して、オブジェクト複数を取得します
-	///</summary>
+	/// <summary>
+	/// グループ名を検索して、オブジェクト複数を取得します
+	/// </summary>
+	/// <param name="groupname_">
+	/// 検索したいグループ名
+	/// </param>
+	/// <returns>
+	/// 一致したオブジェクト全体
+	/// </returns>
 	template<class T>
 	std::shared_ptr<std::vector<std::shared_ptr<T>>> GetTasks_GroupName(const std::string& groupname_)
 	{
@@ -174,9 +197,16 @@ public:
 		return searchObjects;
 	}
 
-	///<summary>
-	///タスク名を検索して、オブジェクト複数を取得します
-	///</summary>
+
+	/// <summary>
+	/// タスク名を検索して、オブジェクト複数を取得します
+	/// </summary>
+	/// <param name="taskname_">
+	/// 検索したいタスク名
+	/// </param>
+	/// <returns>
+	/// 一致したオブジェクト全体
+	/// </returns>
 	template<class T>
 	std::shared_ptr<std::vector<std::shared_ptr<T>>> GetTasks_TaskName(const std::string& taskname_)
 	{
@@ -217,36 +247,24 @@ private:
 	///<summary>
 	///登録予定のオブジェクトを登録します
 	///<summary>
-	///<returns>
-	///なし
-	///</returns>
 	void TaskApplication();
 
 
 	///<summary>
 	///登録されているオブジェクトの更新処理を行います
 	///</summary>
-	///<returns>
-	///なし
-	///</returns>
 	void T_UpDate();
 
 
 	///<summary>
 	///登録されているオブジェクトの描画処理を行います
 	///</summary>
-	///<returns>
-	///なし
-	///</returns>
 	void T_Render();
 
 
 	///<summary>
 	///登録されているオブジェクトの消去を行います
 	///</summary>
-	///<returns>
-	///なし
-	///</returns>
 	void T_Destory();
 
 
@@ -269,4 +287,4 @@ private:
 
 
 };
-extern TaskSystem* taskSystem;
+extern TaskSystem* taskSystem;		//タスクシステムにアクセス用変数

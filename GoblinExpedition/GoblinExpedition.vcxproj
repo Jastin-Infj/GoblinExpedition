@@ -76,8 +76,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\game\Desktop\GoblinExpedition\GoblinExpedition\include\Inc;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\game\Desktop\GoblinExpedition\GoblinExpedition\include\Lib;$(SIV3D_20160812)\Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\takum\Desktop\GoblinExpedition\GoblinExpedition\include\Inc;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\takum\Desktop\GoblinExpedition\GoblinExpedition\include\Lib;$(SIV3D_20160812)\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

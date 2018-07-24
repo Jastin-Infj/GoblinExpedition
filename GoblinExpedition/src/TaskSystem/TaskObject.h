@@ -105,14 +105,6 @@ public:
 
 
 	///<summary>
-	///初期化処理
-	///</summary>
-	///<returns>
-	///初期化処理終了 true
-	///</returns>
-	virtual bool Init(const std::pair<std::string, std::string>&);
-
-	///<summary>
 	///更新処理
 	///</summary>
 	///<returns>
@@ -147,11 +139,11 @@ public:
 	///</returns>
 	void Kill();
 
+
 	///<summary>
 	///Killカウンタを返します
 	///</summary>
 	int  getKillCounter()const;
-
 
 
 	///<summary>
@@ -210,6 +202,16 @@ public:
 	const float getDrawOrder()const;
 
 
+	/// <summary>
+	/// タスク名を生成時に初期化設定を行います
+	/// </summary>
+	/// <param name="taskname">
+	/// グループ名・タスク名
+	/// </param>
+	/// <returns>
+	/// タスク名の設定完了 true / タスク名に空白がある false
+	/// </returns>
+	bool CreatedObjectInit(const std::pair<std::string,std::string>& taskname);
 private:
 
 ///メンバ変数
@@ -234,7 +236,7 @@ private:
 	///<summary>
 	///描画優先順位
 	///</summary>
-	float priority;
+	float order;
 
 
 ///メンバ関数

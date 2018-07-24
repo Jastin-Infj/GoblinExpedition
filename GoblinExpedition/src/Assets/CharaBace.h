@@ -27,29 +27,65 @@ public:
 	virtual ~CharaBace();
 
 
-	///<summary>
-	///<para>初期化処理</para>
-	///<para>グループ名・タスク名 , 対象オブジェクト , 初期座標位置 , 描画サイズ , 描画優先順位 </para>
-	///<returns>初期化　成功/失敗 true : false</returns>
-	///</summary>
-	bool Init(const std::pair<std::string, std::string>& taskname, Type type, Point& pos, Point& scale,float order);
+	/// <summary>
+	/// パラメータの初期化設定
+	/// </summary>
+	/// <param name="taskname">
+	/// グループ名・タスク名
+	/// </param>
+	/// <param name="objecttype">
+	/// 生成オブジェクトタイプ
+	/// </param>
+	/// <param name="pos">
+	/// 初期座標
+	/// </param>
+	/// <param name="scale">
+	/// 描画の大きさ
+	/// </param>
+	/// <param name="order">
+	/// 描画の優先順位
+	/// </param>
+	/// <returns>
+	/// 初期化出来る / true (falseなし)
+	/// </returns>
+	bool ParameterInit(const std::pair<std::string, std::string>& taskname, ObjectType objecttype, Point& pos, Point& scale,float order);
 
 
-	///<summary>
-	///<para>オブジェクトの生成をします</para>
-	///<para>グループ名・タスク名 , 描画する対象,初期座標位置 ,描画するサイズ ,(タスクシステムに登録するか true : false) </para>
-	///</summary>
-	static CharaBace::SP Create(const std::pair<std::string, std::string>& taskname, Type type, Point pos, Point scale, float order, bool flag = true);
+	/// <summary>
+	/// オブジェクトを生成します
+	/// </summary>
+	/// <param name="taskname">
+	/// グループ名・タスク名
+	/// </param>
+	/// <param name="objectType">
+	/// 生成オブジェクトタイプ
+	/// </param>
+	/// <param name="pos">
+	/// 初期座標
+	/// </param>
+	/// <param name="scale">
+	/// 描画の大きさ
+	/// </param>
+	/// <param name="order">
+	/// 描画の優先順位
+	/// </param>
+	/// <param name="flag">
+	/// システムに登録する (true)/しない(false)
+	/// </param>
+	/// <returns>
+	/// 生成したオブジェクトのスマートポインタ
+	/// </returns>
+	static CharaBace::SP Create(const std::pair<std::string, std::string>& taskname, ObjectType objectType, Point pos, Point scale, float order, bool flag = true);
 
 
 private:
 	DrawInterFace* draw;		//描画機能
-	Type           type;		//扱っている対象
+	ObjectType     objecttype;	//扱っている対象
 	Point          position;	//現在位置
 	Point          scale;		//大きさ
 
 	///<summary>
-	///更新処理
+	///オブジェクトの更新処理
 	///</summary>
 	void UpDate()override;
 
@@ -73,13 +109,19 @@ private:
 	Texture getResoruceManagerTexture()const;
 
 
-	///<summary>
-	///<para>ターゲットが引数のタイプかを判定します</para>
-	///<para>一致　true : 不一致　 false</para>
-	///<param name = "type">オブジェクトのタイプ</param>
-	///<param name = "checktype">判定するオブジェクトのタイプ</param>
-	///<returns>タイプの一致している/していない true : false</returns>
-	constexpr bool TypeCheck(const Type& type , const Type& checktype )const;
+	/// <summary>
+	/// ターゲットが引数のタイプかを判定します
+	/// </summary>
+	/// <param name="objecttype">
+	/// オブジェクトのタイプ
+	/// </param>
+	/// <param name="checkObjectType">
+	/// 判定するオブジェクトのタイプ
+	/// </param>
+	/// <returns>
+	/// タイプの一致している/していない true : false
+	/// </returns>
+	constexpr bool ObjectTypeCheck(const ObjectType& objecttype , const ObjectType& checkObjectType )const;
 
 
 //=================================================================================================

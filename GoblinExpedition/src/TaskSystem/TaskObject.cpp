@@ -42,14 +42,6 @@ std::pair<std::string,std::string> TaskObject::getTaskname()const
 {
 	return this->taskname;
 }
-/*初期化処理を行います*/
-bool TaskObject::Init(const std::pair<std::string, std::string>& taskname_)
-{
-	this->setTaskName(taskname_);
-	this->setDrawOrder();
-	std::cout << this->taskname.second << "init()" << std::endl;
-	return true;
-}
 /*更新処理を行います*/
 void TaskObject::UpDate()
 {
@@ -104,10 +96,22 @@ bool TaskObject::getisPause()const
 /*描画優先順位を設定します*/
 void TaskObject::setDrawOrder(float order_)
 {
-	this->priority = order_;
+	this->order = order_;
 }
 /*描画優先順位を返します*/
 const float TaskObject::getDrawOrder()const
 {
-	return this->priority;
+	return this->order;
+}
+/*オブジェクト生成時にタスク名を設定します*/
+bool TaskObject::CreatedObjectInit(const std::pair<std::string, std::string>& taskname_)
+{
+	//空白の名前がある場合
+	if (taskname_.first == "" || taskname_.second == "")
+	{
+		return false;
+	}
+	this->setTaskName(taskname_);
+	this->setDrawOrder(1.0f);
+	return true;
 }

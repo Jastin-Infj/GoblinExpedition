@@ -3,6 +3,9 @@
 class Game : public TaskObject
 {
 public:
+	typedef std::shared_ptr<Game> SP;
+
+
 	///<summary>
 	///コンストラクタ
 	///</summary>
@@ -19,8 +22,8 @@ public:
 	///<para>初期化処理<para>
 	///引数:グループ名・タスク名
 	///<summary>
-	///<param name = "taskname">グループ名・タスク名</param>
-	bool Init(const std::pair<std::string, std::string>& taskname)override;
+	///<param name="taskname">グループ名・タスク名</param>
+	bool Init(const std::pair<std::string, std::string>& taskname);
 
 
 	///<summary>

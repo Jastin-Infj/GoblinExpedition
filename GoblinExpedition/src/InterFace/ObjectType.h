@@ -3,7 +3,7 @@
 ///<summary>
 ///オブジェクトタイプを設定するファイルです
 ///</summary>
-enum Type
+enum class ObjectType
 {
 	Back,		//背景
 	UI,			//UI

@@ -19,12 +19,12 @@ CharaBace::~CharaBace()
 	this->Finalize();
 }
 /*初期化処理をします*/
-bool CharaBace::Init(const std::pair<std::string, std::string>& taskname_, Type type_, Point& pos, Point& scale_,float order)
+bool CharaBace::ParameterInit(const std::pair<std::string, std::string>& taskname_, ObjectType objecttype_, Point& pos, Point& scale_,float order_)
 {
 	__super::setTaskName(taskname_);
 
 	//対象のタイプ設定
-	this->type = type_;
+	this->objecttype = objecttype_;
 	
 	//DrawInterFaceを生成する
 	this->draw = new DrawInterFace();
@@ -39,8 +39,7 @@ bool CharaBace::Init(const std::pair<std::string, std::string>& taskname_, Type 
 	//描画矩形の生成
 	this->draw->setDrawBace(this->position, this->scale);
 	//描画優先順位の設定
-	this->setDrawOrder(order);
-
+	this->setDrawOrder(order_);
 
 
 	return true;
@@ -74,7 +73,7 @@ bool CharaBace::Finalize()
 	return true;
 }
 /*オブジェクトの生成*/
-CharaBace::SP CharaBace::Create(const std::pair<std::string, std::string>& taskname, Type type, Point pos, Point scale, float order, bool flag)
+CharaBace::SP CharaBace::Create(const std::pair<std::string, std::string>& taskname, ObjectType objecttype, Point pos, Point scale, float order, bool flag)
 {
 	CharaBace::SP to = CharaBace::SP(new CharaBace());
 	if (to)
@@ -82,7 +81,7 @@ CharaBace::SP CharaBace::Create(const std::pair<std::string, std::string>& taskn
 		/*自分のアドレス値を渡す*/
 		to->me = to;
 		/*各値の初期化値を設定*/
-		if (!to->Init(taskname,type,pos,scale,order))
+		if (!to->ParameterInit(taskname,objecttype,pos,scale,order))
 		{
 			/*初期化が成功しなければ削除*/
 			to->Kill();
@@ -99,38 +98,38 @@ CharaBace::SP CharaBace::Create(const std::pair<std::string, std::string>& taskn
 /*ResourceManagerからTextureを貼り付けします*/
 Texture CharaBace::getResoruceManagerTexture()const
 {
-	switch (this->type)
+	switch (this->objecttype)
 	{
 		/* 背景 */
-	case Type::Back:
+	case ObjectType::Back:
 		//画像元矩形の生成
 		this->draw->setDrawSrc(0,0,680,480);
 		//テクスチャの貼り付け
 		return rm->getTexture("インゲーム背景");
 		break;
 		/* UI */
-	case Type::UI:
+	case ObjectType::UI:
 		//画像元矩形の生成
 		
 		//テクスチャの貼り付け
 		return rm->getTexture("ライフ");
 		break;
 		/* プレイヤ */
-	case Type::Player:
+	case ObjectType::Player:
 		//画像元矩形の生成
 
 		//テクスチャの貼り付け
 		return rm->getTexture("プレイヤ");
 		break;
 		/* 敵 */
-	case Type::Enemy:
+	case ObjectType::Enemy:
 		//画像元矩形の生成
 		this->draw->setDrawSrc(0, 0, 64, 64);
 		//テクスチャの貼り付け
 		return rm->getTexture("ゴブリン");
 		break;
 		/* アイテム */
-	case Type::Item:
+	case ObjectType::Item:
 		//画像元矩形の生成
 
 		//テクスチャの貼り付け
@@ -143,7 +142,7 @@ Texture CharaBace::getResoruceManagerTexture()const
 	return Texture();
 }
 /*オブジェクトタイプがBackであるかを判定します*/
-constexpr bool CharaBace::TypeCheck(const Type& type_ , const Type& target)const
+constexpr bool CharaBace::ObjectTypeCheck(const ObjectType& ObjectType_ , const ObjectType& target)const
 {
-	return type_ == target ? true : false;
+	return ObjectType_ == target ? true : false;
 }

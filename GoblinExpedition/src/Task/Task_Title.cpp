@@ -47,7 +47,7 @@ TaskObject::SP Title::Create(const std::pair<std::string, std::string>& taskname
 	{
 		/*Ž©•ª‚Ìƒf[ƒ^‚ð“n‚·*/
 		to->me = to;
-		if (!to->Init(taskname))
+		if (!to->CreatedObjectInit(taskname))
 		{
 			to->Kill();
 		}

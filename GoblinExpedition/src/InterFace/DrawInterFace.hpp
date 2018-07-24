@@ -13,82 +13,122 @@ public:
 	///</summary>
 	DrawInterFace() {}
 
-
-	///<summary>
-	///<para>コンストラクタ</para>
-	///<para>引数: s3d::Rect(描画座標xy,描画サイズxy),s3d::Rect(画像元座標,画像元1つ分サイズ)</para>
-	///</summary>
+	
+	/// <summary>
+	/// 矩形生成つきコンストラクタ
+	/// </summary>
+	/// <param name="draw">
+	/// (描画座標xy,描画サイズxy)
+	/// </param>
+	/// <param name="src">
+	/// (画像元座標,画像元1つ分サイズ)
+	/// </param>
 	explicit DrawInterFace(const s3d::Rect& draw, const s3d::Rect& src)
 	{
 		this->drawbace = draw;
 		this->srcbace = src;
 	}
 
-
-	///<summary>
-	///<para>描画するための矩形を生成します</para>
-	///<para>s3d::Rect(描画座標 , 描画サイズ)</para>
-	///</summary>
+	
+	/// <summary>
+	/// 描画するための矩形を生成します
+	/// </summary>
+	/// <param name="draw">
+	/// (描画座標 x y , 描画サイズ x y )
+	/// </param>
 	void setDrawBace(const s3d::Rect& draw)
 	{
 		this->drawbace = draw;
 	}
 
-
-	///<summary>
-	///<para>描画するための矩形を生成します</para>
-	///<para>引数:　描画座標 x y, 描画サイズ x y</para>
-	///</summary>
+	
+	/// <summary>
+	/// 描画するための矩形を生成します
+	/// </summary>
+	/// <param name="x">
+	/// 描画座標X
+	/// </param>
+	/// <param name="y">
+	/// 描画座標Y
+	/// </param>
+	/// <param name="w">
+	/// 描画サイズX
+	/// </param>
+	/// <param name="h">
+	/// 描画サイズY
+	/// </param>
 	void setDrawBace(int x, int y, int w, int h)
 	{
 		this->drawbace = { x,y,w,h };
 	}
 
-
-	///<summary>
-	///<para>描画するための矩形を生成します</para>
-	///<para>引数:　Point(描画座標), Point(描画サイズ)</para>
-	///</summary>
-	void setDrawBace(const Point& pos ,const Point size)
+	
+	/// <summary>
+	/// 描画するための矩形を生成します
+	/// </summary>
+	/// <param name="draw_pos">
+	/// 描画座標
+	/// </param>
+	/// <param name="draw_size">
+	/// 描画サイズ
+	/// </param>
+	void setDrawBace(const Point& draw_pos ,const Point draw_size)
 	{
-		this->drawbace = { pos , size };
+		this->drawbace = { draw_pos , draw_size };
 	}
 
-
-	///<summary>
-	///<para>画像元の矩形を生成します</para>
-	///<para>引数: 画像元座標xy , 画像元サイズ(1つ分) </para>
-	///</summary>
+	
+	/// <summary>
+	/// 画像元の矩形を生成します
+	/// </summary>
+	/// <param name="x">
+	/// 描画座標X
+	/// </param>
+	/// <param name="y">
+	/// 描画座標Y
+	/// </param>
+	/// <param name="w">
+	/// 描画サイズX
+	/// </param>
+	/// <param name="h">
+	/// 描画サイズY
+	/// </param>
 	void setDrawSrc(int x, int y, int w, int h)
 	{
 		this->srcbace = { x,y,w,h };
 	}
 
-
-	///<summary>
-	///<para>画像元の矩形を生成します</para>
-	///<para>引数: s3d::Rect(画像元座標 x y,画像元1つ分サイズ x y)</para>
-	///</summary>
+	
+	/// <summary>
+	/// 画像元の矩形を生成します
+	/// </summary>
+	/// <param name="src">
+	/// (画像元座標 x y,画像元1つ分サイズ x y)
+	/// </param>
 	void setDrawSrc(const s3d::Rect& src)
 	{
 		this->srcbace = src;
 	}
 
-
-	///<summary>
-	///<para>テクスチャを設定します</para>
-	///<para>ResourceManagerから取得します</para>
-	///</summary>
-	void setTexture(Texture image_)
+	
+	/// <summary>
+	/// テクスチャを設定します
+	/// </summary>
+	/// <param name="resourcemaneger_image">
+	/// ResourceManagerから取得したTexture
+	/// </param>
+	void setTexture(Texture resourcemaneger_image)
 	{
-		this->image = image_;
+		this->image = resourcemaneger_image;
 	}
 
 
 	///<summary>
-	///<para>描画矩形を返します</para>
+	///描画矩形を返します
 	///</summary>
-	///<returns>描画矩形</returns>
+	///<returns>
+	/// 描画矩形
+	///</returns>
 	s3d::Rect getDrawBace()const
 	{
 		return this->drawbace;
@@ -96,32 +136,47 @@ public:
 
 
 	///<summary>
-	///<para>画像元矩形を返します</para>
+	///画像元矩形を返します
 	///</summary>
-	///<returns>画像元矩形</returns>
+	///<returns>
+	///画像元矩形
+	///</returns>
 	s3d::Rect getSrcBace()const
 	{
 		return this->srcbace;
 	}
 
 
-	///<summary>
-	///<para>描画をします</para>
-	///<para>描画位置・サイズ , 画像元位置・サイズ</para>
-	///</summary>
+	/// <summary>
+	/// 描画をします
+	/// </summary>
+	/// <param name="draw_">
+	/// (描画座標 x y , 描画サイズ x y)
+	/// </param>
+	/// <param name="src_">
+	/// (画像元座標 x y , 画像元サイズ x y)
+	/// </param>
 	void Draw(const s3d::Rect& draw_, const s3d::Rect& src_)
 	{
 		s3d::Rect(draw_)(this->image(src_)).draw();
 	}
 
-
-	///<summary>
-	///<para>描画をします</para>
-	///<para>描画位置 , 描画サイズ , 画像元位置・サイズ</para>
-	///</summary>
-	void Draw(const Point& pos ,const Point& size ,const s3d::Rect& src_)
+	
+	/// <summary>
+	/// 描画をします
+	/// </summary>
+	/// <param name="drawpos">
+	/// 描画座標
+	/// </param>
+	/// <param name="drawsize">
+	/// 描画サイズ
+	/// </param>
+	/// <param name="src_">
+	/// (画像元座標 x y , 画像元サイズ x y )
+	/// </param>
+	void Draw(const Point& drawpos ,const Point& drawsize ,const s3d::Rect& src_)
 	{
-		s3d::Rect(pos, size)(this->image(src_)).draw();
+		s3d::Rect(drawpos, drawsize)(this->image(src_)).draw();
 	}
 
 	

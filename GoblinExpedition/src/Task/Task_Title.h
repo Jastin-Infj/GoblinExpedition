@@ -20,7 +20,7 @@ public:
 	///引数:グループ名・タスク名
 	///</summary>
 	///<param name = "taskname">グループ名・タスク名</param>
-	bool Init(const std::pair<std::string, std::string>& taskname)override;
+	bool Init(const std::pair<std::string, std::string>& taskname);
 
 
 	///<summary>

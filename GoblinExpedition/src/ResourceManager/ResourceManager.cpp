@@ -136,14 +136,3 @@ void ResourceManager::DeleteResource()
 	this->DeleteTextrue();
 	this->DeleteSound();
 }
-/*Siv3D版　タスク名を検索し、描画をします*/
-void ResourceManager::DrawManager(const std::string& taskname)
-{
-	for (auto it = this->textrues.begin(); it != this->textrues.end(); ++it)
-	{
-		if ((*it).first == taskname)
-		{
-			(*it).second.draw();
-		}
-	}
-}

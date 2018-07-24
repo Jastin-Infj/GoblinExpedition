@@ -11,21 +11,24 @@ public:
 	///<summary>
 	///移動タイプ
 	///</summary>
-	enum Type
+	enum MoveType
 	{
 		UniformLinearMotion		//等速直線運動
 	};
 
 
 	///<summary>
-	///<para>コンストラクタ</para>
-	///<para>引数 : 移動スピード , 移動タイプ </para>
+	///コンストラクタ
 	///</summary>
-	///<param name = 'speed'>移動スピード</param>
-	///<param name = 'type'>移動タイプ</param>
-	MoveInterFace(const Point& speed , const Type& type_)
+	///<param name = 'speed'>
+	/// 移動スピード
+	///</param>
+	///<param name = 'movetype'>
+	/// 移動タイプ
+	///</param>
+	MoveInterFace(const Point& speed , const MoveType& movetype_)
 		:moveVec(speed),
-		type(type_) 
+		MoveType(movetype_) 
 	{}
 
 
@@ -36,6 +39,6 @@ public:
 
 
 private:
-	Point moveVec;		//移動ベクトル
-	Type  type;			//移動タイプ
+	Point     moveVec;			//移動ベクトル
+	MoveType  MoveType;			//移動タイプ
 };
