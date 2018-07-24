@@ -40,7 +40,8 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 		auto enemy = CharaBace::Create(std::pair<std::string, std::string>("モンスター", "ゴブリン"), ObjectType::Enemy, Point(0, 480 /2), Point(64, 64), 0.8f);
 	}
 	{
-		auto mouseplayer = CharaBace::Create(std::pair<std::string, std::string>("マウス", "マウスPlayer"), ObjectType::Mouse, Point(Mouse::Pos()), Point{}, 0.8f);
+		auto player = CharaBace::Create(std::pair<std::string, std::string>("プレイヤ", "自キャラ"), ObjectType::Player, Point(0,460 - 40), Point{}, 0.8f);
+		auto mouse = CharaBace::Create(std::pair<std::string, std::string>("マウス", "プレイヤ"), ObjectType::Mouse, Point(Mouse::Pos()), Point{}, 0.8f);
 	}
 	return true;
 }
@@ -60,6 +61,11 @@ bool Game::Finalize()
 	}
 	auto enemys = taskSystem->GetTasks<CharaBace>(std::pair<std::string, std::string>("モンスター", "ゴブリン"));
 	for (auto it = enemys->begin(); it != enemys->end(); ++it)
+	{
+		(*it)->Kill();
+	}
+	auto players = taskSystem->GetTasks<CharaBace>(std::pair<std::string, std::string>("プレイヤ", "自キャラ"));
+	for (auto it = players->begin(); it != players->end(); ++it)
 	{
 		(*it)->Kill();
 	}
