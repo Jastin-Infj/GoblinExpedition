@@ -1,6 +1,8 @@
 #include "CharaBace.h"
 #include "../TaskSystem/TaskSystem.h"
 #include "../ResourceManager/ResourceManager.h"
+#include "../InterFace/Collider.hpp"
+#include "../InterFace/MoveInterFace.hpp"
 #include <iostream>
 #include <Windows.h>
 /*コンストラクタ*/
@@ -19,25 +21,53 @@ CharaBace::~CharaBace()
 	this->Finalize();
 }
 /*初期化処理をします*/
-bool CharaBace::ParameterInit(const std::pair<std::string, std::string>& taskname_, ObjectType objecttype_, Point& pos, Point& scale_,float order_)
+bool CharaBace::ParameterInit(
+	const std::pair<std::string, std::string>& taskname_, 
+	ObjectType								   objecttype_, 
+	const Point&							   pos, 
+	const Point&							   scale_,
+	float									   order_, 
+	bool								       hitbace_, 
+	bool							           draw_, 
+	bool						               move_
+)
 {
 	__super::setTaskName(taskname_);
-
-	//対象のタイプ設定
-	this->objecttype = objecttype_;
-	
-	//DrawInterFaceを生成する
-	this->draw = new DrawInterFace();
-	/*対象オブジェクトによってそれぞれのテクスチャを貼り付ける*/
-	this->draw->setTexture(this->getResoruceManagerTexture());
-
 
 	//初期座標位置の設定
 	this->position = pos;
 	//描画サイズを設定
 	this->scale = scale_;
-	//描画矩形の生成
-	this->draw->setDrawBace(this->position, this->scale);
+
+	//対象のタイプ設定
+	this->objecttype = objecttype_;
+	
+	//当たり判定機能
+	if (hitbace_)
+	{
+		this->hitbace = new Collider(Collider::ShapeHitType::Cube,this->position,this->scale);
+	}
+
+	//DrawInterFaceを生成する
+	if (draw_)
+	{
+		this->draw = new DrawInterFace();
+	}
+	if (draw != nullptr)
+	{
+		/*対象オブジェクトによってそれぞれのテクスチャを貼り付ける*/
+		this->draw->setTexture(this->getResoruceManagerTexture());
+		//描画矩形の生成
+		this->draw->setDrawBace(this->position, this->scale);
+	}
+
+	//移動機能をつける
+	if (move_)
+	{
+		this->move = new MoveInterFace();
+	}
+	
+	
 	//描画優先順位の設定
 	this->setDrawOrder(order_);
 
@@ -61,7 +91,14 @@ void CharaBace::Render()
 	Rect src = this->draw->getSrcBace();
 	/*描画をする*/
 	{
-		this->draw->Draw(this->draw->getDrawBace(),this->draw->getSrcBace());
+		if (this->objecttype != ObjectType::Player)
+		{
+			this->draw->Draw(this->draw->getDrawBace(),this->draw->getSrcBace());
+		}
+		else
+		{
+			this->draw->PalletColorDraw(this->position , this->scale , Palette::Red);
+		}
 	}
 }
 bool CharaBace::Finalize()
@@ -73,7 +110,17 @@ bool CharaBace::Finalize()
 	return true;
 }
 /*オブジェクトの生成*/
-CharaBace::SP CharaBace::Create(const std::pair<std::string, std::string>& taskname, ObjectType objecttype, Point pos, Point scale, float order, bool flag)
+CharaBace::SP CharaBace::Create(
+	const std::pair<std::string, std::string>& taskname,
+	ObjectType								   objecttype,
+	const Point&							   pos,
+	const Point&							   scale,
+	float									   order,
+	bool								       hitbace,
+	bool									   drawinterface,
+	bool								       moveinterface,
+	bool									   flag
+)
 {
 	CharaBace::SP to = CharaBace::SP(new CharaBace());
 	if (to)
@@ -81,7 +128,7 @@ CharaBace::SP CharaBace::Create(const std::pair<std::string, std::string>& taskn
 		/*自分のアドレス値を渡す*/
 		to->me = to;
 		/*各値の初期化値を設定*/
-		if (!to->ParameterInit(taskname,objecttype,pos,scale,order))
+		if (!to->ParameterInit(taskname,objecttype,pos,scale,order,hitbace,drawinterface,moveinterface))
 		{
 			/*初期化が成功しなければ削除*/
 			to->Kill();
@@ -116,10 +163,7 @@ Texture CharaBace::getResoruceManagerTexture()const
 		break;
 		/* プレイヤ */
 	case ObjectType::Player:
-		//画像元矩形の生成
 
-		//テクスチャの貼り付け
-		return rm->getTexture("プレイヤ");
 		break;
 		/* 敵 */
 	case ObjectType::Enemy:

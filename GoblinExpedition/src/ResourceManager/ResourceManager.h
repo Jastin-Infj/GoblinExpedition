@@ -113,7 +113,7 @@ public:
 	/// 検索ワード
 	/// </param>
 	/// <returns>
-	/// テクスチャ名と一致したテクスチャのポインタ
+	/// テクスチャ名と一致したテクスチャ
 	/// </returns>
 	Texture getTexture(const std::string& texturename)const;
 

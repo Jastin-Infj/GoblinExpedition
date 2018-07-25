@@ -179,10 +179,28 @@ public:
 		s3d::Rect(drawpos, drawsize)(this->image(src_)).draw();
 	}
 
+
+	/// <summary>
+	/// 矩形を指定の色に塗りつぶしして描画します
+	/// </summary>
+	/// <param name="drawpos">
+	/// 描画座標
+	/// </param>
+	/// <param name="drawsize">
+	/// 描画サイズ
+	/// </param>
+	/// <param name="color">
+	/// 描画カラー
+	/// </param>
+	void PalletColorDraw(const Point& drawpos, const Point& drawsize ,const Color& color)
+	{
+		s3d::Rect(drawpos, drawsize).draw(color);
+	}
+
 	
 private:
 	s3d::Rect  drawbace;	//描画矩形(整数)
 	s3d::Rect  srcbace;		//画像元矩形（整数）
 
-	Texture image;		//テクスチャ
+	Texture image;			//テクスチャ
 };

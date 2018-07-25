@@ -33,15 +33,15 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 	{
 		//画像の指定
 		rm->setTexture("インゲーム背景", Texture(L"./data/image/doukutu.png"));
-		auto back = CharaBace::Create(std::pair<std::string, std::string>("背景", "インゲーム背景"), ObjectType::Back, Point(0,0), Point(680, 480), 0.1f);
+		auto back = CharaBace::Create(std::pair<std::string, std::string>("背景", "インゲーム背景"), ObjectType::Back, Point(0, 0), Point(Window::Size().x, Window::Size().y), 0.1f,false,true);
 	}
 	{
 		rm->setTexture("ゴブリン", Texture(L"./data/image/Goburin.png"));
-		auto enemy = CharaBace::Create(std::pair<std::string, std::string>("モンスター", "ゴブリン"), ObjectType::Enemy, Point(0, 480 /2), Point(64, 64), 0.8f);
+		auto enemy = CharaBace::Create(std::pair<std::string, std::string>("モンスター", "ゴブリン"), ObjectType::Enemy, Point(0, Window::Size().y / 2), Point(64, 64), 0.8f,false,true);
 	}
 	{
-		auto player = CharaBace::Create(std::pair<std::string, std::string>("プレイヤ", "自キャラ"), ObjectType::Player, Point(0,460 - 40), Point{}, 0.8f);
-		auto mouse = CharaBace::Create(std::pair<std::string, std::string>("マウス", "プレイヤ"), ObjectType::Mouse, Point(Mouse::Pos()), Point{}, 0.8f);
+		auto player = CharaBace::Create(std::pair<std::string, std::string>("プレイヤ", "自キャラ"), ObjectType::Player, Point(Window::Size().x - 32 ,Window::Size().y / 2), Point{32,32}, 0.8f,false,true);
+		auto mouse = CharaBace::Create(std::pair<std::string, std::string>("マウス", "プレイヤ"), ObjectType::Mouse, Point(Mouse::Pos()), Point{}, 0.8f,false,true);
 	}
 	return true;
 }

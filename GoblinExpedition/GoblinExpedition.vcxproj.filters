@@ -470,5 +470,8 @@
     <ClInclude Include="src\InterFace\MoveInterFace.hpp">
       <Filter>ソース ファイル\InterFace</Filter>
     </ClInclude>
+    <ClInclude Include="src\InterFace\Collider.hpp">
+      <Filter>ソース ファイル\InterFace</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
