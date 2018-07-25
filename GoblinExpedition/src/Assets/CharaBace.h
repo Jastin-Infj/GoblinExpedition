@@ -119,6 +119,31 @@ public:
 	);
 
 
+	/// <summary>
+	/// 座標の設定・変更をします
+	/// </summary>
+	/// <param name="pos">
+	/// 設定する座標
+	/// </param>
+	void setPosition(const Point& pos);
+
+
+	/// <summary>
+	/// 現在の座標を返します
+	/// </summary>
+	/// <returns>
+	/// 現在の座標
+	/// </returns>
+	Point getPosition()const;
+
+
+	/// <summary>
+	/// オブジェクトタイプを返します
+	/// </summary>
+	/// <returns>
+	/// オブジェクトタイプ
+	/// </returns>
+	ObjectType getObjectType()const;
 private:
 	ObjectType     objecttype;	//扱っている対象
 	Point          position;	//現在位置
@@ -177,5 +202,17 @@ private:
 	/// オブジェクトタイプによって当たり判定矩形を設定します
 	/// </summary>
 	void setObjectTypeCollider();
+
+
+	/// <summary>
+	/// オブジェクトタイプによって移動量を設定します
+	/// </summary>
+	void setObjectTypeMoveSpeed();
+
+
+	/// <summary>
+	/// オブジェクトタイプによって移動方法を設定します
+	/// </summary>
+	void ObjectTypeMove();
 //=================================================================================================
 };

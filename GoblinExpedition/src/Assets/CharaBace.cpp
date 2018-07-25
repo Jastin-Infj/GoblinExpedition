@@ -57,29 +57,25 @@ bool CharaBace::ParameterInit(
 	if (draw_)
 	{
 		this->draw = new DrawInterFace();
-	}
-	else
-	{
-		this->draw = nullptr;
-	}
-	if (draw != nullptr)
-	{
 		/*対象オブジェクトによってそれぞれのテクスチャを貼り付ける*/
 		this->draw->setTexture(this->getResoruceManagerTexture());
 		//描画矩形の生成
 		this->draw->setDrawBace(this->position, this->scale);
 	}
+	else
+	{
+		this->draw = nullptr;
+	}
 
 	//移動機能をつける
 	if (move_)
 	{
-		this->move = new MoveInterFace();
+		this->setObjectTypeMoveSpeed();
 	}
 	else
 	{
 		this->move = nullptr;
 	}
-
 
 	//描画優先順位の設定
 	this->setDrawOrder(order_);
@@ -90,7 +86,12 @@ bool CharaBace::ParameterInit(
 /*更新処理*/
 void CharaBace::UpDate()
 {
-
+	/*移動出来るオブジェクトは移動モーションします*/
+	if (this->move != nullptr)
+	{
+		std::cout << this->getTaskname().second << std::endl;
+		this->ObjectTypeMove();
+	}
 }
 /*描画処理*/
 void CharaBace::Render()
@@ -228,8 +229,50 @@ void CharaBace::setObjectTypeCollider()
 		break;
 	}
 }
+/*オブジェクトタイプによって移動量の設定を行います*/
+void CharaBace::setObjectTypeMoveSpeed()
+{
+	switch (this->objecttype)
+	{
+	case ObjectType::Enemy:
+		this->move = new MoveInterFace(Point(1, 0));
+		break;
+	default:
+		break;
+	}
+}
+/*オブジェクトタイプによって移動方法を設定します*/
+void CharaBace::ObjectTypeMove()
+{
+	switch (this->objecttype)
+	{
+	case ObjectType::Enemy:
+		//等速直線運動で動く
+		this->move->UniformLinearMotion(this->position);
+		//矩形を再設定
+		this->draw->setDrawBace(this->position, this->scale);
+		break;
+	default:
+		break;
+	}
+}
 /*オブジェクトタイプがtargetであるかを判定します*/
 constexpr bool CharaBace::ObjectTypeCheck(const ObjectType& ObjectType_, const ObjectType& target)const
 {
 	return ObjectType_ == target ? true : false;
+}
+/*座標を設定・変更します*/
+void CharaBace::setPosition(const Point& pos)
+{
+	this->position = pos;
+}
+/*現在の座標を返します*/
+Point CharaBace::getPosition()const
+{
+	return this->position;
+}
+/*オブジェクトタイプを返します*/
+ObjectType CharaBace::getObjectType()const
+{
+	return this->objecttype;
 }

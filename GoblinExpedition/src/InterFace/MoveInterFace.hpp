@@ -1,20 +1,13 @@
 #pragma once
 #include <Siv3D.hpp>
-
+#include "../Assets/CharaBace.h"
+#include "../InterFace/ObjectType.h"
 ///<summary>
 ///移動に関する機能を使用できるクラス
 ///</summary>
 class MoveInterFace
 {
 public:
-
-	///<summary>
-	///移動タイプ
-	///</summary>
-	enum MoveType
-	{
-		UniformLinearMotion		//等速直線運動
-	};
 
 	/// <summary>
 	/// 引数なしコンストラクタ
@@ -31,10 +24,9 @@ public:
 	///<param name = 'movetype'>
 	/// 移動タイプ
 	///</param>
-	MoveInterFace(const Point& movespeed , const MoveType& movetype_)
+	MoveInterFace(const Point& movespeed)
 		:
-		moveVec(movespeed),
-		MoveType(movetype_) 
+		moveVec(movespeed)
 	{}
 
 
@@ -57,16 +49,27 @@ public:
 
 
 	/// <summary>
-	/// 移動方法のタイプを変更します
+	/// 移動量を返します
 	/// </summary>
-	/// <param name="movetype">
-	/// 移動方法
-	/// </param>
-	void setMoveType(const MoveType& movetype)
+	/// <returns>
+	/// 移動量
+	/// </returns>
+	Point getMoveVec()const
 	{
-		this->MoveType = movetype;
+		return this->moveVec;
+	}
+
+
+	/// <summary>
+	/// 等速直線運動で移動をします
+	/// </summary>
+	/// <param name="position">
+	/// 移動対象
+	/// </param>
+	void UniformLinearMotion(Point& position)
+	{
+		position += this->moveVec;
 	}
 private:
 	Point     moveVec;			//移動ベクトル
-	MoveType  MoveType;			//移動タイプ
 };
