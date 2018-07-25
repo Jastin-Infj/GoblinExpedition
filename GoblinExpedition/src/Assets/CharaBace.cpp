@@ -293,6 +293,13 @@ void CharaBace::ObjectTypeMove()
 			this->collider->setHitBace(this->position, this->scale);
 		}
 
+		//ƒ}ƒEƒX“–‚½‚è”»’èˆ—
+		if (this->collider->MouseLeftPressed())
+		{
+			//“G‚ð“|‚·
+			this->Kill();
+		}
+
 		//ÚG”½“]ƒtƒ‰ƒO
 		{
 			if (ObjectTypeCheck(this->objecttype, ObjectType::Enemy))

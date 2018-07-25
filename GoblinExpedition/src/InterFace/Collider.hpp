@@ -49,7 +49,31 @@ public:
 	{
 		return this->hitbace.intersects(shape);
 	}
-		
+
+
+	/// <summary>
+	/// 当たり判定矩形がカーソルの上にあるかを判定します
+	/// </summary>
+	/// <returns>
+	/// 接触している true / 接触していない false
+	/// </returns>
+	bool MouseOver()
+	{
+		return this->hitbace.mouseOver;
+	}
+	
+
+	/// <summary>
+	/// マウスがカーソル上にありかつ左クリックを押されるかを判定します
+	/// </summary>
+	/// <returns>
+	/// クリックした true / クリックしていない false
+	/// </returns>
+	bool MouseLeftPressed()
+	{
+		return this->hitbace.leftPressed;
+	}
+
 
 	/// <summary>
 	/// 当たり判定矩形を返します
