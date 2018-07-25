@@ -22,13 +22,13 @@ CharaBace::~CharaBace()
 }
 /*初期化処理をします*/
 bool CharaBace::ParameterInit(
-	const std::pair<std::string, std::string>& taskname_, 
-	ObjectType								   objecttype_, 
-	const Point&							   pos, 
+	const std::pair<std::string, std::string>& taskname_,
+	ObjectType								   objecttype_,
+	const Point&							   pos,
 	const Point&							   scale_,
-	float									   order_, 
-	bool								       hitbace_, 
-	bool							           draw_, 
+	float									   order_,
+	bool								       collider_,
+	bool							           draw_,
 	bool						               move_
 )
 {
@@ -41,17 +41,26 @@ bool CharaBace::ParameterInit(
 
 	//対象のタイプ設定
 	this->objecttype = objecttype_;
-	
+
 	//当たり判定機能
-	if (hitbace_)
+	if (collider_)
 	{
-		this->hitbace = new Collider(Collider::ShapeHitType::Cube,this->position,this->scale);
+		//当たり判定矩形を設定
+		this->setObjectTypeCollider();
+	}
+	else
+	{
+		this->collider = nullptr;
 	}
 
 	//DrawInterFaceを生成する
 	if (draw_)
 	{
 		this->draw = new DrawInterFace();
+	}
+	else
+	{
+		this->draw = nullptr;
 	}
 	if (draw != nullptr)
 	{
@@ -66,8 +75,12 @@ bool CharaBace::ParameterInit(
 	{
 		this->move = new MoveInterFace();
 	}
-	
-	
+	else
+	{
+		this->move = nullptr;
+	}
+
+
 	//描画優先順位の設定
 	this->setDrawOrder(order_);
 
@@ -75,9 +88,9 @@ bool CharaBace::ParameterInit(
 	return true;
 }
 /*更新処理*/
-void CharaBace::UpDate() 
+void CharaBace::UpDate()
 {
-	
+
 }
 /*描画処理*/
 void CharaBace::Render()
@@ -87,25 +100,28 @@ void CharaBace::Render()
 	{
 		MessageBox(NULL, L"アドレス値がミスっています", L"中身がnullptrでした", MB_OK);
 	}
-
-	Rect src = this->draw->getSrcBace();
 	/*描画をする*/
 	{
-		if (this->objecttype != ObjectType::Player)
-		{
-			this->draw->Draw(this->draw->getDrawBace(),this->draw->getSrcBace());
-		}
-		else
-		{
-			this->draw->PalletColorDraw(this->position , this->scale , Palette::Red);
-		}
+		Rect src = this->draw->getSrcBace();
+		this->ObjecytypeDraw();
 	}
 }
 bool CharaBace::Finalize()
 {
-	if (draw != nullptr)
+	if (this->collider != nullptr)
+	{
+		delete this->collider;
+		this->collider = nullptr;
+	}
+	if (this->draw != nullptr)
 	{
 		delete this->draw;
+		this->draw = nullptr;
+	}
+	if (this->move != nullptr)
+	{
+		delete this->move;
+		this->move = nullptr;
 	}
 	return true;
 }
@@ -116,7 +132,7 @@ CharaBace::SP CharaBace::Create(
 	const Point&							   pos,
 	const Point&							   scale,
 	float									   order,
-	bool								       hitbace,
+	bool								       collider,
 	bool									   drawinterface,
 	bool								       moveinterface,
 	bool									   flag
@@ -128,7 +144,7 @@ CharaBace::SP CharaBace::Create(
 		/*自分のアドレス値を渡す*/
 		to->me = to;
 		/*各値の初期化値を設定*/
-		if (!to->ParameterInit(taskname,objecttype,pos,scale,order,hitbace,drawinterface,moveinterface))
+		if (!to->ParameterInit(taskname, objecttype, pos, scale, order, collider, drawinterface, moveinterface))
 		{
 			/*初期化が成功しなければ削除*/
 			to->Kill();
@@ -150,14 +166,14 @@ Texture CharaBace::getResoruceManagerTexture()const
 		/* 背景 */
 	case ObjectType::Back:
 		//画像元矩形の生成
-		this->draw->setDrawSrc(0,0,680,480);
+		this->draw->setDrawSrc(0, 0, 680, 480);
 		//テクスチャの貼り付け
 		return rm->getTexture("インゲーム背景");
 		break;
 		/* UI */
 	case ObjectType::UI:
 		//画像元矩形の生成
-		
+
 		//テクスチャの貼り付け
 		return rm->getTexture("ライフ");
 		break;
@@ -185,8 +201,35 @@ Texture CharaBace::getResoruceManagerTexture()const
 	/*空のテクスチャ*/
 	return Texture();
 }
-/*オブジェクトタイプがBackであるかを判定します*/
-constexpr bool CharaBace::ObjectTypeCheck(const ObjectType& ObjectType_ , const ObjectType& target)const
+/*オブジェクトタイプによって描画方法を変化させます*/
+void CharaBace::ObjecytypeDraw()
+{
+	switch (this->objecttype)
+	{
+	case ObjectType::Player:
+		this->draw->PaletteColorDraw(this->draw->getDrawBace(), Palette::Red);
+		//当たり判定矩形描画
+		this->draw->PaletteColorDraw(this->collider->getHitBace(), Palette::White);
+		break;
+	default:
+		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
+		break;
+	}
+}
+/*当たり判定矩形を各自設定します*/
+void CharaBace::setObjectTypeCollider()
+{
+	switch (this->objecttype)
+	{
+	case ObjectType::Player:
+		this->collider = new Collider(Collider::ShapeHitType::Cube, Point(this->position.x - this->scale.x , 0), Point(8, Window::Size().y));
+		break;
+	default:
+		break;
+	}
+}
+/*オブジェクトタイプがtargetであるかを判定します*/
+constexpr bool CharaBace::ObjectTypeCheck(const ObjectType& ObjectType_, const ObjectType& target)const
 {
 	return ObjectType_ == target ? true : false;
 }

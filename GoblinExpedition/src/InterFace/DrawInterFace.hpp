@@ -1,6 +1,5 @@
 #pragma once
 #include <Siv3D.hpp>
-
 ///<summary>
 ///描画機能を追加するクラス
 ///</summary>
@@ -13,7 +12,7 @@ public:
 	///</summary>
 	DrawInterFace() {}
 
-	
+
 	/// <summary>
 	/// 矩形生成つきコンストラクタ
 	/// </summary>
@@ -29,7 +28,7 @@ public:
 		this->srcbace = src;
 	}
 
-	
+
 	/// <summary>
 	/// 描画するための矩形を生成します
 	/// </summary>
@@ -41,7 +40,7 @@ public:
 		this->drawbace = draw;
 	}
 
-	
+
 	/// <summary>
 	/// 描画するための矩形を生成します
 	/// </summary>
@@ -62,7 +61,7 @@ public:
 		this->drawbace = { x,y,w,h };
 	}
 
-	
+
 	/// <summary>
 	/// 描画するための矩形を生成します
 	/// </summary>
@@ -72,12 +71,12 @@ public:
 	/// <param name="draw_size">
 	/// 描画サイズ
 	/// </param>
-	void setDrawBace(const Point& draw_pos ,const Point draw_size)
+	void setDrawBace(const Point& draw_pos, const Point draw_size)
 	{
 		this->drawbace = { draw_pos , draw_size };
 	}
 
-	
+
 	/// <summary>
 	/// 画像元の矩形を生成します
 	/// </summary>
@@ -98,7 +97,7 @@ public:
 		this->srcbace = { x,y,w,h };
 	}
 
-	
+
 	/// <summary>
 	/// 画像元の矩形を生成します
 	/// </summary>
@@ -110,7 +109,7 @@ public:
 		this->srcbace = src;
 	}
 
-	
+
 	/// <summary>
 	/// テクスチャを設定します
 	/// </summary>
@@ -148,7 +147,7 @@ public:
 
 
 	/// <summary>
-	/// 描画をします
+	/// テクスチャを貼り付けて描画をします
 	/// </summary>
 	/// <param name="draw_">
 	/// (描画座標 x y , 描画サイズ x y)
@@ -156,14 +155,14 @@ public:
 	/// <param name="src_">
 	/// (画像元座標 x y , 画像元サイズ x y)
 	/// </param>
-	void Draw(const s3d::Rect& draw_, const s3d::Rect& src_)
+	void TextureDraw(const s3d::Rect& draw_, const s3d::Rect& src_)
 	{
 		s3d::Rect(draw_)(this->image(src_)).draw();
 	}
 
-	
+
 	/// <summary>
-	/// 描画をします
+	/// テクスチャを貼り付けて描画をします
 	/// </summary>
 	/// <param name="drawpos">
 	/// 描画座標
@@ -174,7 +173,7 @@ public:
 	/// <param name="src_">
 	/// (画像元座標 x y , 画像元サイズ x y )
 	/// </param>
-	void Draw(const Point& drawpos ,const Point& drawsize ,const s3d::Rect& src_)
+	void TextureDraw(const Point& drawpos, const Point& drawsize, const s3d::Rect& src_)
 	{
 		s3d::Rect(drawpos, drawsize)(this->image(src_)).draw();
 	}
@@ -192,15 +191,28 @@ public:
 	/// <param name="color">
 	/// 描画カラー
 	/// </param>
-	void PalletColorDraw(const Point& drawpos, const Point& drawsize ,const Color& color)
+	void PaletteColorDraw(const Point& drawpos, const Point& drawsize, const Color& color)
 	{
 		s3d::Rect(drawpos, drawsize).draw(color);
 	}
 
-	
+
+	/// <summary>
+	/// 矩形を指定の色に塗りつぶしして描画します
+	/// </summary>
+	/// <param name="draw_">
+	/// 描画座標・描画矩形
+	/// </param>
+	/// <param name="color">
+	/// 描画カラー
+	/// </param>
+	void PaletteColorDraw(const Rect& draw_ , const Color& color)
+	{
+		draw_.draw(color);
+	}
+
 private:
 	s3d::Rect  drawbace;	//描画矩形(整数)
 	s3d::Rect  srcbace;		//画像元矩形（整数）
-
 	Texture image;			//テクスチャ
 };

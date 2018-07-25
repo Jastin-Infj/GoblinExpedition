@@ -44,9 +44,10 @@ public:
 	/// <returns>
 	/// ÚG true / ÚG‚µ‚Ä‚¢‚È‚¢ false
 	/// </returns>
-	bool Hit()
+	template <class Shape>
+	bool Hit(Shape& shape)
 	{
-		return this->hitbace.intersects(Rect(0,0,0,0));
+		return this->hitbace.intersects(shape);
 	}
 		
 
@@ -61,7 +62,7 @@ public:
 		return hitbace;
 	}
 
-
+	
 private:
 	ShapeHitType shapehittype;	//“–‚½‚è”»’è‚ÌŒ`
 	Rect         hitbace;		//“–‚½‚è”»’è‹éŒ`

@@ -123,7 +123,7 @@ private:
 	ObjectType     objecttype;	//扱っている対象
 	Point          position;	//現在位置
 	Point          scale;		//大きさ
-	Collider*      hitbace;		//当たり判定機能
+	Collider*      collider;	//当たり判定機能
 	DrawInterFace* draw;		//描画機能
 	MoveInterFace* move;		//移動機能
 
@@ -165,5 +165,17 @@ private:
 	/// タイプの一致している/していない true : false
 	/// </returns>
 	constexpr bool ObjectTypeCheck(const ObjectType& objecttype , const ObjectType& checkObjectType )const;
+
+
+	/// <summary>
+	/// オブジェクトタイプによって描画方法を変化させます
+	/// </summary>
+	void ObjecytypeDraw();
+
+
+	/// <summary>
+	/// オブジェクトタイプによって当たり判定矩形を設定します
+	/// </summary>
+	void setObjectTypeCollider();
 //=================================================================================================
 };
