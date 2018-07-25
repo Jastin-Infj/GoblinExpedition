@@ -42,6 +42,15 @@ bool CharaBace::ParameterInit(
 	//対象のタイプ設定
 	this->objecttype = objecttype_;
 
+	if (this->ObjectTypeCheck(this->objecttype, ObjectType::Enemy))
+	{
+		this->enemyfunction = new EnemyFunction;
+	}
+	else
+	{
+		this->enemyfunction = nullptr;
+	}
+
 	//当たり判定機能
 	if (collider_)
 	{
@@ -58,7 +67,7 @@ bool CharaBace::ParameterInit(
 	{
 		this->draw = new DrawInterFace();
 		/*対象オブジェクトによってそれぞれのテクスチャを貼り付ける*/
-		this->draw->setTexture(this->getResoruceManagerTexture());
+		this->setResoruceManagerTexture();
 		//描画矩形の生成
 		this->draw->setDrawBace(this->position, this->scale);
 	}
@@ -89,8 +98,11 @@ void CharaBace::UpDate()
 	/*移動出来るオブジェクトは移動モーションします*/
 	if (this->move != nullptr)
 	{
-		std::cout << this->getTaskname().second << std::endl;
 		this->ObjectTypeMove();
+	}
+	if (ObjectTypeCheck(this->objecttype, ObjectType::Enemy))
+	{
+		this->enemyfunction->LeftRightInversion();
 	}
 }
 /*描画処理*/
@@ -109,6 +121,11 @@ void CharaBace::Render()
 }
 bool CharaBace::Finalize()
 {
+	if (this->enemyfunction != nullptr)
+	{
+		delete this->enemyfunction;
+		this->enemyfunction = nullptr;
+	}
 	if (this->collider != nullptr)
 	{
 		delete this->collider;
@@ -160,7 +177,7 @@ CharaBace::SP CharaBace::Create(
 	return nullptr;
 }
 /*ResourceManagerからTextureを貼り付けします*/
-Texture CharaBace::getResoruceManagerTexture()const
+void CharaBace::setResoruceManagerTexture()const
 {
 	switch (this->objecttype)
 	{
@@ -169,14 +186,14 @@ Texture CharaBace::getResoruceManagerTexture()const
 		//画像元矩形の生成
 		this->draw->setDrawSrc(0, 0, 680, 480);
 		//テクスチャの貼り付け
-		return rm->getTexture("インゲーム背景");
+		this->draw->setTexture(rm->getTexture("インゲーム背景"));
 		break;
 		/* UI */
 	case ObjectType::UI:
 		//画像元矩形の生成
 
 		//テクスチャの貼り付け
-		return rm->getTexture("ライフ");
+		this->draw->setTexture(rm->getTexture("ライフ"));
 		break;
 		/* プレイヤ */
 	case ObjectType::Player:
@@ -187,20 +204,18 @@ Texture CharaBace::getResoruceManagerTexture()const
 		//画像元矩形の生成
 		this->draw->setDrawSrc(0, 0, 64, 64);
 		//テクスチャの貼り付け
-		return rm->getTexture("ゴブリン");
+		this->draw->setTexture(rm->getTexture("ゴブリン"));
 		break;
 		/* アイテム */
 	case ObjectType::Item:
 		//画像元矩形の生成
 
 		//テクスチャの貼り付け
-		return rm->getTexture("アイテム");
+		this->draw->setTexture(rm->getTexture("アイテム"));
 		break;
 	default:
 		break;
 	}
-	/*空のテクスチャ*/
-	return Texture();
 }
 /*オブジェクトタイプによって描画方法を変化させます*/
 void CharaBace::ObjecytypeDraw()
@@ -211,6 +226,9 @@ void CharaBace::ObjecytypeDraw()
 		this->draw->PaletteColorDraw(this->draw->getDrawBace(), Palette::Red);
 		//当たり判定矩形描画
 		this->draw->PaletteColorDraw(this->collider->getHitBace(), Palette::White);
+		break;
+	case ObjectType::Enemy:
+		this->draw->PaletteColorDraw(this->collider->getHitBace(), Palette::Yellow);
 		break;
 	default:
 		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
@@ -224,6 +242,9 @@ void CharaBace::setObjectTypeCollider()
 	{
 	case ObjectType::Player:
 		this->collider = new Collider(Collider::ShapeHitType::Cube, Point(this->position.x - this->scale.x , 0), Point(8, Window::Size().y));
+		break;
+	case ObjectType::Enemy:
+		this->collider = new Collider(Collider::ShapeHitType::Cube, this->position, this->scale);
 		break;
 	default:
 		break;
@@ -250,7 +271,14 @@ void CharaBace::ObjectTypeMove()
 		//等速直線運動で動く
 		this->move->UniformLinearMotion(this->position);
 		//矩形を再設定
-		this->draw->setDrawBace(this->position, this->scale);
+		if (this->draw != nullptr)
+		{
+			this->draw->setDrawBace(this->position, this->scale);
+		}
+		if (this->collider != nullptr)
+		{
+			this->collider->setHitBace(this->position, this->scale);
+		}
 		break;
 	default:
 		break;
@@ -276,3 +304,29 @@ ObjectType CharaBace::getObjectType()const
 {
 	return this->objecttype;
 }
+
+
+//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
+/*Player当たり判定矩形と接触判定を行います*/
+bool CharaBace::EnemyFunction::onHitbaceExit(const CharaBace::SP& me_ , const CharaBace::SP& target_)const
+{
+	if (me_->collider != nullptr && target_->collider != nullptr)
+	{
+		return me_->collider->Hit(target_->collider->getHitBace());
+	}
+	return false;
+}
+void CharaBace::EnemyFunction::LeftRightInversion()
+{
+	auto enemy = taskSystem->GetTask_TaskName<CharaBace>("ゴブリン");
+	auto player = taskSystem->GetTask_TaskName<CharaBace>("自キャラ");
+	if (this->onHitbaceExit(enemy, player))
+	{
+		enemy->move->setMovespeed(-enemy->move->getMoveVec());
+	}
+}
+
+
+//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+

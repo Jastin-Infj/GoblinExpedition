@@ -37,7 +37,7 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 	}
 	{
 		rm->setTexture("ゴブリン", Texture(L"./data/image/Goburin.png"));
-		auto enemy = CharaBace::Create(std::pair<std::string, std::string>("モンスター", "ゴブリン"), ObjectType::Enemy, Point(0, Window::Size().y / 2), Point(64, 64), 0.8f,false,true,true);
+		auto enemy = CharaBace::Create(std::pair<std::string, std::string>("モンスター", "ゴブリン"), ObjectType::Enemy, Point(-48, Window::Size().y / 2), Point(64, 64), 0.8f,true,true,true);
 	}
 	{
 		auto player = CharaBace::Create(std::pair<std::string, std::string>("プレイヤ", "自キャラ"), ObjectType::Player, Point(Window::Size().x - 32 ,Window::Size().y / 2), Point{32,32}, 0.8f,true,true);

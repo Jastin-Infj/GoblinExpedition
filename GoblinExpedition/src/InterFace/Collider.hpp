@@ -45,7 +45,7 @@ public:
 	/// 接触 true / 接触していない false
 	/// </returns>
 	template <class Shape>
-	bool Hit(Shape& shape)
+	bool Hit(const Shape& shape)
 	{
 		return this->hitbace.intersects(shape);
 	}
@@ -62,6 +62,20 @@ public:
 		return hitbace;
 	}
 
+	
+	/// <summary>
+	/// 当たり判定矩形を設定・変更します
+	/// </summary>
+	/// <param name="pos">
+	/// 当たり判定座標
+	/// </param>
+	/// <param name="scale">
+	/// 当たり判定サイズ
+	/// </param>
+	void setHitBace(const Point& pos , const Point& scale)
+	{
+		this->hitbace = { pos,scale };
+	}
 	
 private:
 	ShapeHitType shapehittype;	//当たり判定の形

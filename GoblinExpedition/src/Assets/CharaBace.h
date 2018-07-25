@@ -144,13 +144,40 @@ public:
 	/// オブジェクトタイプ
 	/// </returns>
 	ObjectType getObjectType()const;
+
+//=================================================================================================
+
+	struct EnemyFunction
+	{
+		/// <summary>
+		/// Player当たり矩形と接触判定を行います
+		/// </summary>
+		/// <param name="me">
+		/// 当たり判定する自身
+		/// </param>
+		/// <param name="target">
+		/// 当たり判定をする相手
+		/// </param>
+		/// <returns>
+		/// 接触 true / 接触なし false
+		/// </returns>
+		bool onHitbaceExit(const CharaBace::SP& me , const CharaBace::SP& target)const;
+
+
+		/// <summary>
+		/// 移動量を反転させます
+		/// </summary>
+		void LeftRightInversion();
+	};
 private:
-	ObjectType     objecttype;	//扱っている対象
-	Point          position;	//現在位置
-	Point          scale;		//大きさ
-	Collider*      collider;	//当たり判定機能
-	DrawInterFace* draw;		//描画機能
-	MoveInterFace* move;		//移動機能
+	ObjectType     objecttype;		//扱っている対象
+	Point          position;		//現在位置
+	Point          scale;			//大きさ
+	Collider*      collider;		//当たり判定機能
+	DrawInterFace* draw;			//描画機能
+	MoveInterFace* move;			//移動機能
+
+	EnemyFunction* enemyfunction;	//敵の機能
 
 	///<summary>
 	///オブジェクトの更新処理
@@ -170,13 +197,6 @@ private:
 	bool Finalize()override;
 
 
-	///<summary>
-	///テクスチャをResourceManagerから取得して対象のオブジェクトタイプによってテクスチャを返します
-	///</summary>
-	///<returns>テクスチャのアドレス値</returns>
-	Texture getResoruceManagerTexture()const;
-
-
 	/// <summary>
 	/// ターゲットが引数のタイプかを判定します
 	/// </summary>
@@ -190,6 +210,12 @@ private:
 	/// タイプの一致している/していない true : false
 	/// </returns>
 	constexpr bool ObjectTypeCheck(const ObjectType& objecttype , const ObjectType& checkObjectType )const;
+
+
+	///<summary>
+	///テクスチャをResourceManagerから取得して対象のオブジェクトタイプによってテクスチャを返します
+	///</summary>
+	void setResoruceManagerTexture()const;
 
 
 	/// <summary>
@@ -214,5 +240,4 @@ private:
 	/// オブジェクトタイプによって移動方法を設定します
 	/// </summary>
 	void ObjectTypeMove();
-//=================================================================================================
 };
