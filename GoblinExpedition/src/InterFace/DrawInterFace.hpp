@@ -157,9 +157,19 @@ public:
 	/// <param name="src_">
 	/// (画像元座標 x y , 画像元サイズ x y)
 	/// </param>
-	void TextureDraw(const s3d::Rect& draw_, const s3d::Rect& src_)
+	/// <param name="mirror">
+	/// 左右反転フラグ 　反転 true / 反転しない false
+	/// </param>
+	void TextureDraw(const s3d::Rect& draw_, const s3d::Rect& src_,bool mirror = false)
 	{
-		s3d::Rect(draw_)(this->image(src_)).draw();
+		if (mirror)
+		{
+			s3d::Rect(draw_)(this->image(src_).mirror()).draw();
+		}
+		else
+		{
+			s3d::Rect(draw_)(this->image(src_)).draw();
+		}
 	}
 
 
@@ -175,9 +185,20 @@ public:
 	/// <param name="src_">
 	/// (画像元座標 x y , 画像元サイズ x y )
 	/// </param>
-	void TextureDraw(const Point& drawpos, const Point& drawsize, const s3d::Rect& src_)
+	/// <param name="mirror">
+	/// 左右反転フラグ 　反転 true / 反転しない false
+	/// </param>
+	void TextureDraw(const Point& drawpos, const Point& drawsize, const s3d::Rect& src_ , bool mirror = false)
 	{
-		s3d::Rect(drawpos, drawsize)(this->image(src_)).draw();
+		if (mirror)
+		{
+			s3d::Rect(drawpos, drawsize)(this->image(src_).mirror()).draw();
+		}
+		else
+		{
+			s3d::Rect(drawpos, drawsize)(this->image(src_)).draw();
+		}
+		
 	}
 
 

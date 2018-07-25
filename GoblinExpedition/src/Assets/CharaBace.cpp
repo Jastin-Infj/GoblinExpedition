@@ -45,6 +45,7 @@ bool CharaBace::ParameterInit(
 	if (this->ObjectTypeCheck(this->objecttype, ObjectType::Enemy))
 	{
 		this->enemyfunction = new EnemyFunction;
+		this->enemyfunction->setleftrightinversionflag(false);
 	}
 	else
 	{
@@ -79,6 +80,7 @@ bool CharaBace::ParameterInit(
 	//移動機能をつける
 	if (move_)
 	{
+		this->move = new MoveInterFace();
 		this->setObjectTypeMoveSpeed();
 	}
 	else
@@ -100,10 +102,7 @@ void CharaBace::UpDate()
 	{
 		this->ObjectTypeMove();
 	}
-	if (ObjectTypeCheck(this->objecttype, ObjectType::Enemy))
-	{
-		this->enemyfunction->LeftRightInversion();
-	}
+	
 }
 /*描画処理*/
 void CharaBace::Render()
@@ -228,7 +227,14 @@ void CharaBace::ObjecytypeDraw()
 		this->draw->PaletteColorDraw(this->collider->getHitBace(), Palette::White);
 		break;
 	case ObjectType::Enemy:
-		this->draw->PaletteColorDraw(this->collider->getHitBace(), Palette::Yellow);
+		if (this->enemyfunction->getleftrightinversionflag())
+		{
+			this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace(),true);
+		}
+		else
+		{
+			this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
+		}
 		break;
 	default:
 		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
@@ -256,7 +262,14 @@ void CharaBace::setObjectTypeMoveSpeed()
 	switch (this->objecttype)
 	{
 	case ObjectType::Enemy:
-		this->move = new MoveInterFace(Point(1, 0));
+		if (this->enemyfunction->getleftrightinversionflag())
+		{
+			this->move->setMovespeed(Point(-3,0));
+		}
+		else
+		{
+			this->move->setMovespeed(Point(3, 0));
+		}
 		break;
 	default:
 		break;
@@ -278,6 +291,22 @@ void CharaBace::ObjectTypeMove()
 		if (this->collider != nullptr)
 		{
 			this->collider->setHitBace(this->position, this->scale);
+		}
+
+		//接触反転フラグ
+		{
+			if (ObjectTypeCheck(this->objecttype, ObjectType::Enemy))
+			{
+				auto enemy = taskSystem->GetTask_TaskName<CharaBace>("ゴブリン");
+				auto player = taskSystem->GetTask_TaskName<CharaBace>("自キャラ");
+				if (this->enemyfunction->onHitbaceExit(enemy, player))
+				{
+					//スピード設定を再設定
+					this->setObjectTypeMoveSpeed();
+					//左右反転フラグをtrueにする
+					this->enemyfunction->setleftrightinversionflag(true);
+				}
+			}
 		}
 		break;
 	default:
@@ -317,16 +346,21 @@ bool CharaBace::EnemyFunction::onHitbaceExit(const CharaBace::SP& me_ , const Ch
 	}
 	return false;
 }
-void CharaBace::EnemyFunction::LeftRightInversion()
+/*左右反転フラグを返します*/
+bool CharaBace::EnemyFunction::getleftrightinversionflag()const
 {
-	auto enemy = taskSystem->GetTask_TaskName<CharaBace>("ゴブリン");
-	auto player = taskSystem->GetTask_TaskName<CharaBace>("自キャラ");
-	if (this->onHitbaceExit(enemy, player))
-	{
-		enemy->move->setMovespeed(-enemy->move->getMoveVec());
-	}
+	return this->leftrightinversionflag;
 }
-
+/*左右反転フラグを設定します*/
+void CharaBace::EnemyFunction::setleftrightinversionflag(bool flag)
+{
+	this->leftrightinversionflag = flag;
+}
+/*左右反転フラグをチェンジします*/
+void CharaBace::EnemyFunction::changeleftrightinversionflag()
+{
+	this->leftrightinversionflag = !this->leftrightinversionflag;
+}
 
 //★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 

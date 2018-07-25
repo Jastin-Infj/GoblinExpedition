@@ -165,9 +165,30 @@ public:
 
 
 		/// <summary>
-		/// 移動量を反転させます
+		/// 左右反転フラグを返します
 		/// </summary>
-		void LeftRightInversion();
+		/// <returns>
+		/// 左右反転フラグを返す
+		/// </returns>
+		bool getleftrightinversionflag()const;
+
+
+		/// <summary>
+		/// 左右反転フラグを入れ替えます
+		/// </summary>
+		void changeleftrightinversionflag();
+
+
+		/// <summary>
+		/// 左右反転フラグを設定します
+		/// </summary>
+		/// <param name="flag">
+		/// true 反転 / false 反転なし
+		/// </param>
+		void setleftrightinversionflag(bool flag);
+	private:
+		//左右反転フラグ
+		bool leftrightinversionflag;
 	};
 private:
 	ObjectType     objecttype;		//扱っている対象
