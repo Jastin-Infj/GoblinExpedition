@@ -102,7 +102,6 @@ void CharaBace::UpDate()
 	{
 		this->ObjectTypeMove();
 	}
-	
 }
 /*描画処理*/
 void CharaBace::Render()
@@ -190,9 +189,12 @@ void CharaBace::setResoruceManagerTexture()const
 		/* UI */
 	case ObjectType::UI:
 		//画像元矩形の生成
-
-		//テクスチャの貼り付け
-		this->draw->setTexture(rm->getTexture("ライフ"));
+		if (this->isTasknameSecond("プレイヤライフ"))
+		{
+			this->draw->setDrawSrc(0, 0, 64, 48);
+			//テクスチャの貼り付け
+			this->draw->setTexture(rm->getTexture("プレイヤライフ"));
+		}
 		break;
 		/* プレイヤ */
 	case ObjectType::Player:
@@ -304,9 +306,12 @@ void CharaBace::ObjectTypeMove()
 		{
 			if (ObjectTypeCheck(this->objecttype, ObjectType::Enemy))
 			{
-				auto enemy = taskSystem->GetTask_TaskName<CharaBace>("ゴブリン");
-				auto player = taskSystem->GetTask_TaskName<CharaBace>("自キャラ");
-				if (this->enemyfunction->onHitbaceExit(enemy, player))
+				CharaBace::WP enemy = taskSystem->GetTask_TaskName<CharaBace>("ゴブリン");
+				CharaBace::WP player = taskSystem->GetTask_TaskName<CharaBace>("自キャラ");
+
+				TaskObject::SP enemy_temp = enemy.lock();
+				TaskObject::SP player_temp = player.lock();
+				if (this->enemyfunction->onHitbaceExit(std::static_pointer_cast<CharaBace>(enemy_temp), std::static_pointer_cast<CharaBace>(player_temp)))
 				{
 					//スピード設定を再設定
 					this->setObjectTypeMoveSpeed();
@@ -314,6 +319,15 @@ void CharaBace::ObjectTypeMove()
 					this->enemyfunction->setleftrightinversionflag(true);
 				}
 			}
+		}
+		if (this->enemyfunction->getleftrightinversionflag() && this->position.x <= -this->scale.x)
+		{
+			std::cout << "マップ外" << std::endl;
+			this->Kill();
+		}
+		else
+		{
+			std::cout << Window::GetPos().x << "   " << this->position.x << std::endl;
 		}
 		break;
 	default:

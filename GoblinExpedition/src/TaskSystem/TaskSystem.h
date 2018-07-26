@@ -30,13 +30,11 @@ public:
 	///</summary>
 	~TaskSystem();
 
-	
+
+	///<summary>
 	///タスクシステムの更新処理
 	///</summary>
-	///<returns>
-	///なし
-	///</returns>
-	void UpDate();
+	void Update();
 
 	
 	/// <summary>

@@ -1,7 +1,6 @@
 #include "Task_Game.h"
 #include "../TaskSystem/TaskSystem.h"
 
-#include "../InterFace/ObjectType.h"
 #include "../Assets/CharaBace.h"
 #include "../ResourceManager/ResourceManager.h"
 
@@ -42,6 +41,13 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 	{
 		auto player = CharaBace::Create(std::pair<std::string, std::string>("プレイヤ", "自キャラ"), ObjectType::Player, Point(Window::Size().x - 32 ,Window::Size().y / 2), Point{32,32}, 0.8f,true,true);
 	}
+	{
+		rm->setTexture("プレイヤライフ", Texture(L"./data/image/heart.png"));
+		for (int i = 0; i < 5; ++i)
+		{
+			auto player_life = CharaBace::Create(std::pair<std::string, std::string>("UI", "プレイヤライフ"), ObjectType::UI, Point(Window::Size().x -64 - i * 64, 0), Point(64, 64), 1.0f, false, true);
+		}
+	}
 	return true;
 }
 /* 更新処理 */
@@ -65,6 +71,11 @@ bool Game::Finalize()
 	}
 	auto players = taskSystem->GetTasks<CharaBace>(std::pair<std::string, std::string>("プレイヤ", "自キャラ"));
 	for (auto it = players->begin(); it != players->end(); ++it)
+	{
+		(*it)->Kill();
+	}
+	auto uis = taskSystem->GetTasks<CharaBace>(std::pair<std::string, std::string>("UI", "プレイヤライフ"));
+	for (auto it = uis->begin(); it != uis->end(); ++it)
 	{
 		(*it)->Kill();
 	}

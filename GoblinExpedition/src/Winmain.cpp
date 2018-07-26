@@ -38,12 +38,12 @@ void Main()
 	/*ライブラリによる初期化を行います*/
 	Init();
 
-	
+	Window::SetBaseSize(640, 480);
 
 	/*ウィンドウを表示させる*/
 	while (System::Update())
 	{
-		taskSystem->UpDate();
+		taskSystem->Update();
 	}
 
 #if(_DEBUG)

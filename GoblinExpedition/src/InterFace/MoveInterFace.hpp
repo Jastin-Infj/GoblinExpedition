@@ -1,7 +1,6 @@
 #pragma once
 #include <Siv3D.hpp>
 #include "../Assets/CharaBace.h"
-#include "../InterFace/ObjectType.h"
 ///<summary>
 ///移動に関する機能を使用できるクラス
 ///</summary>

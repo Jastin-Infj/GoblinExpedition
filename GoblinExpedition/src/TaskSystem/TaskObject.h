@@ -212,6 +212,19 @@ public:
 	/// タスク名の設定完了 true / タスク名に空白がある false
 	/// </returns>
 	bool CreatedObjectInit(const std::pair<std::string,std::string>& taskname);
+
+
+	///<summary>
+	///タスク名が検索ワードと一致しているかを返します
+	///</summary>
+	///<param name="taskname_">
+	///検索ワード
+	///</param>
+	///<returns>
+	///一致している true / 一致していない false
+	///</returns>
+	bool isTasknameSecond(const std::string& taskname_)const;
+
 private:
 
 ///メンバ変数

@@ -115,3 +115,8 @@ bool TaskObject::CreatedObjectInit(const std::pair<std::string, std::string>& ta
 	this->setDrawOrder(1.0f);
 	return true;
 }
+/*タスク名が検索ワードと一致しているかを返します*/
+bool TaskObject::isTasknameSecond(const std::string& taskname_)const
+{
+	return this->taskname.second == taskname_ ? true : false;
+}

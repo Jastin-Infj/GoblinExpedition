@@ -13,9 +13,9 @@
 
 namespace s3d
 {
-	/// <summary>
+	///<summary>
 	/// 8 ビット符号付き整数
-	/// </summary>
+	///</summary>
 	using int8 = std::int8_t;
 
 	/// <summary>

@@ -1,6 +1,5 @@
 #pragma once
 #include <Siv3D.hpp>
-#include "ObjectType.h"
 #include "../Assets/CharaBace.h"
 ///<summary>
 ///描画機能を追加するクラス

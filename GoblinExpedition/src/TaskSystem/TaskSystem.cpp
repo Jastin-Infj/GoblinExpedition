@@ -15,7 +15,7 @@ TaskSystem::~TaskSystem()
 	std::cout << "~TaskSystem" << std::endl;
 }
 /*タスクシステムの更新処理*/
-void TaskSystem::UpDate()
+void TaskSystem::Update()
 {
 	this->T_UpDate();
 	this->T_Render();
@@ -88,7 +88,7 @@ bool TaskSystem::AddObjectCheck()const
 /*登録オブジェクトに消去するオブジェクトがないかを判定します*/
 bool TaskSystem::CheckKillTask()const
 {
-	for (int i = 0; i < this->addobjects.size(); ++i)
+	for (int i = 0; i < this->taskobjects.size(); ++i)
 	{
 		if (this->taskobjects[i].second->getKillCounter() > 0)
 		{

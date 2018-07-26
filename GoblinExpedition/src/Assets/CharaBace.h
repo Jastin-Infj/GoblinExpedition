@@ -6,7 +6,21 @@
 #include "../InterFace/DrawInterFace.hpp"
 #include "../InterFace/MoveInterFace.hpp"
 #include "../InterFace/Collider.hpp"
-#include "../InterFace/ObjectType.h"
+
+
+///<summary>
+///オブジェクトタイプを設定するファイルです
+///</summary>
+enum class ObjectType
+{
+	Back,		//背景
+	UI,			//UI
+	Player,		//プレイヤ
+	Mouse,		//マウス
+	Enemy,		//敵
+	Item,		//アイテム
+};
+
 
 ///<summary>
 ///オブジェクトクラス
@@ -190,6 +204,21 @@ public:
 		//左右反転フラグ
 		bool leftrightinversionflag;
 	};
+
+
+	struct PlayerFunction
+	{
+	public:
+		///<summary>
+		///ライフ値を返します
+		///<summary>
+		///<returns>
+		///
+		///
+	private:
+		int life;
+	};
+//==================================================================================================
 private:
 	ObjectType     objecttype;		//扱っている対象
 	Point          position;		//現在位置
