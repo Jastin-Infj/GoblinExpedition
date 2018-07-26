@@ -33,12 +33,12 @@ void Main()
 	taskSystem = new TaskSystem();
 	rm = new ResourceManager();
 
+	Window::SetBaseSize(640, 480);
+
 	/*初期時にタスクを生成します*/
 	TaskStartCreate();
 	/*ライブラリによる初期化を行います*/
 	Init();
-
-	Window::SetBaseSize(640, 480);
 
 	/*ウィンドウを表示させる*/
 	while (System::Update())

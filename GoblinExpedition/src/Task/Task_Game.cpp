@@ -5,6 +5,10 @@
 #include "../ResourceManager/ResourceManager.h"
 
 #include <iostream>
+
+#define PLAYER_LIFE 5				//playerのライフ
+
+
 /* コンストラクタ */
 Game::Game()
 {
@@ -43,7 +47,7 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 	}
 	{
 		rm->setTexture("プレイヤライフ", Texture(L"./data/image/heart.png"));
-		for (int i = 0; i < 5; ++i)
+		for (int i = 0; i < PLAYER_LIFE; ++i)
 		{
 			auto player_life = CharaBace::Create(std::pair<std::string, std::string>("UI", "プレイヤライフ"), ObjectType::UI, Point(Window::Size().x -64 - i * 64, 0), Point(64, 64), 1.0f, false, true);
 		}

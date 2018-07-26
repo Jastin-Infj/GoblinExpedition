@@ -66,7 +66,7 @@ ResourceManager::~ResourceManager()
 void ResourceManager::setTexture(const std::string& texname_,const Texture& image_)
 {
 	/*既存の名前があった場合は関数を終了させる*/
-	for (auto it = this->textrues.begin(); it != this->textrues.end(); ++it)
+	for (auto it = this->textures.begin(); it != this->textures.end(); ++it)
 	{
 		if ((*it).first == texname_)
 		{
@@ -77,7 +77,7 @@ void ResourceManager::setTexture(const std::string& texname_,const Texture& imag
 	std::pair<std::string, Texture> textrue;
 	textrue.first = texname_;
 	textrue.second = image_;
-	this->textrues.push_back(textrue);
+	this->textures.push_back(textrue);
 }
 /*サウンドをシステムに登録します*/
 void ResourceManager::setSound(const std::string& soundname_,const Sound& sound_)
@@ -98,7 +98,7 @@ void ResourceManager::setSound(const std::string& soundname_,const Sound& sound_
 /*登録してあるテクスチャから指定されたテクスチャを返します*/
 Texture ResourceManager::getTexture(const std::string& texname_)const
 {
-	for (auto it = this->textrues.begin(); it != this->textrues.end(); ++it)
+	for (auto it = this->textures.begin(); it != this->textures.end(); ++it)
 	{
 		if ((*it).first == texname_)
 		{
@@ -123,7 +123,7 @@ Sound ResourceManager::getSound(const std::string& texname_)const
 /* 登録してあるテクスチャを削除します */
 void ResourceManager::DeleteTextrue()
 {
-	this->textrues.clear();
+	this->textures.clear();
 }
 /*登録してあるサウンドを削除をします*/
 void ResourceManager::DeleteSound()

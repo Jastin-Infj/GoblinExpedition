@@ -194,6 +194,7 @@
     <Image Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Engine\Assets\engine_textures.s3a" />
     <None Include="Engine\Config.ini" />
     <None Include="Engine\dll(x64)\D3D\d3dcompiler_47.dll" />
@@ -301,7 +302,6 @@
     <ClInclude Include="src\Task\SceceTask.h" />
     <ClInclude Include="src\Task\Task_Game.h" />
     <ClInclude Include="src\Task\Task_Title.h" />
-    <ClInclude Include="src\XMLWarning.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

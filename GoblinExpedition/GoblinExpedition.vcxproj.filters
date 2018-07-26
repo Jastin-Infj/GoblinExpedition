@@ -369,6 +369,7 @@
     <None Include="Example\Well\Well.wavefrontobj">
       <Filter>リソース ファイル\Example\Well</Filter>
     </None>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Engine\dll(x64)\libmpg123\COPYING.txt">
@@ -469,9 +470,6 @@
     </ClInclude>
     <ClInclude Include="src\InterFace\Collider.hpp">
       <Filter>ソース ファイル\InterFace</Filter>
-    </ClInclude>
-    <ClInclude Include="src\XMLWarning.h">
-      <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

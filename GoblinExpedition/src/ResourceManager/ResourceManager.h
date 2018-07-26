@@ -151,7 +151,7 @@ private:
 	///<summary>
 	///登録しているテクスチャ
 	///</summary>
-	std::vector<std::pair<std::string, Texture>> textrues;
+	std::vector<std::pair<std::string, Texture>> textures;
 
 
 	///<summary>
