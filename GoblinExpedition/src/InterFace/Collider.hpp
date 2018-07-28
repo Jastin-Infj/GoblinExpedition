@@ -28,11 +28,32 @@ public:
 	/// <param name="scale_">
 	/// 当たり判定サイズ 
 	/// </param>
-	Collider(const ShapeHitType& shapehittype_, const Point& position_, const Point& scale_)
+	Collider(const ShapeHitType& shapehittype_, const Vec2& position_, const Point& scale_)
 		:
 		shapehittype(shapehittype_),
 		hitbace(position_ , scale_)
 	{}
+
+
+	/// <summary>
+	/// コライダーを追加します
+	/// </summary>
+	/// <param name="shapehittype_">
+	/// 当たり判定の図形
+	/// </param>
+	/// <param name="position_">
+	/// 当たり判定座標
+	/// </param>
+	/// <param name="scale_">
+	/// 当たり判定サイズ 
+	/// </param>
+	/// <returns>
+	/// 生成したコライダーのアドレス
+	/// </returns>
+	static Collider* Addcomponent(const ShapeHitType& shapehittype_, const Vec2& position_, const Point& scale_)
+	{
+		return new Collider(shapehittype_, position_, scale_);
+	}
 
 
 	/// <summary>
@@ -81,7 +102,7 @@ public:
 	/// <returns>
 	/// 当たり判定矩形
 	/// </returns>
-	Rect getHitBace()const
+	RectF getHitBace()const
 	{
 		return hitbace;
 	}
@@ -101,7 +122,21 @@ public:
 		this->hitbace = { pos,scale };
 	}
 	
+
+	/// <summary>
+	/// 当たり判定矩形を設定・変更します
+	/// </summary>
+	/// <param name="pos">
+	/// 当たり判定座標
+	/// </param>
+	/// <param name="scale">
+	/// 当たり判定サイズ
+	/// </param>
+	void setHitBace(const Vec2& pos, const Point& scale)
+	{
+		this->hitbace = { pos,scale };
+	}
 private:
 	ShapeHitType shapehittype;	//当たり判定の形
-	Rect         hitbace;		//当たり判定矩形
+	RectF         hitbace;		//当たり判定矩形
 };

@@ -1,18 +1,20 @@
 #pragma once
 
+/// <summary>
+/// @file  TaskSystem.h
+/// @brief オブジェクトの生成削除を簡潔に行えるシステム
+/// </summary>
+
+
 #include <iostream>
 #include <vector>
 #include <memory>
 
 #include "TaskObject.h"
 
-///<summary>
-///
-///</summary>
-///<returns>
-///
-///</returns>
-
+/// <summary>
+/// 
+/// </summary>
 class TaskSystem
 {
 public:
@@ -41,7 +43,7 @@ public:
 	/// オブジェクトをタスクシステムに登録します
 	/// </summary>
 	/// <param name="createobject">
-	/// 登録したいオブジェクト
+	/// @param [name] 登録したいオブジェクト
 	/// </param>
 	void Add(const TaskObject::SP& createobject);
 
@@ -68,7 +70,7 @@ public:
 	/// タスク名・グループ名を検索して、オブジェクト単体を取得します
 	/// </summary>
 	/// <param name="taskname_">
-	/// 検索ワード
+	/// @param[name]検索ワード
 	/// </param>
 	/// <returns>
 	/// 検索ワードと一致したスマートポインタ

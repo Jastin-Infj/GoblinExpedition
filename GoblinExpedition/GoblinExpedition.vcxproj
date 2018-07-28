@@ -76,8 +76,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\game\Desktop\GoblinExpedition\GoblinExpedition\include\Inc;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\game\Desktop\GoblinExpedition\GoblinExpedition\include\Lib;$(SIV3D_20160812)\Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\takum\Desktop\GoblinExpedition\GoblinExpedition\include\Inc;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\takum\Desktop\GoblinExpedition\GoblinExpedition\include\Lib;$(SIV3D_20160812)\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -169,7 +169,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Assets\CharaBace.cpp" />
+    <ClCompile Include="src\Assets\Enemy.cpp" />
+    <ClCompile Include="src\Assets\GameObject.cpp" />
+    <ClCompile Include="src\Assets\Player.cpp" />
+    <ClCompile Include="src\Assets\UI.cpp" />
     <ClCompile Include="src\ResourceManager\ResourceManager.cpp" />
     <ClCompile Include="src\TaskSystem\TaskObject.cpp" />
     <ClCompile Include="src\TaskSystem\TaskSystem.cpp" />
@@ -194,7 +197,6 @@
     <Image Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
     <None Include="Engine\Assets\engine_textures.s3a" />
     <None Include="Engine\Config.ini" />
     <None Include="Engine\dll(x64)\D3D\d3dcompiler_47.dll" />
@@ -292,7 +294,10 @@
     <Font Include="Example\YomogiFont.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Assets\CharaBace.h" />
+    <ClInclude Include="src\Assets\Enemy.h" />
+    <ClInclude Include="src\Assets\GameObject.h" />
+    <ClInclude Include="src\Assets\Player.h" />
+    <ClInclude Include="src\Assets\UI.h" />
     <ClInclude Include="src\InterFace\Collider.hpp" />
     <ClInclude Include="src\InterFace\DrawInterFace.hpp" />
     <ClInclude Include="src\InterFace\MoveInterFace.hpp" />

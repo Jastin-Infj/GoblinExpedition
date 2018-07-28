@@ -110,7 +110,7 @@ public:
 	///<returns>
 	///‚È‚µ
 	///</returns>
-	virtual void UpDate() = 0;
+	virtual void UpDate();
 
 
 	///<summary>
@@ -128,7 +128,7 @@ public:
 	///<returns>
 	///‰ğ•úˆ—I—¹@true
 	///</returns>
-	virtual bool Finalize() = 0;
+	virtual bool Finalize();
 
 
 	///<summary>

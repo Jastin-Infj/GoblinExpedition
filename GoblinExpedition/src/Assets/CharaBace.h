@@ -8,19 +8,6 @@
 #include "../InterFace/Collider.hpp"
 
 
-///<summary>
-///オブジェクトタイプを設定するファイルです
-///</summary>
-enum class ObjectType
-{
-	Back,		//背景
-	UI,			//UI
-	Player,		//プレイヤ
-	Mouse,		//マウス
-	Enemy,		//敵
-	Item,		//アイテム
-};
-
 
 ///<summary>
 ///オブジェクトクラス
@@ -76,7 +63,6 @@ public:
 	bool ParameterInit
 	(
 		const std::pair<std::string, std::string>& taskname, 
-		ObjectType                                 objecttype, 
 		const Point&							   pos, 
 		const Point&							   scale,
 		float									   order,
@@ -122,7 +108,6 @@ public:
 	static CharaBace::SP Create
 	(
 		const std::pair<std::string, std::string>& taskname, 
-		ObjectType								   objecttype, 
 		const Point&							   pos, 
 		const Point&							   scale,
 		float									   order, 
@@ -150,83 +135,21 @@ public:
 	/// </returns>
 	Point getPosition()const;
 
-
-	/// <summary>
-	/// オブジェクトタイプを返します
-	/// </summary>
-	/// <returns>
-	/// オブジェクトタイプ
-	/// </returns>
-	ObjectType getObjectType()const;
-
 //=================================================================================================
 
 	struct EnemyFunction
 	{
-		/// <summary>
-		/// Player当たり矩形と接触判定を行います
-		/// </summary>
-		/// <param name="me">
-		/// 当たり判定する自身
-		/// </param>
-		/// <param name="target">
-		/// 当たり判定をする相手
-		/// </param>
-		/// <returns>
-		/// 接触 true / 接触なし false
-		/// </returns>
-		bool onHitbaceExit(const CharaBace::SP& me , const CharaBace::SP& target)const;
-
-
-		/// <summary>
-		/// 左右反転フラグを返します
-		/// </summary>
-		/// <returns>
-		/// 左右反転フラグを返す
-		/// </returns>
-		bool getleftrightinversionflag()const;
-
-
-		/// <summary>
-		/// 左右反転フラグを入れ替えます
-		/// </summary>
-		void changeleftrightinversionflag();
-
-
-		/// <summary>
-		/// 左右反転フラグを設定します
-		/// </summary>
-		/// <param name="flag">
-		/// true 反転 / false 反転なし
-		/// </param>
-		void setleftrightinversionflag(bool flag);
+		
 	private:
-		//左右反転フラグ
-		bool leftrightinversionflag;
-	};
-
-
-	struct PlayerFunction
-	{
-	public:
-		///<summary>
-		///ライフ値を返します
-		///<summary>
-		///<returns>
-		///
-		///
-	private:
-		int life;
+		
 	};
 //==================================================================================================
 private:
-	ObjectType     objecttype;		//扱っている対象
 	Point          position;		//現在位置
 	Point          scale;			//大きさ
-	Collider*      collider;		//当たり判定機能
 	DrawInterFace* draw;			//描画機能
+	Collider*      collider;		//当たり判定機能
 	MoveInterFace* move;			//移動機能
-
 	EnemyFunction* enemyfunction;	//敵の機能
 
 	///<summary>
@@ -245,21 +168,6 @@ private:
 	///解放処理
 	///</summary>
 	bool Finalize()override;
-
-
-	/// <summary>
-	/// ターゲットが引数のタイプかを判定します
-	/// </summary>
-	/// <param name="objecttype">
-	/// オブジェクトのタイプ
-	/// </param>
-	/// <param name="checkObjectType">
-	/// 判定するオブジェクトのタイプ
-	/// </param>
-	/// <returns>
-	/// タイプの一致している/していない true : false
-	/// </returns>
-	constexpr bool ObjectTypeCheck(const ObjectType& objecttype , const ObjectType& checkObjectType )const;
 
 
 	///<summary>

@@ -117,14 +117,23 @@
     <ClCompile Include="src\Task\Task_Title.cpp">
       <Filter>ソース ファイル\Task\Title</Filter>
     </ClCompile>
-    <ClCompile Include="src\Assets\CharaBace.cpp">
-      <Filter>ソース ファイル\Assets</Filter>
-    </ClCompile>
     <ClCompile Include="src\Task\Task_Game.cpp">
       <Filter>ソース ファイル\Task\Game</Filter>
     </ClCompile>
     <ClCompile Include="src\Winmain.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Assets\GameObject.cpp">
+      <Filter>ソース ファイル\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Assets\Player.cpp">
+      <Filter>ソース ファイル\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Assets\Enemy.cpp">
+      <Filter>ソース ファイル\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Assets\UI.cpp">
+      <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -369,7 +378,6 @@
     <None Include="Example\Well\Well.wavefrontobj">
       <Filter>リソース ファイル\Example\Well</Filter>
     </None>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Engine\dll(x64)\libmpg123\COPYING.txt">
@@ -459,9 +467,6 @@
     <ClInclude Include="src\Task\Task_Title.h">
       <Filter>ソース ファイル\Task\Title</Filter>
     </ClInclude>
-    <ClInclude Include="src\Assets\CharaBace.h">
-      <Filter>ソース ファイル\Assets</Filter>
-    </ClInclude>
     <ClInclude Include="src\Task\Task_Game.h">
       <Filter>ソース ファイル\Task\Game</Filter>
     </ClInclude>
@@ -470,6 +475,18 @@
     </ClInclude>
     <ClInclude Include="src\InterFace\Collider.hpp">
       <Filter>ソース ファイル\InterFace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Assets\GameObject.h">
+      <Filter>ソース ファイル\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Assets\Player.h">
+      <Filter>ソース ファイル\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Assets\Enemy.h">
+      <Filter>ソース ファイル\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Assets\UI.h">
+      <Filter>ソース ファイル\Assets</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

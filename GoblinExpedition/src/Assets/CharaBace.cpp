@@ -5,6 +5,7 @@
 #include "../InterFace/MoveInterFace.hpp"
 #include <iostream>
 #include <Windows.h>
+
 /*コンストラクタ*/
 CharaBace::CharaBace()
 {
@@ -23,12 +24,11 @@ CharaBace::~CharaBace()
 /*初期化処理をします*/
 bool CharaBace::ParameterInit(
 	const std::pair<std::string, std::string>& taskname_,
-	ObjectType								   objecttype_,
 	const Point&							   pos,
 	const Point&							   scale_,
 	float									   order_,
-	bool								       collider_,
 	bool							           draw_,
+	bool								       collider_,
 	bool						               move_
 )
 {
@@ -38,44 +38,6 @@ bool CharaBace::ParameterInit(
 	this->position = pos;
 	//描画サイズを設定
 	this->scale = scale_;
-
-	//対象のタイプ設定
-	this->objecttype = objecttype_;
-
-	if (this->ObjectTypeCheck(this->objecttype, ObjectType::Enemy))
-	{
-		this->enemyfunction = new EnemyFunction;
-		this->enemyfunction->setleftrightinversionflag(false);
-	}
-	else
-	{
-		this->enemyfunction = nullptr;
-	}
-
-	//当たり判定機能
-	if (collider_)
-	{
-		//当たり判定矩形を設定
-		this->setObjectTypeCollider();
-	}
-	else
-	{
-		this->collider = nullptr;
-	}
-
-	//DrawInterFaceを生成する
-	if (draw_)
-	{
-		this->draw = new DrawInterFace();
-		/*対象オブジェクトによってそれぞれのテクスチャを貼り付ける*/
-		this->setResoruceManagerTexture();
-		//描画矩形の生成
-		this->draw->setDrawBace(this->position, this->scale);
-	}
-	else
-	{
-		this->draw = nullptr;
-	}
 
 	//移動機能をつける
 	if (move_)
@@ -144,7 +106,6 @@ bool CharaBace::Finalize()
 /*オブジェクトの生成*/
 CharaBace::SP CharaBace::Create(
 	const std::pair<std::string, std::string>& taskname,
-	ObjectType								   objecttype,
 	const Point&							   pos,
 	const Point&							   scale,
 	float									   order,
@@ -182,18 +143,13 @@ void CharaBace::setResoruceManagerTexture()const
 		/* 背景 */
 	case ObjectType::Back:
 		//画像元矩形の生成
-		this->draw->setDrawSrc(0, 0, 680, 480);
-		//テクスチャの貼り付け
-		this->draw->setTexture(rm->getTexture("インゲーム背景"));
 		break;
 		/* UI */
 	case ObjectType::UI:
 		//画像元矩形の生成
 		if (this->isTasknameSecond("プレイヤライフ"))
 		{
-			this->draw->setDrawSrc(0, 0, 64, 48);
-			//テクスチャの貼り付け
-			this->draw->setTexture(rm->getTexture("プレイヤライフ"));
+			
 		}
 		break;
 		/* プレイヤ */
@@ -203,9 +159,7 @@ void CharaBace::setResoruceManagerTexture()const
 		/* 敵 */
 	case ObjectType::Enemy:
 		//画像元矩形の生成
-		this->draw->setDrawSrc(0, 0, 64, 64);
-		//テクスチャの貼り付け
-		this->draw->setTexture(rm->getTexture("ゴブリン"));
+		
 		break;
 		/* アイテム */
 	case ObjectType::Item:
@@ -249,10 +203,10 @@ void CharaBace::setObjectTypeCollider()
 	switch (this->objecttype)
 	{
 	case ObjectType::Player:
-		this->collider = new Collider(Collider::ShapeHitType::Cube, Point(this->position.x - this->scale.x , 0), Point(8, Window::Size().y));
+		
 		break;
 	case ObjectType::Enemy:
-		this->collider = new Collider(Collider::ShapeHitType::Cube, this->position, this->scale);
+		
 		break;
 	default:
 		break;
@@ -302,24 +256,6 @@ void CharaBace::ObjectTypeMove()
 			this->Kill();
 		}
 
-		//接触反転フラグ
-		{
-			if (ObjectTypeCheck(this->objecttype, ObjectType::Enemy))
-			{
-				CharaBace::WP enemy = taskSystem->GetTask_TaskName<CharaBace>("ゴブリン");
-				CharaBace::WP player = taskSystem->GetTask_TaskName<CharaBace>("自キャラ");
-
-				TaskObject::SP enemy_temp = enemy.lock();
-				TaskObject::SP player_temp = player.lock();
-				if (this->enemyfunction->onHitbaceExit(std::static_pointer_cast<CharaBace>(enemy_temp), std::static_pointer_cast<CharaBace>(player_temp)))
-				{
-					//スピード設定を再設定
-					this->setObjectTypeMoveSpeed();
-					//左右反転フラグをtrueにする
-					this->enemyfunction->setleftrightinversionflag(true);
-				}
-			}
-		}
 		if (this->enemyfunction->getleftrightinversionflag() && this->position.x <= -this->scale.x)
 		{
 			std::cout << "マップ外" << std::endl;
@@ -358,30 +294,11 @@ ObjectType CharaBace::getObjectType()const
 
 //★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 
-/*Player当たり判定矩形と接触判定を行います*/
-bool CharaBace::EnemyFunction::onHitbaceExit(const CharaBace::SP& me_ , const CharaBace::SP& target_)const
-{
-	if (me_->collider != nullptr && target_->collider != nullptr)
-	{
-		return me_->collider->Hit(target_->collider->getHitBace());
-	}
-	return false;
-}
-/*左右反転フラグを返します*/
-bool CharaBace::EnemyFunction::getleftrightinversionflag()const
-{
-	return this->leftrightinversionflag;
-}
-/*左右反転フラグを設定します*/
-void CharaBace::EnemyFunction::setleftrightinversionflag(bool flag)
-{
-	this->leftrightinversionflag = flag;
-}
-/*左右反転フラグをチェンジします*/
-void CharaBace::EnemyFunction::changeleftrightinversionflag()
-{
-	this->leftrightinversionflag = !this->leftrightinversionflag;
-}
+
+
+//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
+
 
 //★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 

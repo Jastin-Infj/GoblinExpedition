@@ -1,6 +1,5 @@
 #pragma once
 #include <Siv3D.hpp>
-#include "../Assets/CharaBace.h"
 ///<summary>
 ///描画機能を追加するクラス
 ///</summary>
@@ -23,12 +22,40 @@ public:
 	/// <param name="src">
 	/// (画像元座標,画像元1つ分サイズ)
 	/// </param>
-	explicit DrawInterFace(const s3d::Rect& draw, const s3d::Rect& src)
+	explicit DrawInterFace(const s3d::RectF& draw, const s3d::Rect& src)
 	{
 		this->drawbace = draw;
 		this->srcbace = src;
 	}
 
+
+	/// <summary>
+	/// 描画機能を追加します(Srcなし)
+	/// </summary>
+	/// <param name="draw">
+	/// (描画座標xy,描画サイズxy)
+	/// </param>
+	static DrawInterFace* Addcomponent(const s3d::RectF& draw)
+	{
+		DrawInterFace* drawcreate = new DrawInterFace();
+		drawcreate->setDrawBace(draw);
+		return drawcreate;
+	}
+
+
+	/// <summary>
+	/// 描画機能を追加します
+	/// </summary>
+	/// <param name="draw">
+	/// (描画座標xy,描画サイズxy)
+	/// </param>
+	/// <param name="src">
+	/// (画像元座標,画像元1つ分サイズ)
+	/// </param>
+	static DrawInterFace* Addcomponent(const s3d::RectF& draw, const s3d::Rect& src)
+	{
+		return new DrawInterFace(draw, src);
+	}
 
 	/// <summary>
 	/// 描画するための矩形を生成します
@@ -57,9 +84,9 @@ public:
 	/// <param name="h">
 	/// 描画サイズY
 	/// </param>
-	void setDrawBace(int x, int y, int w, int h)
+	void setDrawBace(double x, double y, int w, int h)
 	{
-		this->drawbace = { x,y,w,h };
+		this->drawbace = { x,y,(double)w,(double)h };
 	}
 
 
@@ -72,7 +99,7 @@ public:
 	/// <param name="draw_size">
 	/// 描画サイズ
 	/// </param>
-	void setDrawBace(const Point& draw_pos, const Point draw_size)
+	void setDrawBace(const Vec2& draw_pos, const Point& draw_size)
 	{
 		this->drawbace = { draw_pos , draw_size };
 	}
@@ -159,15 +186,15 @@ public:
 	/// <param name="mirror">
 	/// 左右反転フラグ 　反転 true / 反転しない false
 	/// </param>
-	void TextureDraw(const s3d::Rect& draw_, const s3d::Rect& src_,bool mirror = false)
+	void TextureDraw(const s3d::RectF& draw_, const s3d::Rect& src_,bool mirror = false)
 	{
 		if (mirror)
 		{
-			s3d::Rect(draw_)(this->image(src_).mirror()).draw();
+			s3d::RectF(draw_)(this->image(src_).mirror()).draw();
 		}
 		else
 		{
-			s3d::Rect(draw_)(this->image(src_)).draw();
+			s3d::RectF(draw_)(this->image(src_)).draw();
 		}
 	}
 
@@ -232,9 +259,8 @@ public:
 	{
 		draw_.draw(color);
 	}
-
 private:
-	s3d::Rect  drawbace;	//描画矩形(整数)
+	s3d::RectF drawbace;	//描画矩形(整数)
 	s3d::Rect  srcbace;		//画像元矩形（整数）
 	Texture image;			//テクスチャ
 };

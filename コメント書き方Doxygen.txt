@@ -1,0 +1,49 @@
+ファイルの先頭
+/**
+ * @file ファイル名.h
+ * @brief 簡単な説明
+ * @author 書いた人
+ * @date 日付（開始日？）
+ */
+
+
+マクロ定義
+/** @def
+ * マクロのコメント
+ */
+#define MAX_NANKA 256
+
+
+
+関数
+
+/**
+ * @fn
+ * ここに関数の説明を書く
+ * @brief 要約説明
+ * @param (引数名) 引数の説明
+ * @param (引数名) 引数の説明
+ * @return 戻り値の説明
+ * @sa 参照すべき関数を書けばリンクが貼れる
+ * @detail 詳細な説明
+ */
+void func1(int a , int b)
+
+
+// 変数へのコメント
+int value = 0;
+
+
+//enum
+
+/**
+ * @enum Enum
+ * 列挙体の説明
+ */
+enum Enum {
+    //! 列挙体の各要素へのコメント
+    EnumItem1 = 0x00,
+
+    //! 列挙体の各要素へのコメント
+    EnumItem2 = 0x01
+};

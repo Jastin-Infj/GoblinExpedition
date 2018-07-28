@@ -1,13 +1,13 @@
 #include "Task_Game.h"
 #include "../TaskSystem/TaskSystem.h"
-
-#include "../Assets/CharaBace.h"
 #include "../ResourceManager/ResourceManager.h"
 
 #include <iostream>
 
-#define PLAYER_LIFE 5				//playerのライフ
-
+#include "../Assets/GameObject.h"
+#include "../Assets/Enemy.h"
+#include "../Assets/Player.h"
+#include "../Assets/UI.h"
 
 /* コンストラクタ */
 Game::Game()
@@ -36,21 +36,14 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 	{
 		//画像の指定
 		rm->setTexture("インゲーム背景", Texture(L"./data/image/doukutu.png"));
-		auto back = CharaBace::Create(std::pair<std::string, std::string>("背景", "インゲーム背景"), ObjectType::Back, Point(0, 0), Point(Window::Size().x, Window::Size().y), 0.1f,false,true);
+		auto back = UI::Create(std::pair<std::string, std::string>("背景", "インゲーム背景"),UI::ObjectType::Background ,Point(0, 0), Point(Window::Size().x, Window::Size().y), 0.1f);
 	}
 	{
 		rm->setTexture("ゴブリン", Texture(L"./data/image/Goburin.png"));
-		auto enemy = CharaBace::Create(std::pair<std::string, std::string>("モンスター", "ゴブリン"), ObjectType::Enemy, Point(-48, Window::Size().y / 2), Point(64, 64), 0.8f,true,true,true);
+		auto enemy = Enemy::Create(std::pair<std::string, std::string>("モンスター", "ゴブリン") ,Enemy::ObjectType::Goburin ,Point(-48, Window::Size().y / 2), Point(64, 64), 0.8f);
 	}
 	{
-		auto player = CharaBace::Create(std::pair<std::string, std::string>("プレイヤ", "自キャラ"), ObjectType::Player, Point(Window::Size().x - 32 ,Window::Size().y / 2), Point{32,32}, 0.8f,true,true);
-	}
-	{
-		rm->setTexture("プレイヤライフ", Texture(L"./data/image/heart.png"));
-		for (int i = 0; i < PLAYER_LIFE; ++i)
-		{
-			auto player_life = CharaBace::Create(std::pair<std::string, std::string>("UI", "プレイヤライフ"), ObjectType::UI, Point(Window::Size().x -64 - i * 64, 0), Point(64, 64), 1.0f, false, true);
-		}
+		auto player = Player::Create(std::pair<std::string, std::string>("プレイヤ", "自キャラ"),Point(Window::Size().x - 32 ,Window::Size().y / 2), Point{32,32} , 5 , 0.8f);
 	}
 	return true;
 }
@@ -63,23 +56,18 @@ void Game::UpDate()
 bool Game::Finalize()
 {
 	/*ゲームタスクが終了したら同時にここで生成したオブジェクトを削除する*/
-	auto backs = taskSystem->GetTasks<CharaBace>(std::pair<std::string, std::string>("背景", "インゲーム背景"));
+	auto backs = taskSystem->GetTasks<TaskObject>(std::pair<std::string, std::string>("背景", "インゲーム背景"));
 	for (auto it = backs->begin(); it != backs->end(); ++it)
 	{
 		(*it)->Kill();
 	}
-	auto enemys = taskSystem->GetTasks<CharaBace>(std::pair<std::string, std::string>("モンスター", "ゴブリン"));
+	auto enemys = taskSystem->GetTasks<TaskObject>(std::pair<std::string, std::string>("モンスター", "ゴブリン"));
 	for (auto it = enemys->begin(); it != enemys->end(); ++it)
 	{
 		(*it)->Kill();
 	}
-	auto players = taskSystem->GetTasks<CharaBace>(std::pair<std::string, std::string>("プレイヤ", "自キャラ"));
+	auto players = taskSystem->GetTasks<TaskObject>(std::pair<std::string, std::string>("プレイヤ", "自キャラ"));
 	for (auto it = players->begin(); it != players->end(); ++it)
-	{
-		(*it)->Kill();
-	}
-	auto uis = taskSystem->GetTasks<CharaBace>(std::pair<std::string, std::string>("UI", "プレイヤライフ"));
-	for (auto it = uis->begin(); it != uis->end(); ++it)
 	{
 		(*it)->Kill();
 	}
