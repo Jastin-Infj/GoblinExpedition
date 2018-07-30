@@ -35,18 +35,27 @@ bool Player::Init_Parameter(const TASKNAME& taskname_ , const Vec2& position_, c
 
 	//追加の初期化項目
 	this->collider = Collider::Addcomponent(Collider::ShapeHitType::Cube, Vec2(this->position.x - this->scale.x, 0), Point(8, Window::Size().y));
+	this->mouse_colider = Collider::Addcomponent(Collider::ShapeHitType::Cube, Vec2(this->mouse_cursor_position), Point(MOUSE_SCALE_W, MOUSE_SCALE_H));
 	this->draw = DrawInterFace::Addcomponent(RectF(this->position,this->scale));
+
+
 	return true;
 }
 /*解放処理*/
 bool Player::Finalize()
 {
+	if (this->mouse_colider)
+	{
+		delete this->mouse_colider;
+	}
 	return true;
 }
 /*更新処理*/
 void Player::UpDate()
 {
-
+	this->mouse_cursor_position = this->Mouse_Pos();
+	/*当たり判定の更新*/
+	this->mouse_colider->setHitBace(this->mouse_cursor_position, Point(MOUSE_SCALE_W, MOUSE_SCALE_H));
 }
 /*描画をします*/
 void Player::Render()
@@ -130,6 +139,21 @@ void Player::Receive_Enemy()
 	{
 		(*it)->Kill();
 	}
+}
+/*マウス座標を毎時更新します*/
+Vec2 Player::Mouse_Pos()const
+{
+	return Mouse::Pos();
+}
+/*マウス座標を返します*/
+Vec2 Player::getMousePos()const
+{
+	return this->mouse_cursor_position;
+}
+/*マウスと敵の当たり判定をします*/
+bool Player::Mouse_EnemyHit(const RectF& target)const
+{
+	return this->mouse_colider->Hit(target);
 }
 /*オブジェクトを生成します*/
 TaskObject::SP Player::Create(const TASKNAME& taskname, const Vec2& position, const Point& scale,const int& life_ ,const float& order, bool flag)

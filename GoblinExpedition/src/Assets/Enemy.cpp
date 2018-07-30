@@ -26,9 +26,11 @@ bool Enemy::Init_Parameter(const TASKNAME& taskname_, const ObjectType& objectty
 	this->position = position_;
 	this->scale = scale_;
 	this->objecttype = objecttype_;
+	this->opaque = OPAQUE_INIT;
+	this->mouse_hitflag = false;
 
 	//追加の初期化項目
-	void(Enemy::*Func[2])() = { &Enemy::Goburin_Parameter , nullptr};
+	void(Enemy::*Func[OBJECT_TYPESIZE])() = { &Enemy::Goburin_Parameter , nullptr};
 	(this->*Func[(int)this->objecttype])();
 	this->setleftrightinversionflag(false);
 
@@ -44,18 +46,21 @@ void Enemy::UpDate()
 {
 	if (this->getleftrightinversionflag())
 	{
-		this->move->setMovespeed(Point(-3, 0));
+		this->move->setMovespeed(Point(-MOVE_SPEED_X, 0));
 		this->collider->setHitBace(this->position, this->scale);
 	}
 	else
 	{
-		this->move->setMovespeed(Point(3, 0));
+		this->move->setMovespeed(Point(MOVE_SPEED_X, 0));
 		this->collider->setHitBace(this->position, this->scale);
 	}
 	this->move->UniformLinearMotion(this->position);
 	
 	/*反転判定を行います*/
 	this->LeftRightInversion();
+	/*マウス判定を行います*/
+	this->Mouse_Hit();
+	/*マップ外判定を行います*/
 	if (this->OutsideMap() && this->getleftrightinversionflag())
 	{
 		this->Kill();
@@ -64,15 +69,32 @@ void Enemy::UpDate()
 /*描画をします*/
 void Enemy::Render()
 {
+	/*描画矩形の更新*/
 	this->draw->setDrawBace(this->position, this->scale);
+
 	if (this->getleftrightinversionflag())
 	{
-		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace(), true);
+		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace(),Color(255,255,255, this->opaque) ,true);
 	}
 	else
 	{
-		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
+		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace(),Color(255,255,255,this->opaque));
 	}
+}
+/*不透明を割合計算で透過させます*/
+void Enemy::Opaque_Decrement()
+{
+	if (this->opaque <= OPAQUE_MIN)
+	{
+		this->opaque = OPAQUE_MIN;
+	}
+	double rate_value = this->opaque * OPAQUE_DECREASERATE;
+	this->opaque = (uint32)rate_value;
+}
+/*不透明度を0であるかを判定します*/
+bool Enemy::isOpaque_Zero()const
+{
+	return this->opaque == OPAQUE_MIN ? true : false;
 }
 /*Player当たり判定矩形と接触判定を行います*/
 bool Enemy::onHitbaceExit(const RectF& target)const
@@ -108,15 +130,43 @@ void Enemy::LeftRightInversion()
 			temp->Receive_Enemy();
 		}
 	}
-	else
-	{
-		return;
-	}
 }
 /*マップ外にいるかを判定します*/
 bool Enemy::OutsideMap()
 {
 	return this->position.x <= -this->scale.x ? true : false;
+}
+/*当たり判定矩形を返します*/
+RectF Enemy::getHitBace()const
+{
+	return this->collider->getHitBace();
+}
+/*マウスと敵の当たり判定を行います*/
+void Enemy::Mouse_Hit()
+{
+	Player::WP player = taskSystem->GetTask_TaskName<Player>("自キャラ");
+	if (!player.expired())
+	{
+		auto temp = player.lock();
+		//マウス処理
+		if (temp->Mouse_EnemyHit(this->collider->getHitBace()))
+		{
+			if (this->collider->MouseLeftPressed())
+			{
+				this->mouse_hitflag = true;
+			}	
+		}
+		/*左クリックが押された後の処理*/
+		if (!this->isOpaque_Zero() && this->mouse_hitflag)
+		{
+			this->Opaque_Decrement();
+			std::cout << this->opaque << std::endl;
+		}
+		else if (this->isOpaque_Zero())
+		{
+			this->Kill();
+		}
+	}
 }
 /*敵を生成します*/
 TaskObject::SP Enemy::Create(const TASKNAME& taskname_, const ObjectType& objecttype_, const Vec2& position_, const Point& scale_, const float& order_, const bool flag)
@@ -151,7 +201,7 @@ void Enemy::Goburin_Parameter()
 	this->collider = Collider::Addcomponent(Collider::ShapeHitType::Cube, this->position, this->scale);
 
 	//初期移動量の設定
-	this->move = MoveInterFace::Addcomponent(Point(3, 0));
+	this->move = MoveInterFace::Addcomponent(Point(MOVE_SPEED_X, MOVE_SPEED_Y));
 }
 
 //★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

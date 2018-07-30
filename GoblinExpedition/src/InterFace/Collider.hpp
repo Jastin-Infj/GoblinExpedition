@@ -85,7 +85,7 @@ public:
 	
 
 	/// <summary>
-	/// マウスがカーソル上にありかつ左クリックを押されるかを判定します
+	/// 左クリックを押されるかを判定します
 	/// </summary>
 	/// <returns>
 	/// クリックした true / クリックしていない false
@@ -138,5 +138,5 @@ public:
 	}
 private:
 	ShapeHitType shapehittype;	//当たり判定の形
-	RectF         hitbace;		//当たり判定矩形
+	RectF        hitbace;		//当たり判定矩形
 };

@@ -200,6 +200,34 @@ public:
 
 
 	/// <summary>
+	/// テクスチャを貼り付けて描画をします(透過処理対応)
+	/// </summary>
+	/// <param name="draw_">
+	/// (描画座標 x y , 描画サイズ x y)
+	/// </param>
+	/// <param name="src_">
+	/// (画像元座標 x y , 画像元サイズ x y)
+	/// </param>
+	/// <param name="alfa">
+	/// アルファ値
+	/// </param>
+	/// <param name="mirror">
+	/// 左右反転フラグ 　反転 true / 反転しない false
+	/// </param>
+	void TextureDraw(const s3d::RectF& draw_, const s3d::Rect& src_,const Color& alfa , bool mirror = false)
+	{
+		if (mirror)
+		{
+			s3d::RectF(draw_)(this->image(src_).mirror()).draw(alfa);
+		}
+		else
+		{
+			s3d::RectF(draw_)(this->image(src_)).draw(alfa);
+		}
+	}
+
+
+	/// <summary>
 	/// テクスチャを貼り付けて描画をします
 	/// </summary>
 	/// <param name="drawpos">
@@ -224,7 +252,42 @@ public:
 		{
 			s3d::Rect(drawpos, drawsize)(this->image(src_)).draw();
 		}
-		
+	}
+
+
+	/// <summary>
+	/// 徐々に透過をしながら描画をします
+	/// </summary>
+	/// <param name="drawpos">
+	/// 描画座標
+	/// </param>
+	/// <param name="drawsize">
+	/// 描画サイズ
+	/// </param>
+	/// <param name="src_">
+	/// (画像元座標 x y , 画像元サイズ x y )
+	/// </param>
+	/// <param name="alfa">
+	/// アルファ値(rbgカラー , 不透明度)
+	/// </param>
+	/// <param name="mirror">
+	/// 左右反転フラグ 　反転 true / 反転しない false
+	/// </param>
+	void TextureDraw(const Point& drawpos, const Point& drawsize, const s3d::Rect& src_,Color& alfa , bool mirror = false)
+	{
+		if (alfa.a <= 0)
+		{
+			alfa.a = 0;
+		}
+		alfa.a--;
+		if (mirror)
+		{
+			s3d::Rect(drawpos, drawsize)(this->image(src_).mirror()).draw(alfa);
+		}
+		else
+		{
+			s3d::Rect(drawpos, drawsize)(this->image(src_)).draw(alfa);
+		}
 	}
 
 

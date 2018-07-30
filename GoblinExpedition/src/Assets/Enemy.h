@@ -4,6 +4,16 @@
 
 #include "Player.h"
 
+#define MOVE_SPEED_X        3		//X移動量
+#define MOVE_SPEED_Y        0       //Y移動量
+
+#define OPAQUE_INIT         255		//不透明度　初期値
+#define OPAQUE_MIN          0		//不透明度　最小値
+#define OPAQUE_MAX			255		//不透明度  最大値
+#define OPAQUE_DECREASERATE 0.88	//1フレームあたりの不透明度減少率
+
+#define OBJECT_TYPESIZE     2       //敵のオブジェクトタイプ数
+
 class Enemy : public GameObject
 {
 public:
@@ -166,7 +176,41 @@ public:
 	/// </summary>
 	bool OutsideMap();
 
+
+	/// <summary>
+	/// 不透明を減少させます
+	/// </summary>
+	void Opaque_Decrement();
+
+
+	/// <summary>
+	/// 不透明度が0になっているかを判定をします
+	/// </summary>
+	/// <returns>
+	/// 0 true / 0以外 false
+	/// </returns>
+	bool isOpaque_Zero()const;
+
+
+	/// <summary>
+	/// マウスと敵の当たり判定
+	/// </summary>
+	void Mouse_Hit();
+
+
+/*外部クラスで使用メソッド*/
+	
+	/// <summary>
+	/// 当たり判定矩形を返します
+	/// </summary>
+	/// <returns>
+	/// 当たり判定矩形
+	/// </returns>
+	RectF getHitBace()const;
+
 private:
 	ObjectType	objecttype;					//オブジェクトタイプ
 	bool leftrightinversionflag;			//左右反転フラグ
+	bool mouse_hitflag;						//接触判定
+	uint32      opaque;						//不透明度
 };

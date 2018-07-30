@@ -1,14 +1,12 @@
 #pragma once
 #include "GameObject.h"
 
-//追加機能
-#include "../InterFace/DrawInterFace.hpp"
-#include "../InterFace/Collider.hpp"
-#include "../InterFace/MoveInterFace.hpp"
-
-#define PLAYER_LIFE_MIN 1					//ライフ値　最低値
-#define PLAYER_LIFE_MAX 10					//ライフ値　上限値
+#define PLAYER_LIFE_MIN       1				//ライフ値　最低値
+#define PLAYER_LIFE_MAX       10			//ライフ値　上限値
 #define PLAYER_LIFE_DECREMENT 1				//ライフ値　減少値
+
+#define MOUSE_SCALE_W         2				//マウス処理 縦
+#define MOUSE_SCALE_H         2				//マウス処理 横
 
 class Player : public GameObject
 {
@@ -136,6 +134,12 @@ public:
 
 
 	/// <summary>
+	/// マウスの座標値を取得します
+	/// </summary>
+	Vec2 Mouse_Pos()const;
+
+
+	/// <summary>
 	/// オブジェクトを生成します
 	/// </summary>
 	/// <param name="taskname">
@@ -182,6 +186,12 @@ public:
 
 
 	/// <summary>
+	/// マウスの座標値を返します
+	/// </summary>
+	Vec2 getMousePos()const;
+
+
+	/// <summary>
 	/// ライフを減少させます
 	/// </summary>
 	void LifeDecrement();
@@ -192,6 +202,20 @@ public:
 	/// </summary>
 	void Receive_Enemy();
 
+
+	/// <summary>
+	/// マウスと敵の当たり判定します
+	/// </summary>
+	/// <param name="target">
+	/// 判定する矩形
+	/// </param>
+	/// <returns>
+	/// 接触 true / 接触していない false
+	/// </returns>
+	bool Mouse_EnemyHit(const RectF& target)const;
+
 private:
-	int            life;			//体力 
+	int            life;					//体力
+	Vec2		   mouse_cursor_position;	//マウスカーソル座標
+	Collider*      mouse_colider;			//マウス当たり判定
 };
