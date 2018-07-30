@@ -488,5 +488,8 @@
     <ClInclude Include="src\Assets\UI.h">
       <Filter>ソース ファイル\Assets</Filter>
     </ClInclude>
+    <ClInclude Include="src\InterFace\EffectInterFace.hpp">
+      <Filter>ソース ファイル\InterFace</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

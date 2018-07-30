@@ -6,8 +6,9 @@
 #include "../InterFace/Collider.hpp"
 #include "../InterFace/MoveInterFace.hpp"
 
-#define PLAYER_LIFE_MIN 1
-#define PLAYER_LIFE_MAX 10
+#define PLAYER_LIFE_MIN 1					//ライフ値　最低値
+#define PLAYER_LIFE_MAX 10					//ライフ値　上限値
+#define PLAYER_LIFE_DECREMENT 1				//ライフ値　減少値
 
 class Player : public GameObject
 {
@@ -104,9 +105,16 @@ public:
 
 
 	/// <summary>
-	/// 体力値が負の記号または0かを判定します
+	/// ライフ値が負の記号または0かを判定します
 	/// </summary>
 	constexpr bool isLifeZero()const;
+
+
+	/// <summary>
+	/// ライフ値が上限以上かを判定します
+	/// </summary>
+	/// <returns></returns>
+	constexpr bool isLifeMax()const;
 
 
 	/// <summary>
@@ -116,6 +124,15 @@ public:
 	/// 最小ライフ値
 	/// </returns>
 	const int  LifeMin();
+
+
+	/// <summary>
+	/// 体力の上限値を返します
+	/// </summary>
+	/// <returns>
+	/// 上限ライフ値
+	/// </returns>
+	const int  LifeMax();
 
 
 	/// <summary>
@@ -163,6 +180,17 @@ public:
 	/// </returns>
 	RectF getHitBace()const;
 
+
+	/// <summary>
+	/// ライフを減少させます
+	/// </summary>
+	void LifeDecrement();
+
+
+	/// <summary>
+	/// Enemyに接触したあとの処理
+	/// </summary>
+	void Receive_Enemy();
 
 private:
 	int            life;			//体力 

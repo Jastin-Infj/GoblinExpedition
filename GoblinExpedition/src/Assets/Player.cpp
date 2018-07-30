@@ -1,6 +1,6 @@
 #include "Player.h"
 #include <iostream>
-
+#include "../TaskSystem/TaskSystem.h"
 #include "UI.h"
 
 /*コンストラクタ*/
@@ -46,7 +46,7 @@ bool Player::Finalize()
 /*更新処理*/
 void Player::UpDate()
 {
-	
+
 }
 /*描画をします*/
 void Player::Render()
@@ -78,21 +78,58 @@ void Player::LifeUICreate()
 /*Playerの体力値を変更・設定します*/
 void Player::setLife(int life_)
 {
+	this->life = life_;
 	if (this->isLifeZero())
 	{
 		this->life = this->LifeMin();
 	}
-	this->life = life_;
+	else if(this->isLifeMax())
+	{
+		this->life = this->LifeMax();
+	}
 }
 /*ライフ値が0以下であるかを判定します*/
 constexpr bool Player::isLifeZero()const
 {
-	return this->life <= 0 ? true : false;
+	return this->life <= PLAYER_LIFE_MIN ? true : false;
+}
+/*ライフ値が上限に達しているかを判定します*/
+constexpr bool Player::isLifeMax()const
+{
+	return this->life >= PLAYER_LIFE_MAX ? true : false;
 }
 /*ライフの最小値を返します*/
 const int Player::LifeMin()
 {
 	return PLAYER_LIFE_MIN;
+}
+/*ライフの上限値を返します*/
+const int Player::LifeMax()
+{
+	return PLAYER_LIFE_MAX;
+}
+/*ライフ値を減少させます*/
+void Player::LifeDecrement()
+{
+	this->life -= PLAYER_LIFE_DECREMENT;
+}
+/*Enemyに接触したあとの処理*/
+void Player::Receive_Enemy()
+{
+	if (this->isLifeZero())
+	{
+		//ゲームオーバー処理へ移行する
+		this->Kill();
+	}
+	this->LifeDecrement();
+
+	/*UIの消去も行う*/
+	auto playerlifeui = taskSystem->GetTasks_TaskName<UI>("プレイヤライフ");
+	auto it = playerlifeui->rbegin();
+	if (playerlifeui)
+	{
+		(*it)->Kill();
+	}
 }
 /*オブジェクトを生成します*/
 TaskObject::SP Player::Create(const TASKNAME& taskname, const Vec2& position, const Point& scale,const int& life_ ,const float& order, bool flag)

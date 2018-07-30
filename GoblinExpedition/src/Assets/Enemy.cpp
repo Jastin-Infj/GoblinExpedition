@@ -65,7 +65,14 @@ void Enemy::UpDate()
 void Enemy::Render()
 {
 	this->draw->setDrawBace(this->position, this->scale);
-	this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
+	if (this->getleftrightinversionflag())
+	{
+		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace(), true);
+	}
+	else
+	{
+		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
+	}
 }
 /*Player“–‚½‚è”»’è‹éŒ`‚ÆÚG”»’è‚ðs‚¢‚Ü‚·*/
 bool Enemy::onHitbaceExit(const RectF& target)const
@@ -94,10 +101,11 @@ void Enemy::LeftRightInversion()
 	if (!player.expired())
 	{
 		Player::SP temp = player.lock();
-		if (this->onHitbaceExit(temp->getHitBace()))
+		if (this->onHitbaceExit(temp->getHitBace()) && !this->getleftrightinversionflag())
 		{
 			/*”½“]ƒtƒ‰ƒO‚ðtrue‚É‚·‚é*/
 			this->setleftrightinversionflag(true);
+			temp->Receive_Enemy();
 		}
 	}
 	else
