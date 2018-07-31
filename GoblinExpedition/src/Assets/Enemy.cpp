@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include <iostream>
+#include "../Task/Task_Game.h"
 /*コンストラクタ*/
 Enemy::Enemy()
 {
@@ -162,14 +163,18 @@ void Enemy::Mouse_Hit()
 			}	
 		}
 		/*左クリックが押された後の処理*/
-		if (!this->isOpaque_Zero() && this->mouse_hitflag)
+		if (!this->isOpaque_Zero() && this->mouse_hitflag && !this->getleftrightinversionflag())
 		{
 			this->Opaque_Decrement();
-			std::cout << this->opaque << std::endl;
 		}
-		else if (this->isOpaque_Zero())
+		else if (this->isOpaque_Zero() && !this->getleftrightinversionflag())
 		{
-			this->Kill();
+			auto game = taskSystem->GetTask_TaskName<Game>("インゲーム");
+			if (game)
+			{
+				game->ScoreAddition(SCORE);
+				this->Kill();
+			}
 		}
 	}
 }

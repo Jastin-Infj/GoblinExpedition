@@ -2,13 +2,9 @@
 
 #include "GameObject.h"
 
-#define SCORE_INIT 0		//初期スコア値
-#define SCORE_MIN  0		//スコア最低値
-#define SCORE_MAX  99999	//スコア上限値
-
 
 /// <summary>
-/// スコアクラス
+/// スコア出力クラス
 /// </summary>
 class Score : public GameObject
 {
@@ -82,7 +78,7 @@ public:
 	/// <returns>
 	/// 
 	/// </returns>
-	TaskObject::SP Create(
+	static TaskObject::SP Create(
 		const TASKNAME&   taskname_, 
 		const Vec2&       position_, 
 		const Point&      scale_, 
@@ -120,15 +116,6 @@ public:
 
 
 	/// <summary>
-	/// 現在のスコアを返します
-	/// </summary>
-	/// <returns>
-	/// 現在のスコア
-	/// </returns>
-	int getScore()const;
-
-
-	/// <summary>
 	/// 指定の桁数の数字を返します
 	/// </summary>
 	/// <param name="digit_">
@@ -147,6 +134,7 @@ public:
 	/// 指定された桁数の数値
 	/// </param>
 	void setvalueSrc(const std::string& value);
+
 private:
 	int score;			//スコア
 	int selectdigit;	//対応させる桁数

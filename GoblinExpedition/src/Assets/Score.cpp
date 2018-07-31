@@ -1,5 +1,7 @@
 #include <iostream>
+#include <string>
 #include "Score.h"
+#include "../Task/Task_Game.h"
 
 /*コンストラクタ*/
 Score::Score()
@@ -27,6 +29,13 @@ bool Score::Score_Parameter(const TASKNAME& taskname_, const Vec2& position_, co
 
 	//各機能ごとの設定
 	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale));
+	this->draw->setTexture(rm->getTexture("スコア"));
+
+	auto game = taskSystem->GetTask_TaskName<Game>("インゲーム");
+	if (game)
+	{
+		this->score = game->getScore();
+	}
 
 	return true;
 }
@@ -38,19 +47,32 @@ void Score::UpDate()
 /*描画をします*/
 void Score::Render()
 {
-	this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
+	if (!this->draw->getSrcBace().w == 0 && !this->draw->getSrcBace().h == 0)
+	{
+		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
+	}
 }
 /*解放処理を行います*/
 bool Score::Finalize()
 {
 	return true;
 }
-/*スコアの更新処理を行います*/
+/*スコアの計算を行います*/
 void Score::Score_UpDate()
 {
+	auto game = taskSystem->GetTask_TaskName<Game>("インゲーム");
+	if (game)
+	{
+		this->score = game->getScore();
+	}
+
 	//指定した桁数の数字を取得
 	std::string str = this->Digit();
 
+	if (str == "")
+	{
+		return;
+	}
 	//画像元矩形の作成
 	this->setvalueSrc(str);
 }
@@ -58,60 +80,59 @@ void Score::Score_UpDate()
 std::string Score::Digit()
 {
 	std::string str = std::to_string(this->score);
-	str = str.substr(this->selectdigit - 1, this->selectdigit);
-	return str;
-}
-/*現在スコアを返します*/
-int Score::getScore()const
-{
-	return this->score;
+	if (this->selectdigit <= str.size())
+	{
+		str = str.substr(this->selectdigit - 1, 1);
+		return str;
+	}
+	return "";
 }
 /*画像元矩形の作成*/
 void Score::setvalueSrc(const std::string& value)
 {
 	if (value == "")
 	{
-		return;
+		this->draw->setDrawSrc(RectF{});
 	}
 	else if (value == "0")
 	{
-		
+		this->draw->setDrawSrc(RectF(0, 0, 40, 50));
 	}
 	else if (value == "1")
 	{
-
+		this->draw->setDrawSrc(RectF(40, 0, 64 - 40, 50));
 	}
 	else if (value == "2")
 	{
-
+		this->draw->setDrawSrc(RectF(64, 0, 100 - 64, 50));
 	}
 	else if (value == "3")
 	{
-
+		this->draw->setDrawSrc(RectF(100, 0, 140 - 100, 50));
 	}
 	else if (value == "4")
 	{
-
+		this->draw->setDrawSrc(RectF(140, 0, 178 - 140, 50));
 	}
 	else if (value == "5")
 	{
-
+		this->draw->setDrawSrc(RectF(178, 0, 215 - 178, 50));
 	}
 	else if (value == "6")
 	{
-
+		this->draw->setDrawSrc(RectF(215, 0, 251 - 215, 50));
 	}
 	else if (value == "7")
 	{
-
+		this->draw->setDrawSrc(RectF(251, 0, 288 - 251, 50));
 	}
 	else if (value == "8")
 	{
-
+		this->draw->setDrawSrc(RectF(288, 0, 325 - 288, 50));
 	}
 	else if (value == "9")
 	{
-
+		this->draw->setDrawSrc(RectF(325, 0, 361 - 325, 50));
 	}
 }
 /*スコアの生成をします*/

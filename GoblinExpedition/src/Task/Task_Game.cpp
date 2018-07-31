@@ -8,6 +8,7 @@
 #include "../Assets/Enemy.h"
 #include "../Assets/Player.h"
 #include "../Assets/UI.h"
+#include "../Assets/Score.h"
 
 /* コンストラクタ */
 Game::Game()
@@ -51,6 +52,14 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 		rm->setTexture("スコアUI", Texture(L"./data/image/Score.png"));
 		auto scoreui = UI::Create(TASKNAME("UI", "スコアUI"), UI::ObjectType::ScoreUI, Vec2(0, 0), Point(128, 64));
 	}
+	{
+		rm->setTexture("スコア", Texture(L"./data/image/Math.png"));
+		auto score1 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130, 5), Point(32, 50), 1);
+		auto score2 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 , 5), Point(32, 50), 2);
+		auto score3 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 * 2, 5), Point(32, 50), 3);
+		auto score4 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 * 3, 5), Point(32, 50), 4);
+		auto score5 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 * 3, 5), Point(32, 50), 5);
+	}
 	return true;
 }
 /* 更新処理 */
@@ -89,6 +98,20 @@ void Game::Enemy_Create()
 		auto enemy = Enemy::Create(std::pair<std::string, std::string>("モンスター", "ゴブリン"), Enemy::ObjectType::Goburin, Vec2(-48, 64 + ENEMY_RANDOM_Y * random), Point(64, 64), 0.8f);
 		this->enemycreatetime = 0.f;
 	}
+}
+/*スコアに引数の値を加算します*/
+void Game::ScoreAddition(const int& addition)
+{
+	this->score += addition;
+	if (this->score >= SCORE_MAX)
+	{
+		this->score = SCORE_MAX;
+	}
+}
+/*現在のスコアを返します*/
+int Game::getScore()const
+{
+	return this->score;
 }
 /*オブジェクトを生成します*/
 TaskObject::SP Game::Create(const std::pair<std::string, std::string>& taskname, bool flag)
