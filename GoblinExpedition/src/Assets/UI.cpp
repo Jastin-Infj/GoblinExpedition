@@ -31,7 +31,8 @@ bool UI::Init_Parameter(const TASKNAME& taskname_, const ObjectType& objecttype_
 	void(UI::*function[])() =
 	{
 		&UI::BackGround_Parameter,
-		&UI::Player_Life_Parameter
+		&UI::Player_Life_Parameter,
+		&UI::ScoreUI_Parameter
 	};
 	(this->*function[(int)this->objecttype])();
 
@@ -56,7 +57,10 @@ void UI::Render()
 		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
 		break;
 	case ObjectType::PlayerLife:
-		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getDrawBace());
+		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
+		break;
+	case ObjectType::ScoreUI:
+		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
 		break;
 	default:
 		break;
@@ -94,5 +98,11 @@ void UI::Player_Life_Parameter()
 {
 	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0, 0, 64, 48));
 	this->draw->setTexture(rm->getTexture("プレイヤライフ"));
+}
+/*スコアUIの設定を行います*/
+void UI::ScoreUI_Parameter()
+{
+	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0, 0, 185, 75));
+	this->draw->setTexture(rm->getTexture("スコアUI"));
 }
 //★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

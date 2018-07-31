@@ -4,6 +4,8 @@
 
 #include "Player.h"
 
+#define SCORE				100		//倒されてたときのスコア
+
 #define MOVE_SPEED_X        3		//X移動量
 #define MOVE_SPEED_Y        0       //Y移動量
 
@@ -208,6 +210,14 @@ public:
 	/// </returns>
 	RectF getHitBace()const;
 
+
+	/// <summary>
+	/// スコアを返します
+	/// </summary>
+	/// <returns>
+	/// スコア
+	/// </returns>
+    const int getScore();
 private:
 	ObjectType	objecttype;					//オブジェクトタイプ
 	bool leftrightinversionflag;			//左右反転フラグ

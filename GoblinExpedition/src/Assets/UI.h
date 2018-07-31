@@ -19,6 +19,7 @@ public:
 	{
 		Background = 0,	//背景関係
 		PlayerLife = 1,	//Playerのライフ
+		ScoreUI    = 2, //スコアUI
 	};
 
 	/// <summary>
@@ -123,10 +124,19 @@ public:
 	/// </summary>
 	void BackGround_Parameter();
 
+
 	/// <summary>
 	/// PlayerのライフUIの設定を行います
 	/// </summary>
 	void Player_Life_Parameter();
+
+
+	/// <summary>
+	/// スコアUIの設定を行います
+	/// </summary>
+	void ScoreUI_Parameter();
+
+
 private:
-	ObjectType objecttype;
+	ObjectType objecttype;		//オブジェクトタイプ
 };

@@ -135,6 +135,9 @@
     <ClCompile Include="src\Assets\UI.cpp">
       <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
+    <ClCompile Include="src\Assets\Score.cpp">
+      <Filter>ソース ファイル\Assets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
@@ -490,6 +493,9 @@
     </ClInclude>
     <ClInclude Include="src\InterFace\EffectInterFace.hpp">
       <Filter>ソース ファイル\InterFace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Assets\Score.h">
+      <Filter>ソース ファイル\Assets</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

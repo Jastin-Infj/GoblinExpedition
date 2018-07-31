@@ -141,6 +141,11 @@ RectF Enemy::getHitBace()const
 {
 	return this->collider->getHitBace();
 }
+/*スコアを返します*/
+const int Enemy::getScore()
+{
+	return SCORE;
+}
 /*マウスと敵の当たり判定を行います*/
 void Enemy::Mouse_Hit()
 {

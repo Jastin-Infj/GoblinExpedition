@@ -1,5 +1,10 @@
 #pragma once
 #include "../TaskSystem/TaskObject.h"
+
+#define ENEMY_CREATE_TIME 30		//敵が生成までにかかる時間
+#define ENEMY_CREATE_SIZE 5			//一回の生成でどれくらいの敵を生成するか
+#define ENEMY_RANDOM_Y    352		//ランダムの範囲
+
 class Game : public TaskObject
 {
 public:
@@ -51,4 +56,12 @@ public:
 	///<returns>オブジェクトのスマートポインタを返します</returns>
 	///</summary>
 	static TaskObject::SP Create(const std::pair<std::string, std::string>& taskname, bool flag = true);
+
+
+	/// <summary>
+	/// 敵をランダム生成します
+	/// </summary>
+	void Enemy_Create();
+private:
+	float enemycreatetime;		//敵が生成するまでの時間
 };
