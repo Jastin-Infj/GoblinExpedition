@@ -4,10 +4,11 @@
 
 #include "Player.h"
 
-#define SCORE				100		//倒されてたときのスコア
+#define ENEMY_SCORE				100		//倒されてたときのスコア
+#define ENEMY_DESTROYINGSCORE     1		//撃破ポイント
 
-#define MOVE_SPEED_X        3		//X移動量
-#define MOVE_SPEED_Y        0       //Y移動量
+#define ENEMY_MOVE_SPEED_X        3		//X移動量
+#define ENEMY_MOVE_SPEED_Y        0     //Y移動量
 
 #define OPAQUE_INIT         255		//不透明度　初期値
 #define OPAQUE_MIN          0		//不透明度　最小値

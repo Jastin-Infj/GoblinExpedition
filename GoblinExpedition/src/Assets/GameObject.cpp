@@ -27,3 +27,9 @@ GameObject::~GameObject()
 		this->move = nullptr;
 	}
 }
+/*引数値のベクトル分座標移動を行います*/
+void GameObject::OffsetPosition(const Vec2& offset)
+{
+	this->position += offset;
+	std::cout << this->position << std::endl;
+}

@@ -32,7 +32,9 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 	this->setDrawOrder(1.0f);
 
 
-	this->enemycreatetime = 0.f;
+	this->enemycreatetime = 0.0f;
+	this->enemy_destroyingcount = ENEMY_DESTROYINGCOUNT_INIT;
+
 	//追加したいオブジェクトをここに記述する
 	
 	/*ResourceManagerにリソースを追加する*/
@@ -60,12 +62,14 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 		auto score4 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 * 3, 5), Point(32, 50), 4);
 		auto score5 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 * 3, 5), Point(32, 50), 5);
 	}
+	rm->setTexture("無双アイテム",Texture(L"./data/image/musou.png"));
+	
 	return true;
 }
 /* 更新処理 */
 void Game::UpDate()
 {
-	//this->Enemy_Create();
+	this->Enemy_Create();
 }
 /*解放処理*/
 bool Game::Finalize()
@@ -95,7 +99,7 @@ void Game::Enemy_Create()
 	this->enemycreatetime++;
 	if (enemycreatetime >= ENEMY_CREATE_TIME)
 	{
-		auto enemy = Enemy::Create(std::pair<std::string, std::string>("モンスター", "ゴブリン"), Enemy::ObjectType::Goburin, Vec2(-48, 64 + ENEMY_RANDOM_Y * random), Point(64, 64), 0.8f);
+		auto enemy = Enemy::Create(TASKNAME("モンスター", "ゴブリン"), Enemy::ObjectType::Goburin, Vec2(-48, 64 + ENEMY_RANDOM_Y * random), Point(64, 64), 0.8f);
 		this->enemycreatetime = 0.f;
 	}
 }
@@ -112,6 +116,39 @@ void Game::ScoreAddition(const int& addition)
 int Game::getScore()const
 {
 	return this->score;
+}
+/*無双アイテムを生成します*/
+void Game::MusouItem_Create()
+{
+	if (this->isMusouItemCreate())
+	{
+		auto musouitem_size = taskSystem->GetTasks_TaskName<UI>("無双アイテム");
+		if (musouitem_size)
+		{
+			//無双アイテムのサイズを取得する
+			int ms = (int)musouitem_size->size();
+			auto musouitem = UI::Create(TASKNAME("アイテム", "無双アイテム"), UI::ObjectType::MusouItem, Vec2(ms * 64, Window::Size().y - 64), Point(64, 64));
+		}
+		else
+		{
+			auto musouitem = UI::Create(TASKNAME("アイテム", "無双アイテム"), UI::ObjectType::MusouItem, Vec2(0, Window::Size().y - 64), Point(64, 64));
+		}
+	}
+}
+/*無双アイテムが生成出来るかを判定します*/
+bool Game::isMusouItemCreate()const
+{
+	return this->enemy_destroyingcount % ENEMY_DESTROYINGSCORE == 0 ? true : false;
+}
+/*敵の撃破数カウントを増加させます*/
+void Game::Enemy_DestroyingCount_Add(const int& destoyingcount)
+{
+	this->enemy_destroyingcount += destoyingcount;
+	/*上限値に来たら停止させる*/
+	if (this->enemy_destroyingcount > ENEYMY_DESTROYINGCOUNT_MAX)
+	{
+		this->enemy_destroyingcount = ENEYMY_DESTROYINGCOUNT_MAX;
+	}
 }
 /*オブジェクトを生成します*/
 TaskObject::SP Game::Create(const std::pair<std::string, std::string>& taskname, bool flag)

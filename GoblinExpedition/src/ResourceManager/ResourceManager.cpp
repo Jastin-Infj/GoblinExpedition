@@ -3,19 +3,9 @@
 #include "ResourceManager.h"
 
 /*コンストラクタ*/
-DrawOrder::DrawOrder()
-{
-#if (_DEBUG)
-	std::cout << "DrawOrder()" << std::endl;
-#endif // (_DEBUG)
-}
+DrawOrder::DrawOrder(){}
 /*デストラクタ*/
-DrawOrder::~DrawOrder()
-{
-#if (_DEBUG)
-	std::cout << "~DrawOrder()" << std::endl;
-#endif // (_DEBUG)
-}
+DrawOrder::~DrawOrder(){}
 /*描画順を設定します*/
 void DrawOrder::setDrawOrder(float order_)
 {

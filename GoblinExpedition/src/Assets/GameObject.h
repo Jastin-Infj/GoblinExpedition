@@ -55,6 +55,14 @@ public:
 	virtual bool Finalize() { return true; }
 
 
+	/// <summary>
+	/// 引数値のベクトル分座標移動を行います
+	/// </summary>
+	/// <param name="offset">
+	/// 移動させる座標値
+	/// </param>
+	void OffsetPosition(const Vec2& offset);
+
 protected:
 	Vec2  position;					//現在の座標
 	Point scale;					//オブジェクトの大きさ

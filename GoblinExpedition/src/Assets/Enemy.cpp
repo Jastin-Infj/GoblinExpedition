@@ -47,12 +47,12 @@ void Enemy::UpDate()
 {
 	if (this->getleftrightinversionflag())
 	{
-		this->move->setMovespeed(Point(-MOVE_SPEED_X, 0));
+		this->move->setMovespeed(Point(-ENEMY_MOVE_SPEED_X, 0));
 		this->collider->setHitBace(this->position, this->scale);
 	}
 	else
 	{
-		this->move->setMovespeed(Point(MOVE_SPEED_X, 0));
+		this->move->setMovespeed(Point(ENEMY_MOVE_SPEED_X, 0));
 		this->collider->setHitBace(this->position, this->scale);
 	}
 	this->move->UniformLinearMotion(this->position);
@@ -145,7 +145,7 @@ RectF Enemy::getHitBace()const
 /*スコアを返します*/
 const int Enemy::getScore()
 {
-	return SCORE;
+	return ENEMY_SCORE;
 }
 /*マウスと敵の当たり判定を行います*/
 void Enemy::Mouse_Hit()
@@ -172,7 +172,12 @@ void Enemy::Mouse_Hit()
 			auto game = taskSystem->GetTask_TaskName<Game>("インゲーム");
 			if (game)
 			{
-				game->ScoreAddition(SCORE);
+				//スコアを加算する
+				game->ScoreAddition(ENEMY_SCORE);
+				//撃破数を加算する
+				game->Enemy_DestroyingCount_Add(ENEMY_DESTROYINGSCORE);
+				//撃破アイテムの生成
+				game->MusouItem_Create();
 				this->Kill();
 			}
 		}
@@ -211,7 +216,7 @@ void Enemy::Goburin_Parameter()
 	this->collider = Collider::Addcomponent(Collider::ShapeHitType::Cube, this->position, this->scale);
 
 	//初期移動量の設定
-	this->move = MoveInterFace::Addcomponent(Point(MOVE_SPEED_X, MOVE_SPEED_Y));
+	this->move = MoveInterFace::Addcomponent(Point(ENEMY_MOVE_SPEED_X, ENEMY_MOVE_SPEED_Y));
 }
 
 //★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

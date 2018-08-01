@@ -20,6 +20,7 @@ public:
 		Background = 0,	//背景関係
 		PlayerLife = 1,	//Playerのライフ
 		ScoreUI    = 2, //スコアUI
+		MusouItem  = 3, //無双アイテム
 	};
 
 	/// <summary>
@@ -135,6 +136,12 @@ public:
 	/// スコアUIの設定を行います
 	/// </summary>
 	void ScoreUI_Parameter();
+
+
+	/// <summary>
+	/// 無双アイテムの設定を行います
+	/// </summary>
+	void MusouItem_Parameter();
 
 
 private:
