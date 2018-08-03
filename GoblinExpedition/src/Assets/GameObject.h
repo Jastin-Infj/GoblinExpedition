@@ -37,13 +37,13 @@ public:
 	/// <summary>
 	/// XVˆ—
 	/// </summary>
-	virtual void UpDate() {};
+	virtual void Update()override {};
 
 
 	/// <summary>
 	/// •`‰æ‚ğ‚µ‚Ü‚·
 	/// </summary>
-	virtual void Render() {};
+	virtual void Render()override {};
 
 
 	/// <summary>

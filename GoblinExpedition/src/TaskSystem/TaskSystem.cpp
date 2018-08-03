@@ -117,7 +117,7 @@ void TaskSystem::T_UpDate()
 		/*Á‹Ž‚³‚ê‚Ä‚¢‚È‚¢ê‡*/
 		if ((*it).second->getKillCounter() == 0 && !(*it).second->getisPause())
 		{
-			(*it).second->UpDate();
+			(*it).second->Update();
 		}
 	}
 }

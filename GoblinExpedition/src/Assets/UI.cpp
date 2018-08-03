@@ -36,7 +36,8 @@ bool UI::Init_Parameter(const TASKNAME& taskname_, const ObjectType& objecttype_
 		&UI::BackGround_Parameter,
 		&UI::Player_Life_Parameter,
 		&UI::ScoreUI_Parameter,
-		&UI::MusouItem_Parameter
+		&UI::MusouItem_Parameter,
+		&UI::ResultRogo_Parameter
 	};
 	(this->*function[(int)this->objecttype])();
 
@@ -48,7 +49,7 @@ bool UI::Finalize()
 	return true;
 }
 /*更新処理*/
-void UI::UpDate()
+void UI::Update()
 {
 	if (this->killcheck)
 	{
@@ -70,6 +71,9 @@ void UI::Render()
 		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
 		break;
 	case ObjectType::MusouItem:
+		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
+		break;
+	case ObjectType::ResultRogo:
 		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
 		break;
 	default:
@@ -122,6 +126,12 @@ void UI::MusouItem_Parameter()
 	this->draw->setTexture(rm->getTexture("無双アイテム"));
 	this->collider = Collider::Addcomponent(Collider::ShapeHitType::Cube,this->position,this->scale);
 }
+/*リザルトロゴの設定を行います*/
+void UI::ResultRogo_Parameter()
+{
+	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0,0,536,106));
+	this->draw->setTexture(rm->getTexture("リザルトロゴ"));
+}
 //★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 
 /*無双アイテムを使用します*/
@@ -157,10 +167,15 @@ void UI::EnemiesKill()
 				(*it)->Opaque_Decrement();
 				if ((*it)->isOpaque_Zero())
 				{
+					//スコアを加算
 					game->ScoreAddition(ENEMY_SCORE);
+					//撃破数を加算
 					game->Enemy_DestroyingCount_Add(ENEMY_DESTROYINGSCORE);
+					//モンスターの消滅フラグをtrue
 					(*it)->setMusouitemkill(true);
+					//モンスターの消去
 					(*it)->Kill();
+					//自身の削除
 					this->Kill();
 				}
 			}

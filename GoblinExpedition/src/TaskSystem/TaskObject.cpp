@@ -43,7 +43,7 @@ std::pair<std::string,std::string> TaskObject::getTaskname()const
 	return this->taskname;
 }
 /*XVˆ—‚ğs‚¢‚Ü‚·*/
-void TaskObject::UpDate()
+void TaskObject::Update()
 {
 	std::cout << this->taskname.second << "update()" << std::endl;
 }

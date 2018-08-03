@@ -110,7 +110,7 @@ public:
 	///<returns>
 	///‚È‚µ
 	///</returns>
-	virtual void UpDate();
+	virtual void Update();
 
 
 	///<summary>

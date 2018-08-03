@@ -10,6 +10,8 @@
 #include "../Assets/UI.h"
 #include "../Assets/Score.h"
 
+#include "../Task/Task_Result.h"
+
 /* コンストラクタ */
 Game::Game()
 {
@@ -20,6 +22,7 @@ Game::Game()
 /* デストラクタ */
 Game::~Game()
 {
+	this->Finalize();
 #if _DEBUG
 	std::cout << "~Game()" << std::endl;
 #endif // _DEBUG
@@ -67,9 +70,19 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 	return true;
 }
 /* 更新処理 */
-void Game::UpDate()
+void Game::Update()
 {
 	this->Enemy_Create();
+	Player::WP player = taskSystem->GetTask_TaskName<Player>("自キャラ");
+	if (!player.expired())
+	{
+		Player::SP temp = player.lock();
+		if (temp->isLifeZero())
+		{
+			//リザルト画面処理へ行く瞬間
+			this->Kill();
+		}
+	}
 }
 /*解放処理*/
 bool Game::Finalize()
@@ -90,6 +103,13 @@ bool Game::Finalize()
 	{
 		(*it)->Kill();
 	}
+	auto scores = taskSystem->GetTasks_GroupName<TaskObject>("UI");
+	for (auto it = scores->begin(); it != scores->end(); ++it)
+	{
+		(*it)->Kill();
+	}
+
+	auto nexttask = Result::Create(TASKNAME("シーン","リザルト"));
 	return true;
 }
 /*敵をランダム生成します*/

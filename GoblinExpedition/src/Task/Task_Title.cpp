@@ -30,7 +30,7 @@ bool Title::Init(const std::pair<std::string,std::string>& taskname_)
 	return true;
 }
 /* XVˆ— */
-void Title::UpDate()
+void Title::Update()
 {
 
 }

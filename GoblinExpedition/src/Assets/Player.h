@@ -60,7 +60,7 @@ public:
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	void UpDate()override;
+	void Update()override;
 
 
 	/// <summary>
@@ -100,12 +100,6 @@ public:
 	/// 体力値
 	/// </param>
 	void setLife(int life);
-
-
-	/// <summary>
-	/// ライフ値が負の記号または0かを判定します
-	/// </summary>
-	constexpr bool isLifeZero()const;
 
 
 	/// <summary>
@@ -186,6 +180,12 @@ public:
 
 
 	/// <summary>
+	/// ライフ値が負の記号または0かを判定します
+	/// </summary>
+	constexpr bool isLifeZero()const;
+
+
+	/// <summary>
 	/// マウスの座標値を返します
 	/// </summary>
 	Vec2 getMousePos()const;
@@ -213,7 +213,6 @@ public:
 	/// 接触 true / 接触していない false
 	/// </returns>
 	bool MouseHit(const RectF& target)const;
-
 
 private:
 	int            life;					//体力

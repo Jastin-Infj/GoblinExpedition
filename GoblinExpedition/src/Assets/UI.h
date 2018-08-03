@@ -21,6 +21,7 @@ public:
 		PlayerLife = 1,	//Playerのライフ
 		ScoreUI    = 2, //スコアUI
 		MusouItem  = 3, //無双アイテム
+		ResultRogo = 4,	//リザルトロゴ
 	};
 
 	/// <summary>
@@ -68,7 +69,7 @@ public:
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	void UpDate()override;
+	void Update()override;
 
 
 	/// <summary>
@@ -156,6 +157,11 @@ public:
 	void EnemiesKill();
 
 
+	/// <summary>
+	/// リザルトロゴの設定を行います
+	/// </summary>
+	void ResultRogo_Parameter();
+
 //外部クラスで使用するメソッド
 	
 
@@ -211,6 +217,7 @@ public:
 	/// 押された : true 押されていない false 
 	/// </returns>
 	bool MouseLclicked();
+
 
 private:
 	ObjectType objecttype;		//オブジェクトタイプ

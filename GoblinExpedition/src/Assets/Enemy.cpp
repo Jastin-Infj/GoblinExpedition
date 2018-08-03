@@ -44,7 +44,7 @@ bool Enemy::Finalize()
 	return true;
 }
 /*XVˆ—*/
-void Enemy::UpDate()
+void Enemy::Update()
 {
 	if (this->getleftrightinversionflag())
 	{

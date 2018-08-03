@@ -51,7 +51,7 @@ bool Player::Finalize()
 	return true;
 }
 /*更新処理*/
-void Player::UpDate()
+void Player::Update()
 {
 	this->mouse_cursor_position = this->Mouse_Pos();
 	/*当たり判定の更新*/
@@ -126,7 +126,7 @@ void Player::setLife(int life_)
 /*ライフ値が0以下であるかを判定します*/
 constexpr bool Player::isLifeZero()const
 {
-	return this->life <= PLAYER_LIFE_MIN ? true : false;
+	return this->life < PLAYER_LIFE_MIN ? true : false;
 }
 /*ライフ値が上限に達しているかを判定します*/
 constexpr bool Player::isLifeMax()const

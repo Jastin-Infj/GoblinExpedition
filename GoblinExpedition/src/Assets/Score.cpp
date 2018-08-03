@@ -40,7 +40,7 @@ bool Score::Score_Parameter(const TASKNAME& taskname_, const Vec2& position_, co
 	return true;
 }
 /*XVˆ—*/
-void Score::UpDate()
+void Score::Update()
 {
 	this->Score_UpDate();
 }

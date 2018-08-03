@@ -138,6 +138,9 @@
     <ClCompile Include="src\Assets\Score.cpp">
       <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
+    <ClCompile Include="src\Task\Task_Result.cpp">
+      <Filter>ソース ファイル\Task\Result</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
@@ -496,6 +499,9 @@
     </ClInclude>
     <ClInclude Include="src\Assets\Score.h">
       <Filter>ソース ファイル\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task\Task_Result.h">
+      <Filter>ソース ファイル\Task\Result</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -179,6 +179,7 @@
     <ClCompile Include="src\TaskSystem\TaskSystem.cpp" />
     <ClCompile Include="src\Task\SceceTask.cpp" />
     <ClCompile Include="src\Task\Task_Game.cpp" />
+    <ClCompile Include="src\Task\Task_Result.cpp" />
     <ClCompile Include="src\Task\Task_Title.cpp" />
     <ClCompile Include="src\Winmain.cpp" />
   </ItemGroup>
@@ -309,6 +310,7 @@
     <ClInclude Include="src\TaskSystem\TaskSystem.h" />
     <ClInclude Include="src\Task\SceceTask.h" />
     <ClInclude Include="src\Task\Task_Game.h" />
+    <ClInclude Include="src\Task\Task_Result.h" />
     <ClInclude Include="src\Task\Task_Title.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
