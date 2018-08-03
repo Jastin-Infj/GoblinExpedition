@@ -30,7 +30,8 @@ bool Enemy::Init_Parameter(const TASKNAME& taskname_, const ObjectType& objectty
 	this->opaque = OPAQUE_INIT;
 	this->mouse_hitflag = false;
 	this->musouitemkill = false;
-
+	this->se = rm->getSound("“GÁ–ÅSE");
+	this->se_play = false;
 	//’Ç‰Á‚Ì‰Šú‰»€–Ú
 	void(Enemy::*Func[OBJECT_TYPESIZE])() = { &Enemy::Goburin_Parameter , nullptr};
 	(this->*Func[(int)this->objecttype])();
@@ -160,6 +161,7 @@ void Enemy::Mouse_Hit()
 		{
 			if (this->collider->MouseLeftPressed())
 			{
+				this->SE_Play();
 				this->mouse_hitflag = true;
 			}	
 		}
@@ -193,6 +195,15 @@ void Enemy::setMusouitemkill(const bool flag)
 bool Enemy::getMusouitemkill()const
 {
 	return this->musouitemkill;
+}
+/*Á–ÅSE‚ğ—¬‚µ‚Ü‚·*/
+void Enemy::SE_Play()
+{
+	if (!this->se_play)
+	{
+		this->se.play();
+		this->se_play = true;
+	}
 }
 /*“G‚ğ¶¬‚µ‚Ü‚·*/
 TaskObject::SP Enemy::Create(const TASKNAME& taskname_, const ObjectType& objecttype_, const Vec2& position_, const Point& scale_, const float& order_, const bool flag)

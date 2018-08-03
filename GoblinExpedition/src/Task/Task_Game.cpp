@@ -48,6 +48,7 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 	}
 	{
 		rm->setTexture("ゴブリン", Texture(L"./data/image/Goburin.png"));
+		rm->setSound("敵消滅SE", Sound(L"./data/BGM/Hit.wav"));
 		auto enemy = Enemy::Create(TASKNAME("モンスター", "ゴブリン") ,Enemy::ObjectType::Goburin ,Vec2(-48, Window::Size().y / 2), Point(64, 64), 0.8f);
 	}
 	{
@@ -109,7 +110,12 @@ bool Game::Finalize()
 		(*it)->Kill();
 	}
 
-	auto nexttask = Result::Create(TASKNAME("シーン","リザルト"));
+
+	//アプリケーションが起動中
+	if (System::Update())
+	{
+		auto nexttask = Result::Create(TASKNAME("シーン", "リザルト"));
+	}
 	return true;
 }
 /*敵をランダム生成します*/

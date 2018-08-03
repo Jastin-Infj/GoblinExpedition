@@ -1,7 +1,7 @@
 #pragma once
 #include "../TaskSystem/TaskObject.h"
 
-#define ENEMY_CREATE_TIME 160		//“G‚ª¶¬‚Ü‚Å‚É‚©‚©‚éŠÔ
+#define ENEMY_CREATE_TIME 100		//“G‚ª¶¬‚Ü‚Å‚É‚©‚©‚éŠÔ
 #define ENEMY_CREATE_SIZE 5			//ˆê‰ñ‚Ì¶¬‚Å‚Ç‚ê‚­‚ç‚¢‚Ì“G‚ğ¶¬‚·‚é‚©
 #define ENEMY_RANDOM_Y    352		//ƒ‰ƒ“ƒ_ƒ€‚Ì”ÍˆÍ
 

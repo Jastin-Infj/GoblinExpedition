@@ -238,10 +238,18 @@ public:
 	/// </returns>
 	bool getMusouitemkill()const;
 
+
+	/// <summary>
+	/// 消滅SEを流します
+	/// </summary>
+	void SE_Play();
+
 private:
 	ObjectType	objecttype;					//オブジェクトタイプ
 	bool leftrightinversionflag;			//左右反転フラグ
 	bool mouse_hitflag;						//接触判定
 	bool musouitemkill;						//無双アイテムで殺されたか？
+	bool se_play;							//消滅SEを流したか？
 	uint32      opaque;						//不透明度
+	Sound       se;							//消滅SE
 };

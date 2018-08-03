@@ -164,6 +164,7 @@ void UI::EnemiesKill()
 		{
 			if (this->isInWindow((*it)->getHitBace()))
 			{
+				(*it)->SE_Play();
 				(*it)->Opaque_Decrement();
 				if ((*it)->isOpaque_Zero())
 				{
