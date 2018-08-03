@@ -1,4 +1,6 @@
 #include "UI.h"
+#include "Enemy.h"
+#include "../Task/Task_Game.h"
 #include <iostream>
 /*コンストラクタ*/
 UI::UI()
@@ -26,6 +28,7 @@ bool UI::Init_Parameter(const TASKNAME& taskname_, const ObjectType& objecttype_
 	this->position = position_;
 	this->scale = scale_;
 	this->objecttype = objecttype_;
+	this->killcheck = false;
 
 	//機能の設定
 	void(UI::*function[])() =
@@ -47,7 +50,10 @@ bool UI::Finalize()
 /*更新処理*/
 void UI::UpDate()
 {
-	
+	if (this->killcheck)
+	{
+		this->EnemiesKill();
+	}
 }
 /*描画をします*/
 void UI::Render()
@@ -114,5 +120,76 @@ void UI::MusouItem_Parameter()
 {
 	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0, 0, 64, 64));
 	this->draw->setTexture(rm->getTexture("無双アイテム"));
+	this->collider = Collider::Addcomponent(Collider::ShapeHitType::Cube,this->position,this->scale);
 }
 //★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
+/*無双アイテムを使用します*/
+void UI::MusouItem_Use()
+{
+	this->killcheck = true;
+}
+/*ウィンドウ内にあるかを判定します*/
+bool UI::isInWindow(const Vec2& position_, const Point& scale_)
+{
+	//ウィンドウ矩形を生成する
+	RectF window = { 0,0,Window::Size()};
+	return window.intersects(RectF(position_, scale_));
+}
+/*ウィンドウ内にあるかを判定します*/
+bool UI::isInWindow(const RectF& drawbase)
+{
+	RectF window = { 0,0,Window::Size() };
+	return window.intersects(RectF(drawbase));
+}
+/*敵を全滅させます*/
+void UI::EnemiesKill()
+{
+	auto game = taskSystem->GetTask_TaskName<Game>("インゲーム");
+
+	auto enemys = taskSystem->GetTasks_TaskName<Enemy>("ゴブリン");
+	if (enemys && game)
+	{
+		for (auto it = enemys->begin(); it != enemys->end(); ++it)
+		{
+			if (this->isInWindow((*it)->getHitBace()))
+			{
+				(*it)->Opaque_Decrement();
+				if ((*it)->isOpaque_Zero())
+				{
+					game->ScoreAddition(ENEMY_SCORE);
+					game->Enemy_DestroyingCount_Add(ENEMY_DESTROYINGSCORE);
+					(*it)->setMusouitemkill(true);
+					(*it)->Kill();
+					this->Kill();
+				}
+			}
+		}
+	}
+}
+/*マウスの判定した後の処理*/
+void UI::Receive_Player()
+{
+	this->MusouItem_Use();
+}
+/*左クリックが押されたかを判定します*/
+bool UI::MouseLclicked()
+{
+	return this->collider->MouseLeftPressed();
+}
+/*UIと当たり判定を返します*/
+bool UI::Hit(const RectF& drawbace)
+{
+	if (this->collider)
+	{
+		return this->collider->Hit(drawbace);
+	}
+	return false;
+}
+
+
+///*無双アイテムの当たり判定矩形を返します*/
+//RectF UI::getDrawBase_MusuoItem()const
+//{
+//	return this->collider->getHitBace();
+//}

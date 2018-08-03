@@ -56,6 +56,32 @@ void Player::UpDate()
 	this->mouse_cursor_position = this->Mouse_Pos();
 	/*当たり判定の更新*/
 	this->mouse_colider->setHitBace(this->mouse_cursor_position, Point(MOUSE_SCALE_W, MOUSE_SCALE_H));
+
+	//無双アイテムの使用
+	auto musouitems = taskSystem->GetTasks_TaskName<UI>("無双アイテム");
+	auto musouitems_it = musouitems->rbegin();
+
+	if (musouitems)
+	{
+		for (auto it = musouitems->begin(); it != musouitems->end(); ++it)
+		{
+			if ((*it)->isInWindow(this->mouse_colider->getHitBace()) && (*it)->Hit(this->mouse_colider->getHitBace()))
+			{
+				if ((*it)->MouseLclicked())
+				{
+					if (this->mouseclickcount == 0)
+					{
+						(*musouitems_it)->Receive_Player();
+					}
+					this->mouseclickcount++;
+				}
+				else
+				{
+					mouseclickcount = 0;
+				}
+			}
+		}
+	}
 }
 /*描画をします*/
 void Player::Render()
@@ -150,8 +176,8 @@ Vec2 Player::getMousePos()const
 {
 	return this->mouse_cursor_position;
 }
-/*マウスと敵の当たり判定をします*/
-bool Player::Mouse_EnemyHit(const RectF& target)const
+/*マウスと当たり判定を行います*/
+bool Player::MouseHit(const RectF& target)const
 {
 	return this->mouse_colider->Hit(target);
 }

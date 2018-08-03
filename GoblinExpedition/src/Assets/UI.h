@@ -144,6 +144,84 @@ public:
 	void MusouItem_Parameter();
 
 
+	/// <summary>
+	/// 無双アイテムを使用します
+	/// </summary>
+	void MusouItem_Use();
+
+
+	/// <summary>
+	/// 敵を全滅させます
+	/// </summary>
+	void EnemiesKill();
+
+
+//外部クラスで使用するメソッド
+	
+
+	/// <summary>
+	/// ウィンドウ内にあるかを判定します
+	/// </summary>
+	/// <param name="position">
+	/// 座標( x , y )
+	/// </param>
+	/// <param name="scale">
+	/// 大きさ(縦 , 横)
+	/// </param>
+	/// <returns>
+	/// ウィンドウ内 true / ウィンドウ外 false
+	/// </returns>
+	bool isInWindow(const Vec2& position, const Point& scale);
+
+
+	/// <summary>
+	/// ウィンドウ内にあるかを判定します
+	/// </summary>
+	/// <param name="drawbase">
+	/// 描画矩形
+	/// </param>
+	/// <returns>
+	/// ウィンドウ内 true / ウィンドウ外 false
+	/// </returns>
+	bool isInWindow(const RectF& drawbase);
+
+
+	/// <summary>
+	/// UIとの当たり判定を行います
+	/// </summary>
+	/// <param name="drawbase">
+	/// 判定する矩形
+	/// </param>
+	/// <returns>
+	/// 接触 true / 接触していない false
+	/// </returns>
+	bool Hit(const RectF& drawbase);
+
+
+	/// <summary>
+	/// マウスの判定した後の処理
+	/// </summary>
+	void Receive_Player();
+
+
+	/// <summary>
+	/// マウスが左クリックされたかを判定します
+	/// </summary>
+	/// <returns>
+	/// 押された : true 押されていない false 
+	/// </returns>
+	bool MouseLclicked();
+
 private:
 	ObjectType objecttype;		//オブジェクトタイプ
+	bool       killcheck;		//死んでいるか？
 };
+
+
+///// <summary>
+///// 無双アイテムの当たり判定矩形を返します
+///// </summary>
+///// <returns>
+///// 無双アイテム当たり判定矩形
+///// </returns>
+//RectF getDrawBase_MusuoItem()const;

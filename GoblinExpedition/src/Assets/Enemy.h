@@ -219,9 +219,29 @@ public:
 	/// スコア
 	/// </returns>
     const int getScore();
+
+
+	/// <summary>
+	/// 無双アイテムで殺されたかのフラグを設定・変更します
+	/// </summary>
+	/// <param name="flag">
+	/// 設定するフラグ
+	/// </param>
+	void setMusouitemkill(const bool flag);
+
+
+	/// <summary>
+	/// 無双アイテムで殺されたかのフラグを返します
+	/// </summary>
+	/// <returns>
+	/// 無双アイテムで殺されたかのフラグ
+	/// </returns>
+	bool getMusouitemkill()const;
+
 private:
 	ObjectType	objecttype;					//オブジェクトタイプ
 	bool leftrightinversionflag;			//左右反転フラグ
 	bool mouse_hitflag;						//接触判定
+	bool musouitemkill;						//無双アイテムで殺されたか？
 	uint32      opaque;						//不透明度
 };

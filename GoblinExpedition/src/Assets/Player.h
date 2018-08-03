@@ -204,7 +204,7 @@ public:
 
 
 	/// <summary>
-	/// マウスと敵の当たり判定します
+	/// マウスと当たり判定をします
 	/// </summary>
 	/// <param name="target">
 	/// 判定する矩形
@@ -212,10 +212,12 @@ public:
 	/// <returns>
 	/// 接触 true / 接触していない false
 	/// </returns>
-	bool Mouse_EnemyHit(const RectF& target)const;
+	bool MouseHit(const RectF& target)const;
+
 
 private:
 	int            life;					//体力
 	Vec2		   mouse_cursor_position;	//マウスカーソル座標
 	Collider*      mouse_colider;			//マウス当たり判定
+	bool		   mouseclickcount;			//マウスclickカウント
 };

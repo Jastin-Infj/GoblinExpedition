@@ -29,6 +29,7 @@ bool Enemy::Init_Parameter(const TASKNAME& taskname_, const ObjectType& objectty
 	this->objecttype = objecttype_;
 	this->opaque = OPAQUE_INIT;
 	this->mouse_hitflag = false;
+	this->musouitemkill = false;
 
 	//追加の初期化項目
 	void(Enemy::*Func[OBJECT_TYPESIZE])() = { &Enemy::Goburin_Parameter , nullptr};
@@ -155,7 +156,7 @@ void Enemy::Mouse_Hit()
 	{
 		auto temp = player.lock();
 		//マウス処理
-		if (temp->Mouse_EnemyHit(this->collider->getHitBace()))
+		if (temp->MouseHit(this->collider->getHitBace()))
 		{
 			if (this->collider->MouseLeftPressed())
 			{
@@ -167,7 +168,7 @@ void Enemy::Mouse_Hit()
 		{
 			this->Opaque_Decrement();
 		}
-		else if (this->isOpaque_Zero() && !this->getleftrightinversionflag())
+		else if (this->isOpaque_Zero() && !this->getleftrightinversionflag() && !this->musouitemkill)
 		{
 			auto game = taskSystem->GetTask_TaskName<Game>("インゲーム");
 			if (game)
@@ -182,6 +183,16 @@ void Enemy::Mouse_Hit()
 			}
 		}
 	}
+}
+/*無双アイテムフラグを設定・変更します*/
+void Enemy::setMusouitemkill(const bool flag)
+{
+	this->musouitemkill = flag;
+}
+/*無双アイテムフラグを返します*/
+bool Enemy::getMusouitemkill()const
+{
+	return this->musouitemkill;
 }
 /*敵を生成します*/
 TaskObject::SP Enemy::Create(const TASKNAME& taskname_, const ObjectType& objecttype_, const Vec2& position_, const Point& scale_, const float& order_, const bool flag)
