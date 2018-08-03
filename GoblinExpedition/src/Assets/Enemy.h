@@ -17,7 +17,8 @@
 
 #define OBJECT_TYPESIZE     2       //敵のオブジェクトタイプ数
 
-#define SE_INITCOUNT 0				//SEの初期化値
+#define ENEMY_SE_INITCOUNT 0				//SEの初期化値
+#define ENEMY_SE_INTERVAL  11				//敵同士でのSEの感覚
 class Enemy : public GameObject
 {
 public:
@@ -249,10 +250,7 @@ public:
 	/// <summary>
 	/// 時間を指定してSEを流します
 	/// </summary>
-	/// <param name="frametime">
-	/// 設定するタイム
-	/// </param>
-	void SE_Play(const int& frametime);
+	void SE_Play_frame();
 private:
 	ObjectType	objecttype;					//オブジェクトタイプ
 	bool leftrightinversionflag;			//左右反転フラグ
@@ -262,4 +260,5 @@ private:
 	double      opaque;						//不透明度
 	Sound       se;							//消滅SE
 	int			se_frametime;				//SEのフレーム値
+	int         se_frametimeMax;			//SEのフレーム値Max
 };

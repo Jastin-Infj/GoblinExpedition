@@ -32,7 +32,18 @@ bool Enemy::Init_Parameter(const TASKNAME& taskname_, const ObjectType& objectty
 	this->musouitemkill = false;
 	this->se = rm->getSound("“GÁ–ÅSE");
 	this->se_play = false;
-	this->se_frametime = SE_INITCOUNT;
+
+	this->se_frametime = ENEMY_SE_INITCOUNT;
+	auto enemys = taskSystem->GetTasks_TaskName<Enemy>("ƒSƒuƒŠƒ“");
+	if (enemys)
+	{
+		this->se_frametimeMax = (int)enemys->size() * ENEMY_SE_INTERVAL;
+	}
+	else
+	{
+		this->se_frametimeMax = ENEMY_SE_INITCOUNT;
+	}
+
 	//’Ç‰Á‚Ì‰Šú‰»€–Ú
 	void(Enemy::*Func[OBJECT_TYPESIZE])() = { &Enemy::Goburin_Parameter , nullptr};
 	(this->*Func[(int)this->objecttype])();
@@ -211,16 +222,17 @@ void Enemy::SE_Play()
 	}
 }
 /*Á–ÅSE‚ð—¬‚µ‚Ü‚·*/
-void Enemy::SE_Play(const int& frametime)
+void Enemy::SE_Play_frame()
 {
 	if (!this->se_play)
 	{
-		this->se_play = true;
 		this->se_frametime++;
-		if (this->se_frametime >= frametime)
+		if (this->se_frametime >= this->se_frametimeMax)
 		{
-			this->SE_Play();
+			this->se.play();
+			this->se_play = true;
 		}
+		std::cout << this->se_frametime << std::endl;
 	}
 }
 /*“G‚ð¶¬‚µ‚Ü‚·*/
