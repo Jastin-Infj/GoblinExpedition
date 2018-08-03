@@ -64,7 +64,7 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 		auto score2 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 , 5), Point(32, 50), 2);
 		auto score3 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 * 2, 5), Point(32, 50), 3);
 		auto score4 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 * 3, 5), Point(32, 50), 4);
-		auto score5 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 * 3, 5), Point(32, 50), 5);
+		auto score5 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 * 4, 5), Point(32, 50), 5);
 	}
 	rm->setTexture("無双アイテム",Texture(L"./data/image/musou.png"));
 	

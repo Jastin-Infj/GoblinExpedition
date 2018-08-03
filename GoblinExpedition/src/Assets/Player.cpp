@@ -65,7 +65,7 @@ void Player::Update()
 	{
 		for (auto it = musouitems->begin(); it != musouitems->end(); ++it)
 		{
-			if ((*it)->isInWindow(this->mouse_colider->getHitBace()) && (*it)->Hit(this->mouse_colider->getHitBace()))
+			if ((*it)->Hit(this->mouse_colider->getHitBace()))
 			{
 				if ((*it)->MouseLclicked())
 				{

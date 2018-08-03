@@ -4,7 +4,7 @@
 
 #include "Player.h"
 
-#define ENEMY_SCORE				100		//倒されてたときのスコア
+#define ENEMY_SCORE				 80		//倒されてたときのスコア
 #define ENEMY_DESTROYINGSCORE     1		//撃破ポイント
 
 #define ENEMY_MOVE_SPEED_X        3		//X移動量
@@ -17,6 +17,7 @@
 
 #define OBJECT_TYPESIZE     2       //敵のオブジェクトタイプ数
 
+#define SE_INITCOUNT 0				//SEの初期化値
 class Enemy : public GameObject
 {
 public:
@@ -244,12 +245,21 @@ public:
 	/// </summary>
 	void SE_Play();
 
+
+	/// <summary>
+	/// 時間を指定してSEを流します
+	/// </summary>
+	/// <param name="frametime">
+	/// 設定するタイム
+	/// </param>
+	void SE_Play(const int& frametime);
 private:
 	ObjectType	objecttype;					//オブジェクトタイプ
 	bool leftrightinversionflag;			//左右反転フラグ
 	bool mouse_hitflag;						//接触判定
 	bool musouitemkill;						//無双アイテムで殺されたか？
 	bool se_play;							//消滅SEを流したか？
-	uint32      opaque;						//不透明度
+	double      opaque;						//不透明度
 	Sound       se;							//消滅SE
+	int			se_frametime;				//SEのフレーム値
 };

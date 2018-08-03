@@ -140,17 +140,17 @@ void UI::MusouItem_Use()
 	this->killcheck = true;
 }
 /*ウィンドウ内にあるかを判定します*/
-bool UI::isInWindow(const Vec2& position_, const Point& scale_)
+bool UI::isInWindow(const Vec2& position_)
 {
 	//ウィンドウ矩形を生成する
-	RectF window = { 0,0,Window::Size()};
-	return window.intersects(RectF(position_, scale_));
+	RectF window = { 0,0, Window::Size()};
+	return window.intersects(Vec2(position_));
 }
 /*ウィンドウ内にあるかを判定します*/
 bool UI::isInWindow(const RectF& drawbase)
 {
 	RectF window = { 0,0,Window::Size() };
-	return window.intersects(RectF(drawbase));
+	return window.intersects(Vec2(drawbase.x , drawbase.y));
 }
 /*敵を全滅させます*/
 void UI::EnemiesKill()
@@ -165,7 +165,10 @@ void UI::EnemiesKill()
 			if (this->isInWindow((*it)->getHitBace()))
 			{
 				(*it)->SE_Play();
-				(*it)->Opaque_Decrement();
+				if (!(*it)->isOpaque_Zero())
+				{
+					(*it)->Opaque_Decrement();
+				}
 				if ((*it)->isOpaque_Zero())
 				{
 					//スコアを加算

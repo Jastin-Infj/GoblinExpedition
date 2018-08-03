@@ -171,13 +171,10 @@ public:
 	/// <param name="position">
 	/// 座標( x , y )
 	/// </param>
-	/// <param name="scale">
-	/// 大きさ(縦 , 横)
-	/// </param>
 	/// <returns>
 	/// ウィンドウ内 true / ウィンドウ外 false
 	/// </returns>
-	bool isInWindow(const Vec2& position, const Point& scale);
+	bool isInWindow(const Vec2& position);
 
 
 	/// <summary>

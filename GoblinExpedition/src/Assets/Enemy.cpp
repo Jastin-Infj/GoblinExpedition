@@ -32,6 +32,7 @@ bool Enemy::Init_Parameter(const TASKNAME& taskname_, const ObjectType& objectty
 	this->musouitemkill = false;
 	this->se = rm->getSound("敵消滅SE");
 	this->se_play = false;
+	this->se_frametime = SE_INITCOUNT;
 	//追加の初期化項目
 	void(Enemy::*Func[OBJECT_TYPESIZE])() = { &Enemy::Goburin_Parameter , nullptr};
 	(this->*Func[(int)this->objecttype])();
@@ -77,27 +78,31 @@ void Enemy::Render()
 
 	if (this->getleftrightinversionflag())
 	{
-		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace(),Color(255,255,255, this->opaque) ,true);
+		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace(),Color(255,255,255, (uint32)this->opaque) ,true);
 	}
 	else
 	{
-		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace(),Color(255,255,255,this->opaque));
+		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace(),Color(255,255,255,(uint32)this->opaque));
 	}
 }
 /*不透明を割合計算で透過させます*/
 void Enemy::Opaque_Decrement()
 {
+	if (this->isOpaque_Zero())
+	{
+		return;
+	}
+	this->opaque *= OPAQUE_DECREASERATE;
 	if (this->opaque <= OPAQUE_MIN)
 	{
 		this->opaque = OPAQUE_MIN;
 	}
-	double rate_value = this->opaque * OPAQUE_DECREASERATE;
-	this->opaque = (uint32)rate_value;
+	std::cout << this->opaque << std::endl;
 }
 /*不透明度を0であるかを判定します*/
 bool Enemy::isOpaque_Zero()const
 {
-	return this->opaque == OPAQUE_MIN ? true : false;
+	return (int)this->opaque == OPAQUE_MIN ? true : false;
 }
 /*Player当たり判定矩形と接触判定を行います*/
 bool Enemy::onHitbaceExit(const RectF& target)const
@@ -126,7 +131,7 @@ void Enemy::LeftRightInversion()
 	if (!player.expired())
 	{
 		Player::SP temp = player.lock();
-		if (this->onHitbaceExit(temp->getHitBace()) && !this->getleftrightinversionflag())
+		if (this->onHitbaceExit(temp->getHitBace()) && !this->getleftrightinversionflag() && !this->isOpaque_Zero())
 		{
 			/*反転フラグをtrueにする*/
 			this->setleftrightinversionflag(true);
@@ -166,7 +171,7 @@ void Enemy::Mouse_Hit()
 			}	
 		}
 		/*左クリックが押された後の処理*/
-		if (!this->isOpaque_Zero() && this->mouse_hitflag && !this->getleftrightinversionflag())
+		if (this->mouse_hitflag && !this->isOpaque_Zero())
 		{
 			this->Opaque_Decrement();
 		}
@@ -201,8 +206,21 @@ void Enemy::SE_Play()
 {
 	if (!this->se_play)
 	{
-		this->se.play();
 		this->se_play = true;
+		this->se.play();
+	}
+}
+/*消滅SEを流します*/
+void Enemy::SE_Play(const int& frametime)
+{
+	if (!this->se_play)
+	{
+		this->se_play = true;
+		this->se_frametime++;
+		if (this->se_frametime >= frametime)
+		{
+			this->SE_Play();
+		}
 	}
 }
 /*敵を生成します*/
