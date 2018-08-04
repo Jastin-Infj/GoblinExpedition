@@ -22,6 +22,7 @@ public:
 		ScoreUI    = 2, //スコアUI
 		MusouItem  = 3, //無双アイテム
 		ResultRogo = 4,	//リザルトロゴ
+		TitleRogo  = 5, //タイトルロゴ
 	};
 
 	/// <summary>
@@ -161,6 +162,12 @@ public:
 	/// リザルトロゴの設定を行います
 	/// </summary>
 	void ResultRogo_Parameter();
+
+
+	/// <summary>
+	/// タイトルロゴの設定を行います
+	/// </summary>
+	void TitleRogo_Parameter();
 
 //外部クラスで使用するメソッド
 	

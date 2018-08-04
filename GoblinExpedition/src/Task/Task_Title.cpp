@@ -1,6 +1,8 @@
 #include "Task_Title.h"
 #include "../TaskSystem/TaskSystem.h"
+#include "../ResourceManager/ResourceManager.h"
 #include "../Task/Task_Game.h"
+#include "../Assets/UI.h"
 #include <iostream>
 using TASKNAME = std::pair<std::string, std::string>;
 
@@ -22,12 +24,15 @@ Title::~Title()
 
 }
 /* 初期化処理 */
-bool Title::Init(const TASKNAME& taskname_)
+bool Title::Init(const std::pair<std::string,std::string>& taskname_)
 {
 	__super::setTaskName(taskname_);
 	this->setDrawOrder(1.0f);
 
 	//追加したいオブジェクトをここに記述する
+
+	rm->setTexture("タイトルロゴ",Texture(L"./data/image/Title.png"));
+	auto titlerogo = UI::Create(TASKNAME("UI", "タイトルロゴ"), UI::ObjectType::TitleRogo, Vec2(Window::Center().x - 256 / 2, 0), Point(256, 96));
 
 	return true;
 }
@@ -42,17 +47,16 @@ void Title::Update()
 /*描画処理*/
 void Title::Render()
 {
-	this->draw->PaletteColorDraw(RectF(0, 0, Window::Size()),Color(125,125,0));
+	
 }
 /*解放処理*/
 bool Title::Finalize()
 {
-	if (this->draw)
+	auto uis = taskSystem->GetTasks_GroupName<UI>("UI");
+	for (auto it = uis->begin(); it != uis->end(); ++it)
 	{
-		delete this->draw;
-		this->draw = nullptr;
+		(*it)->Kill();
 	}
-
 	if (System::Update())
 	{
 		auto game = Game::Create(TASKNAME("シーン","インゲーム"));
@@ -67,7 +71,7 @@ TaskObject::SP Title::Create(const std::pair<std::string, std::string>& taskname
 	{
 		/*自分のデータを渡す*/
 		to->me = to;
-		if (!to->CreatedObjectInit(taskname))
+		if (!to->Init(taskname))
 		{
 			to->Kill();
 		}

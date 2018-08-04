@@ -1,6 +1,5 @@
 #pragma once
 #include "../TaskSystem/TaskObject.h"
-#include "../InterFace/DrawInterFace.hpp"
 class Title : public TaskObject
 {
 public:
@@ -55,5 +54,5 @@ public:
 	static TaskObject::SP Create(const std::pair<std::string, std::string>& taskname, bool flag = true);
 
 private:
-	DrawInterFace* draw;		//•`‰æ‹@”\
+
 };

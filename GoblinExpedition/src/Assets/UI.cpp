@@ -37,7 +37,8 @@ bool UI::Init_Parameter(const TASKNAME& taskname_, const ObjectType& objecttype_
 		&UI::Player_Life_Parameter,
 		&UI::ScoreUI_Parameter,
 		&UI::MusouItem_Parameter,
-		&UI::ResultRogo_Parameter
+		&UI::ResultRogo_Parameter,
+		&UI::TitleRogo_Parameter
 	};
 	(this->*function[(int)this->objecttype])();
 
@@ -74,6 +75,9 @@ void UI::Render()
 		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
 		break;
 	case ObjectType::ResultRogo:
+		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
+		break;
+	case ObjectType::TitleRogo:
 		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
 		break;
 	default:
@@ -131,6 +135,12 @@ void UI::ResultRogo_Parameter()
 {
 	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0,0,536,106));
 	this->draw->setTexture(rm->getTexture("リザルトロゴ"));
+}
+/*タイトルロゴの設定を行います*/
+void UI::TitleRogo_Parameter()
+{
+	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0, 0, 418, 64));
+	this->draw->setTexture(rm->getTexture("タイトルロゴ"));
 }
 //★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 
