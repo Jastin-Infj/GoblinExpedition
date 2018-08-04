@@ -3,11 +3,13 @@
 
 /*追加したいタスクはここに入力*/
 #include "Task_Game.h"
+#include "Task_Title.h"
 
+using TASKNAME = std::pair<std::string, std::string>;
 
 void TaskStartCreate()
 {
-	auto game = Game::Create(std::pair<std::string, std::string>("シーン","インゲーム"));
+	auto title = Title::Create(TASKNAME("シーン","タイトル"));
 }
 void Init()
 {

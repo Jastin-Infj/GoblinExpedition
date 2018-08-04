@@ -60,11 +60,18 @@ public:
 	bool Finalize()override;
 
 
-	///<summary>
-	///<para>オブジェクトを生成します</para>
-	///<para>引数: グループ名・タスク名 , (タスクシステムに登録するか)
-	///<returns>オブジェクトのスマートポインタを返します</returns>
-	///</summary>
+	/// <summary>
+	/// ゲームシーンを生成します
+	/// </summary>
+	/// <param name="taskname">
+	/// ゲームシーン名(グループ名・タスク名)
+	/// </param>
+	/// <param name="flag">
+	/// タスクシステムに登録をするか true / false
+	/// </param>
+	/// <returns>
+	/// ゲームシーンのポインタ
+	/// </returns>
 	static TaskObject::SP Create(const std::pair<std::string, std::string>& taskname, bool flag = true);
 
 

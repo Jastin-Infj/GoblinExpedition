@@ -5,6 +5,7 @@
 
 #include "../Assets/UI.h"
 #include "../Assets/Score.h"
+#include "Task_Title.h"
 
 /*コンストラクタ*/
 Result::Result()
@@ -57,7 +58,10 @@ void Result::set_gameData(const int& score_, const int& destroyingcount_)
 /*更新処理*/
 void Result::Update()
 {
-
+	if (Input::KeyS.pressed)
+	{
+		this->Kill();
+	}
 }
 /*解放処理*/
 bool Result::Finalize()
@@ -66,6 +70,11 @@ bool Result::Finalize()
 	for (auto it = uis->begin(); it != uis->end(); ++it)
 	{
 		(*it)->Kill();
+	}
+
+	if (System::Update())
+	{
+		auto title = Title::Create(TASKNAME("シーン", "タイトル"));
 	}
 	return true;
 }

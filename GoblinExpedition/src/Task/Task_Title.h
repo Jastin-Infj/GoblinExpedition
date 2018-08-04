@@ -1,8 +1,13 @@
 #pragma once
 #include "../TaskSystem/TaskObject.h"
+#include "../InterFace/DrawInterFace.hpp"
 class Title : public TaskObject
 {
 public:
+	typedef std::shared_ptr<Title> SP;		//シェアポインタ
+	typedef std::weak_ptr<Title>   WP;		//ウィークポインタ
+
+
 	///<summary>
 	///コンストラクタ
 	///</summary>
@@ -32,7 +37,7 @@ public:
 	///<summary>
 	///描画処理 使用しない
 	///</summary>
-	void Render()override {};
+	void Render()override;
 
 
 	///<summary>
@@ -48,4 +53,7 @@ public:
 	///<returns>オブジェクトのスマートポインタを返します</returns>
 	///</summary>
 	static TaskObject::SP Create(const std::pair<std::string, std::string>& taskname, bool flag = true);
+
+private:
+	DrawInterFace* draw;		//描画機能
 };
