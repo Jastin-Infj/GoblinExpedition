@@ -60,11 +60,11 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 	}
 	{
 		rm->setTexture("スコア", Texture(L"./data/image/Math.png"));
-		auto score1 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130, 5), Point(32, 50), 1);
-		auto score2 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 , 5), Point(32, 50), 2);
-		auto score3 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 * 2, 5), Point(32, 50), 3);
-		auto score4 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 * 3, 5), Point(32, 50), 4);
-		auto score5 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 * 4, 5), Point(32, 50), 5);
+		auto score1 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130, 5), Point(32, 50),1);
+		auto score2 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 , 5), Point(32, 50),2);
+		auto score3 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 * 2, 5), Point(32, 50),3);
+		auto score4 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 * 3, 5), Point(32, 50),4);
+		auto score5 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 * 4, 5), Point(32, 50),5);
 	}
 	rm->setTexture("無双アイテム",Texture(L"./data/image/musou.png"));
 	
@@ -114,7 +114,7 @@ bool Game::Finalize()
 	//アプリケーションが起動中
 	if (System::Update())
 	{
-		auto nexttask = Result::Create(TASKNAME("シーン", "リザルト"));
+		auto nexttask = Result::Create(TASKNAME("シーン", "リザルト"),this->score , this->enemy_destroyingcount);
 	}
 	return true;
 }

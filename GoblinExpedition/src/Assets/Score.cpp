@@ -19,7 +19,7 @@ Score::~Score()
 #endif // _DEBUG
 }
 /*スコアの初期化設定を行います*/
-bool Score::Score_Parameter(const TASKNAME& taskname_, const Vec2& position_, const Point& scale_, const int& digit_ , const float& order_)
+bool Score::Score_Parameter(const TASKNAME& taskname_, const Vec2& position_, const Point& scale_,const int& digit_ ,const int& score_ , const float& order_)
 {
 	__super::setTaskName(taskname_);
 	this->position = position_;
@@ -31,11 +31,7 @@ bool Score::Score_Parameter(const TASKNAME& taskname_, const Vec2& position_, co
 	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale));
 	this->draw->setTexture(rm->getTexture("スコア"));
 
-	auto game = taskSystem->GetTask_TaskName<Game>("インゲーム");
-	if (game)
-	{
-		this->score = game->getScore();
-	}
+	this->score = score_;
 
 	return true;
 }
@@ -136,12 +132,12 @@ void Score::setvalueSrc(const std::string& value)
 	}
 }
 /*スコアの生成をします*/
-TaskObject::SP Score::Create(const TASKNAME& taskname_, const Vec2& position_, const Point& scale_,const int& digit_  ,const float& order_, bool flag)
+TaskObject::SP Score::Create(const TASKNAME& taskname_, const Vec2& position_, const Point& scale_,const int& digit_ , const int& score_  ,const float& order_, bool flag)
 {
 	Score::SP score = Score::SP(new Score());
 	if (score)
 	{
-		if (!score->Score_Parameter(taskname_ , position_ , scale_ , digit_ , order_))
+		if (!score->Score_Parameter(taskname_ , position_ , scale_ ,digit_ ,score_,order_))
 		{
 			score->Kill();
 		}

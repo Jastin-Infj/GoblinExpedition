@@ -39,6 +39,9 @@ public:
 	/// <param name="digit_">
 	/// 数字の桁数
 	/// </param>
+	/// <param name="score_">
+	/// 対象のスコア
+	/// </param>
 	/// <param name="order_">
 	/// 描画優先順位
 	/// </param>
@@ -50,6 +53,7 @@ public:
 		const Vec2&       position_,
 		const Point&      scale_,
 		const int&        digit_,
+		const int&        score_,
 		const float&      order_
 		);
 
@@ -69,6 +73,9 @@ public:
 	/// <param name="digit_">
 	/// 割り当てる桁数
 	/// </param>
+	/// <param name="score_">
+	/// 対象にするスコア
+	/// </param>
 	/// <param name="order_">
 	/// 描画優先順位
 	/// </param>
@@ -81,8 +88,9 @@ public:
 	static TaskObject::SP Create(
 		const TASKNAME&   taskname_, 
 		const Vec2&       position_, 
-		const Point&      scale_, 
+		const Point&      scale_,
 		const int&        digit_,
+		const int&        score_ = 0,
 		const float&      order_ = 1.0f, 
 		bool              flag = true
 		);
