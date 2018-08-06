@@ -3,6 +3,7 @@
 #include "../TaskSystem/TaskSystem.h"
 #include "UI.h"
 
+#include "../Task/Task_Game.h"
 /*コンストラクタ*/
 Player::Player()
 {
@@ -77,9 +78,41 @@ void Player::Update()
 				}
 				else
 				{
-					mouseclickcount = 0;
+					this->mouseclickcount = 0;
 				}
 			}
+		}
+	}
+
+	UI::WP escape = taskSystem->GetTask_TaskName<UI>("エスケープロゴ");
+	if (!escape.expired())
+	{
+		UI::SP temp = escape.lock();
+		if (temp->Hit(this->mouse_colider->getHitBace()))
+		{
+			if (temp->MouseLclicked())
+			{
+				if (this->mouseclickcount == 0)
+				{
+					temp->Receive_Player();
+					this->mouseclickcount++;
+				}
+				else
+				{
+					this->mouseclickcount = 0;
+				}
+			}
+		}
+	}
+
+
+	if (this->isLifeZero())
+	{
+		Game::WP game = taskSystem->GetTask_TaskName<Game>("インゲーム");
+		if (!game.expired())
+		{
+			Game::SP temp = game.lock();
+			temp->ChengeGameState(Game::GameState::LifeZero);
 		}
 	}
 }

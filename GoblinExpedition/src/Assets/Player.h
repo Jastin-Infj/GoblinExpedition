@@ -1,9 +1,11 @@
 #pragma once
 #include "GameObject.h"
 
+#define PLAYER_LIFE_INIT      2             //ライフ値　初期化値
 #define PLAYER_LIFE_MIN       1				//ライフ値　最低値
 #define PLAYER_LIFE_MAX       10			//ライフ値　上限値
 #define PLAYER_LIFE_DECREMENT 1				//ライフ値　減少値
+
 
 #define MOUSE_SCALE_W         2				//マウス処理 縦
 #define MOUSE_SCALE_H         2				//マウス処理 横

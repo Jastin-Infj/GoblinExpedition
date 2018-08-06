@@ -7,7 +7,7 @@
 
 #define ENEMY_DESTROYINGCOUNT_INIT  0		//敵の撃破数　初期化値
 #define ENEMY_DESTROYINGCOUNT_MIN   0		//敵の撃破数　最小値
-#define ENEYMY_DESTROYINGCOUNT_MAX  999		//敵の撃破数　最大値
+#define ENEMY_DESTROYINGCOUNT_MAX  999		//敵の撃破数　最大値
 
 #define SCORE_INIT        0			//スコアの初期化値
 #define SCORE_MIN         0			//スコアの最小値
@@ -18,8 +18,19 @@
 class Game : public TaskObject
 {
 public:
-	typedef std::shared_ptr<Game> SP;
+	typedef std::shared_ptr<Game> SP;		//シェアポインタ
+	typedef std::weak_ptr<Game>   WP;		//ウィークポインタ
 
+
+	/// <summary>
+	/// ゲームの状況を示す
+	/// </summary>
+	enum class GameState
+	{
+		Normal,		//通常状態
+		LifeZero,	//ライフが0
+		ESCAPE,		//エスケープが押された
+	};
 
 	///<summary>
 	///コンストラクタ
@@ -124,8 +135,26 @@ public:
 	void MusouItem_Create();
 
 
+	/// <summary>
+	/// ゲーム状況を変化させます
+	/// </summary>
+	/// <param name="gamestate">
+	/// 変化させるゲーム状態
+	/// </param>
+	void ChengeGameState(const GameState gamestate);
+
+
+	/// <summary>
+	/// ゲーム状況を返します
+	/// </summary>
+	/// <returns>
+	/// ゲーム状況
+	/// </returns>
+	GameState getGameState()const;
+
 private:
 	float enemycreatetime;				//敵が生成するまでの時間
 	int   score;						//スコア
 	int   enemy_destroyingcount;		//敵の撃破数
+	GameState gamestate;				//今のゲーム状況
 };

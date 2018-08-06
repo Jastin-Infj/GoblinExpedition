@@ -23,6 +23,7 @@ public:
 		MusouItem  = 3, //無双アイテム
 		ResultRogo = 4,	//リザルトロゴ
 		TitleRogo  = 5, //タイトルロゴ
+		ESCAPERogo = 6, //エスケープ
 	};
 
 	/// <summary>
@@ -153,6 +154,12 @@ public:
 
 
 	/// <summary>
+	/// ゲームを終了させます
+	/// </summary>
+	void Escape_Use();
+
+
+	/// <summary>
 	/// 敵を全滅させます
 	/// </summary>
 	void EnemiesKill();
@@ -168,6 +175,13 @@ public:
 	/// タイトルロゴの設定を行います
 	/// </summary>
 	void TitleRogo_Parameter();
+
+
+	/// <summary>
+	/// エスケープロゴの設定を行います
+	/// </summary>
+	void Escape_Parameter();
+
 
 //外部クラスで使用するメソッド
 	

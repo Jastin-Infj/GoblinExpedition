@@ -38,7 +38,7 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 	this->enemycreatetime = 0.0f;
 	this->enemy_destroyingcount = ENEMY_DESTROYINGCOUNT_INIT;
 
-	//追加したいオブジェクトをここに記述する
+	this->gamestate = GameState::Normal;
 	
 	/*ResourceManagerにリソースを追加する*/
 	{
@@ -52,7 +52,7 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 		auto enemy = Enemy::Create(TASKNAME("モンスター", "ゴブリン") ,Enemy::ObjectType::Goburin ,Vec2(-48, Window::Size().y / 2), Point(64, 64), 0.8f);
 	}
 	{
-		auto player = Player::Create(TASKNAME("プレイヤ", "自キャラ"),Vec2(Window::Size().x - 32 ,Window::Size().y / 2), Point{32,32} , 5 , 0.8f);
+		auto player = Player::Create(TASKNAME("プレイヤ", "自キャラ"),Vec2(Window::Size().x - 32 ,Window::Size().y / 2), Point{32,32} , PLAYER_LIFE_INIT , 0.8f);
 	}
 	{
 		rm->setTexture("スコアUI", Texture(L"./data/image/Score.png"));
@@ -66,6 +66,10 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 		auto score4 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 * 3, 5), Point(32, 50),4);
 		auto score5 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 * 4, 5), Point(32, 50),5);
 	}
+	{
+		rm->setTexture("エスケープロゴ", Texture(L"./data/image/escape.png"));
+		auto escape = UI::Create(TASKNAME("UI", "エスケープロゴ"), UI::ObjectType::ESCAPERogo, Vec2(Window::Size().x - 128, Window::Size().y - 48), Point(128, 48));
+	}
 	rm->setTexture("無双アイテム",Texture(L"./data/image/musou.png"));
 	
 	return true;
@@ -78,9 +82,15 @@ void Game::Update()
 	if (!player.expired())
 	{
 		Player::SP temp = player.lock();
-		if (temp->isLifeZero())
+		if (this->gamestate == GameState::LifeZero)
 		{
+			this->score = SCORE_MIN;
+			this->enemy_destroyingcount = ENEMY_DESTROYINGCOUNT_MIN;
 			//リザルト画面処理へ行く瞬間
+			this->Kill();
+		}
+		else if(this->gamestate == GameState::ESCAPE)
+		{
 			this->Kill();
 		}
 	}
@@ -109,8 +119,6 @@ bool Game::Finalize()
 	{
 		(*it)->Kill();
 	}
-
-
 	//アプリケーションが起動中
 	if (System::Update())
 	{
@@ -171,10 +179,20 @@ void Game::Enemy_DestroyingCount_Add(const int& destoyingcount)
 {
 	this->enemy_destroyingcount += destoyingcount;
 	/*上限値に来たら停止させる*/
-	if (this->enemy_destroyingcount > ENEYMY_DESTROYINGCOUNT_MAX)
+	if (this->enemy_destroyingcount > ENEMY_DESTROYINGCOUNT_MAX)
 	{
-		this->enemy_destroyingcount = ENEYMY_DESTROYINGCOUNT_MAX;
+		this->enemy_destroyingcount = ENEMY_DESTROYINGCOUNT_MAX;
 	}
+}
+/*ゲーム状況を変更・設定します*/
+void Game::ChengeGameState(const GameState gamestate_)
+{
+	this->gamestate = gamestate_;
+}
+/*ゲーム状況を返します*/
+Game::GameState Game::getGameState()const
+{
+	return this->gamestate;
 }
 /*オブジェクトを生成します*/
 TaskObject::SP Game::Create(const std::pair<std::string, std::string>& taskname, bool flag)

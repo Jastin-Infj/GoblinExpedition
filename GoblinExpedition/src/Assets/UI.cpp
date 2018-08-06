@@ -38,7 +38,8 @@ bool UI::Init_Parameter(const TASKNAME& taskname_, const ObjectType& objecttype_
 		&UI::ScoreUI_Parameter,
 		&UI::MusouItem_Parameter,
 		&UI::ResultRogo_Parameter,
-		&UI::TitleRogo_Parameter
+		&UI::TitleRogo_Parameter,
+		&UI::Escape_Parameter
 	};
 	(this->*function[(int)this->objecttype])();
 
@@ -78,6 +79,9 @@ void UI::Render()
 		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
 		break;
 	case ObjectType::TitleRogo:
+		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
+		break;
+	case ObjectType::ESCAPERogo:
 		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
 		break;
 	default:
@@ -142,12 +146,29 @@ void UI::TitleRogo_Parameter()
 	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0, 0, 418, 64));
 	this->draw->setTexture(rm->getTexture("タイトルロゴ"));
 }
+/*エスケープロゴの設定を行います*/
+void UI::Escape_Parameter()
+{
+	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0, 0, 285, 88));
+	this->draw->setTexture(rm->getTexture("エスケープロゴ"));
+	this->collider = Collider::Addcomponent(Collider::ShapeHitType::Cube, this->position,this->scale);
+}
 //★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 
 /*無双アイテムを使用します*/
 void UI::MusouItem_Use()
 {
 	this->killcheck = true;
+}
+/*ゲームを終了させます*/
+void UI::Escape_Use()
+{
+	Game::WP game = taskSystem->GetTask_TaskName<Game>("インゲーム");
+	if (!game.expired())
+	{
+		Game::SP temp = game.lock();
+		temp->ChengeGameState(Game::GameState::ESCAPE);
+	}
 }
 /*ウィンドウ内にあるかを判定します*/
 bool UI::isInWindow(const Vec2& position_)
@@ -199,7 +220,15 @@ void UI::EnemiesKill()
 /*マウスの判定した後の処理*/
 void UI::Receive_Player()
 {
-	this->MusouItem_Use();
+	switch (this->objecttype)
+	{
+	case ObjectType::MusouItem:		//無双アイテムの使用
+		this->MusouItem_Use();
+		break;
+	case ObjectType::ESCAPERogo:	//エスケープが押された
+		this->Escape_Use();
+		break;
+	}
 }
 /*左クリックが押されたかを判定します*/
 bool UI::MouseLclicked()
