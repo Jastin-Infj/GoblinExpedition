@@ -36,10 +36,12 @@ bool HowPlay::Init(const std::pair<std::string, std::string>& taskname_)
 /* XVˆ— */
 void HowPlay::Update()
 {
+	//‰¼ˆ—
 	if (Input::KeyS.clicked)
 	{
 		this->Kill();
 	}
+
 }
 /*•`‰æˆ—*/
 void HowPlay::Render()
@@ -83,3 +85,4 @@ TaskObject::SP HowPlay::Create(const std::pair<std::string, std::string>& taskna
 	}
 	return nullptr;
 }
+/**/

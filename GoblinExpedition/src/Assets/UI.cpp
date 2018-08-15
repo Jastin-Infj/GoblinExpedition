@@ -109,7 +109,7 @@ void UI::MusouItem_Parameter()
 {
 	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0, 0, 64, 64));
 	this->draw->setTexture(rm->getTexture("無双アイテム"));
-	this->collider = Collider::Addcomponent(Collider::ShapeHitType::Cube,this->position,this->scale);
+	this->collider = Collider::Addcomponent(Collider::ShapeT::RectF,this->position,this->scale);
 }
 /*リザルトロゴの設定を行います*/
 void UI::ResultRogo_Parameter()
@@ -128,7 +128,7 @@ void UI::Escape_Parameter()
 {
 	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0, 0, 285, 88));
 	this->draw->setTexture(rm->getTexture("エスケープロゴ"));
-	this->collider = Collider::Addcomponent(Collider::ShapeHitType::Cube, this->position,this->scale);
+	this->collider = Collider::Addcomponent(Collider::ShapeT::RectF, this->position,this->scale);
 }
 /*遊び方UIの設定を行います*/
 void UI::HowplayUI_Parameter()
@@ -141,7 +141,7 @@ void UI::TotitleUI_Parameter()
 {
 	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0, 0, 606, 135));
 	this->draw->setTexture(rm->getTexture("タイトルへ戻る"));
-	this->collider = Collider::Addcomponent(Collider::ShapeHitType::Cube, this->position, this->scale);
+	this->collider = Collider::Addcomponent(Collider::ShapeT::RectF, this->position, this->scale);
 }
 //★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 

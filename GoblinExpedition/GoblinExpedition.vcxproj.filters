@@ -512,5 +512,8 @@
     <ClInclude Include="src\Task\Task_HowPlay.h">
       <Filter>ソース ファイル\Task\HowPlay</Filter>
     </ClInclude>
+    <ClInclude Include="src\InterFace\ShapeMouseCursor.hpp">
+      <Filter>ソース ファイル\InterFace</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

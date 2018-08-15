@@ -171,22 +171,10 @@ public:
 
 
 	/// <summary>
-	/// オブジェクトグループ名を指定して、当たり判定を行います
+	/// マウスの当たり判定を毎フレーム検知します
 	/// </summary>
-	/// <param name="groupname">
-	/// 検索するグループ名
-	/// </param>
-	void MouseHittoObjectGroupName_update(const std::string& groupname);
+	void Mousehitupdate();
 
-
-	/// <summary>
-	/// オブジェクト名を指定して、当たり判定を行います
-	/// </summary>
-	/// <param name="taskname_">
-	/// 検索するオブジェクト名
-	/// </param>
-	void MouseHittoObjectName_update(const std::string& taskname_);
-	
 
 /*外部クラスでメソッド使用*/
 

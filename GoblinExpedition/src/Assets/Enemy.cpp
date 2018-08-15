@@ -62,12 +62,12 @@ void Enemy::Update()
 	if (this->getleftrightinversionflag())
 	{
 		this->move->setMovespeed(Point(-ENEMY_MOVE_SPEED_X, 0));
-		this->collider->setHitBace(this->position, this->scale);
+		this->collider->sethitbace(this->position, this->scale);
 	}
 	else
 	{
 		this->move->setMovespeed(Point(ENEMY_MOVE_SPEED_X, 0));
-		this->collider->setHitBace(this->position, this->scale);
+		this->collider->sethitbace(this->position, this->scale);
 	}
 	this->move->UniformLinearMotion(this->position);
 	
@@ -157,7 +157,7 @@ bool Enemy::OutsideMap()
 /*当たり判定矩形を返します*/
 RectF Enemy::getHitBace()const
 {
-	return this->collider->getHitBace();
+	return this->collider->gethitbaceRect();
 }
 /*スコアを返します*/
 const int Enemy::getScore()
@@ -172,7 +172,7 @@ void Enemy::Mouse_Hit()
 	{
 		auto temp_player = player.lock();
 		//マウス処理
-		if (temp_player->MouseHit(this->collider->getHitBace()))
+		if (temp_player->MouseHit(this->collider->gethitbaceRect()))
 		{
 			if (this->collider->MouseLeftPressed())
 			{
@@ -264,7 +264,7 @@ void Enemy::Goburin_Parameter()
 	this->draw->setTexture(rm->getTexture("ゴブリン"));
 
 	//当たり判定の設定
-	this->collider = Collider::Addcomponent(Collider::ShapeHitType::Cube, this->position, this->scale);
+	this->collider = Collider::Addcomponent(Collider::ShapeT::RectF,this->position, this->scale);
 
 	//初期移動量の設定
 	this->move = MoveInterFace::Addcomponent(Point(ENEMY_MOVE_SPEED_X, ENEMY_MOVE_SPEED_Y));

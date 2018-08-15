@@ -1,5 +1,6 @@
 #pragma once
 #include "../TaskSystem/TaskObject.h"
+#include "../InterFace/ShapeMouseCursor.hpp"
 
 class HowPlay : public TaskObject
 {
@@ -67,6 +68,8 @@ public:
 	/// </returns>
 	static TaskObject::SP Create(const std::pair<std::string, std::string>& taskname, bool flag = true);
 
+
 private:
 
+private:
 };

@@ -305,6 +305,7 @@
     <ClInclude Include="src\InterFace\Collider.hpp" />
     <ClInclude Include="src\InterFace\DrawInterFace.hpp" />
     <ClInclude Include="src\InterFace\EffectInterFace.hpp" />
+    <ClInclude Include="src\InterFace\ShapeMouseCursor.hpp" />
     <ClInclude Include="src\InterFace\MoveInterFace.hpp" />
     <ClInclude Include="src\ResourceManager\ResourceManager.h" />
     <ClInclude Include="src\TaskSystem\TaskObject.h" />

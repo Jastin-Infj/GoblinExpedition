@@ -9,6 +9,7 @@
 #include "../InterFace/Collider.hpp"			//当たり判定
 #include "../InterFace/DrawInterFace.hpp"		//描画機能
 #include "../InterFace/MoveInterFace.hpp"		//移動機能
+#include "../InterFace/ShapeMouseCursor.hpp"	//マウスカーソル図形機能
 
 using TASKNAME = std::pair<std::string, std::string>;
 
@@ -66,10 +67,11 @@ public:
 protected:
 	Vec2  position;					//現在の座標
 	Point scale;					//オブジェクトの大きさ
-	float          order;			//描画優先順位
-	Collider*      collider;		//当たり判定
-	DrawInterFace* draw;			//描画機能
-	MoveInterFace* move;			//移動機能
+	float             order;		//描画優先順位
+	Collider*         collider;		//当たり判定
+	DrawInterFace*    draw;			//描画機能
+	MoveInterFace*    move;			//移動機能
+	ShapeMouseCursor* shapemouse;	//マウス図形
 };
 
 

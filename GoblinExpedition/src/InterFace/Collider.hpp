@@ -7,31 +7,55 @@
 class Collider
 {
 public:
-	/// <summary>
-	/// 当たり判定図形タイプ
-	/// </summary>
-	enum class ShapeHitType
-	{
-		Cube,	//矩形
-	};
 
-	
+	using ShapeT = Shape::Type;		//図形のタイプ
+
+
 	/// <summary>
-	/// コンストラクタ
+	/// コンストラクタ(矩形)
 	/// </summary>
 	/// <param name="shapehittype_">
 	/// 当たり判定の図形
 	/// </param>
-	/// <param name="position_">
-	/// 当たり判定座標
+	/// <param name="rectf">
+	/// 生成した小数点座標ありの矩形
 	/// </param>
-	/// <param name="scale_">
-	/// 当たり判定サイズ 
-	/// </param>
-	Collider(const ShapeHitType& shapehittype_, const Vec2& position_, const Point& scale_)
+	Collider(const ShapeT& shapetype_,const RectF& rectf)
 		:
-		shapehittype(shapehittype_),
-		hitbace(position_ , scale_)
+		shapehittype(shapetype_),
+		hitbaceRect(rectf)
+	{}
+
+
+	/// <summary>
+	/// コンストラクタ(矩形)
+	/// </summary>
+	/// <param name="shapehittype_">
+	/// 当たり判定の図形
+	/// </param>
+	/// <param name="circle">
+	/// 生成した円
+	/// </param>
+	explicit Collider(const ShapeT& shapetype_, const Rect& rect)
+		:
+		shapehittype(shapetype_),
+		hitbaceRect(rect)
+	{}
+
+
+	/// <summary>
+	/// コンストラクタ(円)
+	/// </summary>
+	/// <param name="shapehittype_">
+	/// 当たり判定の図形
+	/// </param>
+	/// <param name="circle">
+	/// 生成した円
+	/// </param>
+	explicit Collider(const ShapeT& shapetype_,const Circle& circle)
+		:
+		shapehittype(shapetype_),
+		hitbaceCircle(circle)
 	{}
 
 
@@ -45,14 +69,50 @@ public:
 	/// 当たり判定座標
 	/// </param>
 	/// <param name="scale_">
-	/// 当たり判定サイズ 
+	/// 当たり判定サイズ
 	/// </param>
 	/// <returns>
 	/// 生成したコライダーのアドレス
 	/// </returns>
-	static Collider* Addcomponent(const ShapeHitType& shapehittype_, const Vec2& position_, const Point& scale_)
+	static Collider* Addcomponent(const ShapeT& shapehittype_, const Vec2& position_, const Point& scale_)
 	{
-		return new Collider(shapehittype_, position_, scale_);
+		switch (shapehittype_)
+		{
+		case ShapeT::Rect:
+			return new Collider(shapehittype_, Rect((int)position_.x , (int)position_.y , scale_));
+			break;
+		case ShapeT::RectF:
+			return new Collider(shapehittype_, RectF(position_, scale_));
+			break;
+		}
+		return nullptr;
+	}
+
+
+	/// <summary>
+	/// コライダーを追加します
+	/// </summary>
+	/// <param name="shapehittype_">
+	/// 当たり判定の図形
+	/// </param>
+	/// <param name="position_">
+	/// 当たり判定座標
+	/// </param>
+	/// <param name="scale_">
+	/// 当たり判定サイズ
+	/// </param>
+	/// <returns>
+	/// 生成したコライダーのアドレス
+	/// </returns>
+	static Collider* Addcomponent(const ShapeT& shapehittype_, const Vec2& position_, const double& scale_)
+	{
+		switch (shapehittype_)
+		{
+		case ShapeT::Circle:
+			return new Collider(shapehittype_, Circle(position_.x, position_.y, scale_));
+			break;
+		}
+		return nullptr;
 	}
 
 
@@ -68,7 +128,7 @@ public:
 	template <class Shape>
 	bool Hit(const Shape& shape)
 	{
-		return this->hitbace.intersects(shape);
+		return this->hitbaceRect.intersects(shape);
 	}
 
 
@@ -80,7 +140,7 @@ public:
 	/// </returns>
 	bool MouseOver()
 	{
-		return this->hitbace.mouseOver;
+		return this->hitbaceRect.mouseOver;
 	}
 	
 
@@ -92,7 +152,7 @@ public:
 	/// </returns>
 	bool MouseLeftPressed()
 	{
-		return this->hitbace.leftPressed;
+		return this->hitbaceRect.leftPressed;
 	}
 
 
@@ -102,7 +162,7 @@ public:
 	/// <returns></returns>
 	bool MouseLeftClicked()
 	{
-		return this->hitbace.leftClicked;
+		return this->hitbaceRect.leftClicked;
 	}
 
 
@@ -112,26 +172,23 @@ public:
 	/// <returns>
 	/// 当たり判定矩形
 	/// </returns>
-	RectF getHitBace()const
+	RectF gethitbaceRect()const
 	{
-		return hitbace;
+		return this->hitbaceRect;
 	}
 
-	
+
 	/// <summary>
-	/// 当たり判定矩形を設定・変更します
+	/// 当たり判定の円を返します
 	/// </summary>
-	/// <param name="pos">
-	/// 当たり判定座標
-	/// </param>
-	/// <param name="scale">
-	/// 当たり判定サイズ
-	/// </param>
-	void setHitBace(const Point& pos , const Point& scale)
+	/// <returns>
+	/// 当たり判定の円
+	/// </returns>
+	Circle gethitbaceCircle()const
 	{
-		this->hitbace = { pos,scale };
+		return this->hitbaceCircle;
 	}
-	
+
 
 	/// <summary>
 	/// 当たり判定矩形を設定・変更します
@@ -142,11 +199,40 @@ public:
 	/// <param name="scale">
 	/// 当たり判定サイズ
 	/// </param>
-	void setHitBace(const Vec2& pos, const Point& scale)
+	void sethitbace(const Vec2& pos, const Point& scale)
 	{
-		this->hitbace = { pos,scale };
+		switch (this->shapehittype)
+		{
+		case ShapeT::Rect:
+			this->hitbaceRect = { pos , scale };
+			break;
+		case ShapeT::RectF:
+			this->hitbaceRect = { pos , scale };
+			break;
+		}
+	}
+
+
+	/// <summary>
+	/// 当たり判定矩形を設定・変更します
+	/// </summary>
+	/// <param name="pos">
+	/// 当たり判定座標
+	/// </param>
+	/// <param name="scale">
+	/// 当たり判定サイズ
+	/// </param>
+	void sethitbace(const Vec2& pos, const double& scale)
+	{
+		switch (this->shapehittype)
+		{
+		case ShapeT::Circle:
+			this->hitbaceCircle = { pos , scale };
+			break;
+		}
 	}
 private:
-	ShapeHitType shapehittype;	//当たり判定の形
-	RectF        hitbace;		//当たり判定矩形
+	ShapeT		 shapehittype;		//当たり判定の形
+	RectF        hitbaceRect;		//当たり判定矩形
+	Circle       hitbaceCircle;		//当たり判定円
 };

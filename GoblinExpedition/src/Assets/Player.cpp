@@ -33,8 +33,8 @@ bool Player::Init_Parameter(const TASKNAME& taskname_ , const Vec2& position_, c
 	this->life = life_;
 
 	//追加の初期化項目
-	this->collider = Collider::Addcomponent(Collider::ShapeHitType::Cube, Vec2(this->position.x - this->scale.x, 0), Point(8, Window::Size().y));
-	this->mouse_colider = Collider::Addcomponent(Collider::ShapeHitType::Cube, Vec2(this->mouse_cursor_position), Point(MOUSE_SCALE_W, MOUSE_SCALE_H));
+	this->collider = Collider::Addcomponent(Collider::ShapeT::RectF, Vec2(this->position.x - this->scale.x, 0), Point(8, Window::Size().y));
+	this->mouse_colider = Collider::Addcomponent(Collider::ShapeT::RectF, Vec2(this->mouse_cursor_position), Point(MOUSE_SCALE_W, MOUSE_SCALE_H));
 	this->draw = DrawInterFace::Addcomponent(RectF(this->position,this->scale));
 
 	this->LifeUICreate();
@@ -55,25 +55,11 @@ void Player::Update()
 {
 	//マウスの座標を更新
 	this->mouse_cursor_position = this->Mouse_Pos();
-	/*当たり判定の更新*/
-	this->mouse_colider->setHitBace(this->mouse_cursor_position, Point(MOUSE_SCALE_W, MOUSE_SCALE_H));
-	
+	//当たり判定矩形の更新
+	this->mouse_colider->sethitbace(this->mouse_cursor_position, Point(MOUSE_SCALE_W, MOUSE_SCALE_H));
+	//マウス判定と他のオブジェクトの接触検知をする
+	this->Mousehitupdate();
 
-	//マウスとアイテムの当たり判定実装
-	this->MouseHittoObjectGroupName_update("アイテム");
-
-	auto escape = taskSystem->GetTask_TaskName<UI>("エスケープロゴ");
-	if (escape)
-	{
-		if (escape->Hit(this->mouse_colider->getHitBace()))
-		{
-			if (escape->MouseLclicked())
-			{
-				escape->Receive_Player();
-			}
-		}
-	}
-	
 	if (this->isLifeZero())
 	{
 		auto game = taskSystem->GetTask_TaskName<Game>("インゲーム");
@@ -86,22 +72,21 @@ void Player::Update()
 /*描画をします*/
 void Player::Render()
 {
-	this->draw->PaletteColorDraw(this->collider->getHitBace(),Palette::Red);
+	this->draw->PaletteColorDraw(this->collider->gethitbaceRect(),Palette::Red);
 	this->draw->PaletteColorDraw(this->draw->getDrawBace(), Palette::White);
 }
-/*マウスとの当たり判定をします*/
-void Player::MouseHittoObjectGroupName_update(const std::string& groupname)
+/*マウスの当たり判定を毎フレーム検知します*/
+void Player::Mousehitupdate()
 {
 	{
 		//無双アイテムの使用
-		auto musouitems = taskSystem->GetTasks_GroupName<UI>(groupname);
+		auto musouitems = taskSystem->GetTasks_GroupName<UI>("アイテム");
 		auto musouitems_it = musouitems->rbegin();
-
 		if (musouitems)
 		{
 			for (auto it = musouitems->begin(); it != musouitems->end(); ++it)
 			{
-				if ((*it)->Hit(this->mouse_colider->getHitBace()))
+				if ((*it)->Hit(this->mouse_colider->gethitbaceRect()))
 				{
 					if ((*it)->MouseLclicked())
 					{
@@ -111,11 +96,24 @@ void Player::MouseHittoObjectGroupName_update(const std::string& groupname)
 			}
 		}
 	}
+	{
+		auto escape = taskSystem->GetTask_TaskName<UI>("エスケープロゴ");
+		if (escape)
+		{
+			if (escape->Hit(this->mouse_colider->gethitbaceRect()))
+			{
+				if (escape->MouseLclicked())
+				{
+					escape->Receive_Player();
+				}
+			}
+		}
+	}
 }
 /*当たり判定を返します*/
 RectF Player::getHitBace()const
 {
-	return this->collider->getHitBace();
+	return this->collider->gethitbaceRect();
 }
 /*Playerの体力値を返します*/
 int Player::getLife()const

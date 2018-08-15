@@ -7,6 +7,7 @@ GameObject::GameObject()
 	this->collider = nullptr;
 	this->draw = nullptr;
 	this->move = nullptr;
+	this->shapemouse = nullptr;
 }
 /*デストラクタ*/
 GameObject::~GameObject() 
@@ -25,6 +26,11 @@ GameObject::~GameObject()
 	{
 		delete this->move;
 		this->move = nullptr;
+	}
+	if (this->shapemouse)
+	{
+		delete this->shapemouse;
+		this->shapemouse = nullptr;
 	}
 }
 /*引数値のベクトル分座標移動を行います*/
