@@ -27,7 +27,7 @@ public:
 	///</summary>
 	TaskSystem();
 
-	
+
 	///<summary>
 	///デストラクタ
 	///</summary>
@@ -39,7 +39,7 @@ public:
 	///</summary>
 	void Update();
 
-	
+
 	/// <summary>
 	/// オブジェクトをタスクシステムに登録します
 	/// </summary>
@@ -65,7 +65,7 @@ public:
 	///登録されているオブジェクトを全部消去を行います
 	///</summary>
 	void TaskObjectDelete();
-	
+
 
 	/// <summary>
 	/// タスク名・グループ名を検索して、オブジェクト単体を取得します
@@ -85,14 +85,15 @@ public:
 			{
 				if ((*it).second->getTaskname() == taskname_)
 				{
-					return std::static_pointer_cast<T>((*it).second);
+					std::weak_ptr<T> temp = std::static_pointer_cast<T>((*it).second);
+					return temp.lock();
 				}
 			}
 		}
 		return nullptr;
 	}
 
-	
+
 	/// <summary>
 	/// グループ名を検索して、オブジェクト単体を取得します
 	/// </summary>
@@ -111,7 +112,8 @@ public:
 			{
 				if ((*it).second->getTaskname().first == groupname_)
 				{
-					return std::static_pointer_cast<T>((*it).second);
+					std::weak_ptr<T> temp = std::static_pointer_cast<T>((*it).second);
+					return temp.lock();
 				}
 			}
 		}
@@ -137,14 +139,15 @@ public:
 			{
 				if ((*it).second->getTaskname().second == taskname_)
 				{
-					return std::static_pointer_cast<T>((*it).second);
+					std::weak_ptr<T> temp = std::static_pointer_cast<T>((*it).second);
+					return temp.lock();
 				}
 			}
 		}
 		return nullptr;
 	}
 
-	
+
 	/// <summary>
 	///タスク名・グループ名を検索して、オブジェクト複数を取得します
 	/// </summary>
@@ -168,7 +171,8 @@ public:
 				}
 			}
 		}
-		return searchObjects;
+		std::weak_ptr<std::vector<std::shared_ptr<T>>> temp = searchObjects;
+		return temp.lock();
 	}
 
 
@@ -195,7 +199,8 @@ public:
 				}
 			}
 		}
-		return searchObjects;
+		std::weak_ptr<std::vector<std::shared_ptr<T>>> temp = searchObjects;
+		return temp.lock();
 	}
 
 
@@ -222,7 +227,8 @@ public:
 				}
 			}
 		}
-		return searchObjects;
+		std::weak_ptr<std::vector<std::shared_ptr<T>>> temp = searchObjects;
+		return temp.lock();
 	}
 
 
@@ -230,7 +236,7 @@ private:
 	///<summary>
 	///登録しているオブジェクト
 	///</summary>
-	std::vector<std::pair<std::pair<std::string,std::string>,TaskObject::SP>> taskobjects;
+	std::vector<std::pair<std::pair<std::string, std::string>, TaskObject::SP>> taskobjects;
 
 
 	///<summary>
@@ -277,7 +283,7 @@ private:
 	///</returns>
 	bool AddObjectCheck()const;
 
-	
+
 	///<summary>
 	///登録オブジェクトから消去予定のオブジェクトがないかを判定します
 	///</summary>

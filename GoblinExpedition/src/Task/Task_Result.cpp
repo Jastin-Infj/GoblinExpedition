@@ -35,6 +35,10 @@ bool Result::Init(const std::pair<std::string, std::string>& taskname_ , const i
 		auto resultrogo = UI::Create(TASKNAME("UI", "リザルトロゴ"), UI::ObjectType::ResultRogo, Vec2(Window::Center().x - 128 /2 , 0), Point(128, 90));
 	}
 	{
+		rm->setTexture("タイトルへ戻る", Texture(L"./data/image/TitleSkip.png"));
+		auto totitle = UI::Create(TASKNAME("UI","タイトルへ戻る"),UI::ObjectType::TitleSkip,Vec2(Window::Size().x - 128, Window::Size().y - 64),Point(128,64));
+	}
+	{
 		for (int i = 0; i < 5; ++i)
 		{
 			//スコア表示

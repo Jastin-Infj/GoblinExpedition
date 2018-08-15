@@ -52,7 +52,7 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 		auto enemy = Enemy::Create(TASKNAME("モンスター", "ゴブリン") ,Enemy::ObjectType::Goburin ,Vec2(-48, Window::Size().y / 2), Point(64, 64), 0.8f);
 	}
 	{
-		auto player = Player::Create(TASKNAME("プレイヤ", "自キャラ"),Vec2(Window::Size().x - 32 ,Window::Size().y / 2), Point{32,32} , PLAYER_LIFE_INIT , 0.8f);
+		auto player = Player::Create(TASKNAME("プレイヤ", "自キャラ"),Vec2(Window::Size().x - 32 ,Window::Size().y / 2), Point{32,32} , PLAYER_LIFE_INIT);
 	}
 	{
 		rm->setTexture("スコアUI", Texture(L"./data/image/Score.png"));
@@ -78,10 +78,9 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 void Game::Update()
 {
 	this->Enemy_Create();
-	Player::WP player = taskSystem->GetTask_TaskName<Player>("自キャラ");
-	if (!player.expired())
+	auto player = taskSystem->GetTask_TaskName<Player>("自キャラ");
+	if (player)
 	{
-		Player::SP temp = player.lock();
 		if (this->gamestate == GameState::LifeZero)
 		{
 			this->score = SCORE_MIN;
@@ -100,24 +99,44 @@ bool Game::Finalize()
 {
 	/*ゲームタスクが終了したら同時にここで生成したオブジェクトを削除する*/
 	auto backs = taskSystem->GetTasks<TaskObject>(std::pair<std::string, std::string>("背景", "インゲーム背景"));
-	for (auto it = backs->begin(); it != backs->end(); ++it)
+	if (backs)
 	{
-		(*it)->Kill();
+		for (auto it = backs->begin(); it != backs->end(); ++it)
+		{
+			(*it)->Kill();
+		}
 	}
 	auto enemys = taskSystem->GetTasks<TaskObject>(std::pair<std::string, std::string>("モンスター", "ゴブリン"));
-	for (auto it = enemys->begin(); it != enemys->end(); ++it)
+	if (enemys)
 	{
-		(*it)->Kill();
+		for (auto it = enemys->begin(); it != enemys->end(); ++it)
+		{
+			(*it)->Kill();
+		}
 	}
 	auto players = taskSystem->GetTasks<TaskObject>(std::pair<std::string, std::string>("プレイヤ", "自キャラ"));
-	for (auto it = players->begin(); it != players->end(); ++it)
+	if (players)
 	{
-		(*it)->Kill();
+		for (auto it = players->begin(); it != players->end(); ++it)
+		{
+			(*it)->Kill();
+		}
 	}
 	auto scores = taskSystem->GetTasks_GroupName<TaskObject>("UI");
-	for (auto it = scores->begin(); it != scores->end(); ++it)
+	if (scores)
 	{
-		(*it)->Kill();
+		for (auto it = scores->begin(); it != scores->end(); ++it)
+		{
+			(*it)->Kill();
+		}
+	}
+	auto items = taskSystem->GetTasks_GroupName<TaskObject>("アイテム");
+	if (items)
+	{
+		for (auto it = items->begin(); it != items->end(); ++it)
+		{
+			(*it)->Kill();
+		}
 	}
 	//アプリケーションが起動中
 	if (System::Update())

@@ -32,13 +32,12 @@ bool Player::Init_Parameter(const TASKNAME& taskname_ , const Vec2& position_, c
 	this->scale = scale_;
 	this->life = life_;
 
-	this->LifeUICreate();
-
 	//追加の初期化項目
 	this->collider = Collider::Addcomponent(Collider::ShapeHitType::Cube, Vec2(this->position.x - this->scale.x, 0), Point(8, Window::Size().y));
 	this->mouse_colider = Collider::Addcomponent(Collider::ShapeHitType::Cube, Vec2(this->mouse_cursor_position), Point(MOUSE_SCALE_W, MOUSE_SCALE_H));
 	this->draw = DrawInterFace::Addcomponent(RectF(this->position,this->scale));
 
+	this->LifeUICreate();
 
 	return true;
 }
@@ -54,65 +53,33 @@ bool Player::Finalize()
 /*更新処理*/
 void Player::Update()
 {
+	//マウスの座標を更新
 	this->mouse_cursor_position = this->Mouse_Pos();
 	/*当たり判定の更新*/
 	this->mouse_colider->setHitBace(this->mouse_cursor_position, Point(MOUSE_SCALE_W, MOUSE_SCALE_H));
+	
 
-	//無双アイテムの使用
-	auto musouitems = taskSystem->GetTasks_TaskName<UI>("無双アイテム");
-	auto musouitems_it = musouitems->rbegin();
+	//マウスとアイテムの当たり判定実装
+	this->MouseHittoObjectGroupName_update("アイテム");
 
-	if (musouitems)
+	auto escape = taskSystem->GetTask_TaskName<UI>("エスケープロゴ");
+	if (escape)
 	{
-		for (auto it = musouitems->begin(); it != musouitems->end(); ++it)
+		if (escape->Hit(this->mouse_colider->getHitBace()))
 		{
-			if ((*it)->Hit(this->mouse_colider->getHitBace()))
+			if (escape->MouseLclicked())
 			{
-				if ((*it)->MouseLclicked())
-				{
-					if (this->mouseclickcount == 0)
-					{
-						(*musouitems_it)->Receive_Player();
-					}
-					this->mouseclickcount++;
-				}
-				else
-				{
-					this->mouseclickcount = 0;
-				}
+				escape->Receive_Player();
 			}
 		}
 	}
-
-	UI::WP escape = taskSystem->GetTask_TaskName<UI>("エスケープロゴ");
-	if (!escape.expired())
-	{
-		UI::SP temp = escape.lock();
-		if (temp->Hit(this->mouse_colider->getHitBace()))
-		{
-			if (temp->MouseLclicked())
-			{
-				if (this->mouseclickcount == 0)
-				{
-					temp->Receive_Player();
-					this->mouseclickcount++;
-				}
-				else
-				{
-					this->mouseclickcount = 0;
-				}
-			}
-		}
-	}
-
-
+	
 	if (this->isLifeZero())
 	{
-		Game::WP game = taskSystem->GetTask_TaskName<Game>("インゲーム");
-		if (!game.expired())
+		auto game = taskSystem->GetTask_TaskName<Game>("インゲーム");
+		if (game)
 		{
-			Game::SP temp = game.lock();
-			temp->ChengeGameState(Game::GameState::LifeZero);
+			game->ChengeGameState(Game::GameState::LifeZero);
 		}
 	}
 }
@@ -121,6 +88,29 @@ void Player::Render()
 {
 	this->draw->PaletteColorDraw(this->collider->getHitBace(),Palette::Red);
 	this->draw->PaletteColorDraw(this->draw->getDrawBace(), Palette::White);
+}
+/*マウスとの当たり判定をします*/
+void Player::MouseHittoObjectGroupName_update(const std::string& groupname)
+{
+	{
+		//無双アイテムの使用
+		auto musouitems = taskSystem->GetTasks_GroupName<UI>(groupname);
+		auto musouitems_it = musouitems->rbegin();
+
+		if (musouitems)
+		{
+			for (auto it = musouitems->begin(); it != musouitems->end(); ++it)
+			{
+				if ((*it)->Hit(this->mouse_colider->getHitBace()))
+				{
+					if ((*it)->MouseLclicked())
+					{
+						(*musouitems_it)->Receive_Player();
+					}
+				}
+			}
+		}
+	}
 }
 /*当たり判定を返します*/
 RectF Player::getHitBace()const

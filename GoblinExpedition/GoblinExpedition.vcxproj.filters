@@ -100,6 +100,9 @@
     <Filter Include="ソース ファイル\InterFace">
       <UniqueIdentifier>{559929a8-45b6-41aa-88be-95477acf4b18}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Task\HowPlay">
+      <UniqueIdentifier>{a6b90d5f-3a4b-47ea-943d-f119f5acb995}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Task\SceceTask.cpp">
@@ -140,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="src\Task\Task_Result.cpp">
       <Filter>ソース ファイル\Task\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Task\Task_HowPlay.cpp">
+      <Filter>ソース ファイル\Task\HowPlay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -502,6 +508,9 @@
     </ClInclude>
     <ClInclude Include="src\Task\Task_Result.h">
       <Filter>ソース ファイル\Task\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task\Task_HowPlay.h">
+      <Filter>ソース ファイル\Task\HowPlay</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

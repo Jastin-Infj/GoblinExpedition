@@ -138,15 +138,14 @@ void Enemy::changeleftrightinversionflag()
 /*左右反転判定をします*/
 void Enemy::LeftRightInversion()
 {
-	Player::WP player = taskSystem->GetTask_TaskName<Player>("自キャラ");
-	if (!player.expired())
+	auto player = taskSystem->GetTask_TaskName<Player>("自キャラ");
+	if (player)
 	{
-		Player::SP temp = player.lock();
-		if (this->onHitbaceExit(temp->getHitBace()) && !this->getleftrightinversionflag() && !this->isOpaque_Zero())
+		if (this->onHitbaceExit(player->getHitBace()) && !this->getleftrightinversionflag() && !this->isOpaque_Zero())
 		{
 			/*反転フラグをtrueにする*/
 			this->setleftrightinversionflag(true);
-			temp->Receive_Enemy();
+			player->Receive_Enemy();
 		}
 	}
 }
@@ -171,9 +170,9 @@ void Enemy::Mouse_Hit()
 	Player::WP player = taskSystem->GetTask_TaskName<Player>("自キャラ");
 	if (!player.expired())
 	{
-		auto temp = player.lock();
+		auto temp_player = player.lock();
 		//マウス処理
-		if (temp->MouseHit(this->collider->getHitBace()))
+		if (temp_player->MouseHit(this->collider->getHitBace()))
 		{
 			if (this->collider->MouseLeftPressed())
 			{

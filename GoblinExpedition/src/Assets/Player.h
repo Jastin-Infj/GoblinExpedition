@@ -170,6 +170,24 @@ public:
 		);
 
 
+	/// <summary>
+	/// オブジェクトグループ名を指定して、当たり判定を行います
+	/// </summary>
+	/// <param name="groupname">
+	/// 検索するグループ名
+	/// </param>
+	void MouseHittoObjectGroupName_update(const std::string& groupname);
+
+
+	/// <summary>
+	/// オブジェクト名を指定して、当たり判定を行います
+	/// </summary>
+	/// <param name="taskname_">
+	/// 検索するオブジェクト名
+	/// </param>
+	void MouseHittoObjectName_update(const std::string& taskname_);
+	
+
 /*外部クラスでメソッド使用*/
 
 	/// <summary>
@@ -220,5 +238,4 @@ private:
 	int            life;					//体力
 	Vec2		   mouse_cursor_position;	//マウスカーソル座標
 	Collider*      mouse_colider;			//マウス当たり判定
-	bool		   mouseclickcount;			//マウスclickカウント
 };

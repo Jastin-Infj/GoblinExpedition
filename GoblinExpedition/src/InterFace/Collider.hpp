@@ -85,7 +85,7 @@ public:
 	
 
 	/// <summary>
-	/// 左クリックを押されるかを判定します
+	/// 左クリックを押されている状態であるかを判定します
 	/// </summary>
 	/// <returns>
 	/// クリックした true / クリックしていない false
@@ -93,6 +93,16 @@ public:
 	bool MouseLeftPressed()
 	{
 		return this->hitbace.leftPressed;
+	}
+
+
+	/// <summary>
+	/// 左クリックが押された状態であるかを判定します
+	/// </summary>
+	/// <returns></returns>
+	bool MouseLeftClicked()
+	{
+		return this->hitbace.leftClicked;
 	}
 
 

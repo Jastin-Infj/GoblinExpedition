@@ -31,17 +31,19 @@ bool UI::Init_Parameter(const TASKNAME& taskname_, const ObjectType& objecttype_
 	this->killcheck = false;
 
 	//機能の設定
-	void(UI::*function[])() =
+	void(UI::*set_parametar[])() =
 	{
-		&UI::BackGround_Parameter,
-		&UI::Player_Life_Parameter,
-		&UI::ScoreUI_Parameter,
-		&UI::MusouItem_Parameter,
-		&UI::ResultRogo_Parameter,
-		&UI::TitleRogo_Parameter,
-		&UI::Escape_Parameter
+		&UI::BackGround_Parameter,		//背景
+		&UI::Player_Life_Parameter,		//プレイヤライフ
+		&UI::ScoreUI_Parameter,			//スコア表示UI
+		&UI::MusouItem_Parameter,		//無双アイテム
+		&UI::ResultRogo_Parameter,		//リザルトロゴ
+		&UI::TitleRogo_Parameter,		//タイトルUI
+		&UI::Escape_Parameter,			//エスケープキー
+		&UI::HowplayUI_Parameter,		//遊び方UI
+		&UI::TotitleUI_Parameter		//タイトルへ戻るUI
 	};
-	(this->*function[(int)this->objecttype])();
+	(this->*set_parametar[(int)this->objecttype])();
 
 	return true;
 }
@@ -61,32 +63,7 @@ void UI::Update()
 /*描画をします*/
 void UI::Render()
 {
-	switch (this->objecttype)
-	{
-	case ObjectType::Background:
-		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
-		break;
-	case ObjectType::PlayerLife:
-		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
-		break;
-	case ObjectType::ScoreUI:
-		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
-		break;
-	case ObjectType::MusouItem:
-		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
-		break;
-	case ObjectType::ResultRogo:
-		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
-		break;
-	case ObjectType::TitleRogo:
-		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
-		break;
-	case ObjectType::ESCAPERogo:
-		this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
-		break;
-	default:
-		break;
-	}
+	this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
 }
 /*オブジェクトを生成します*/
 TaskObject::SP UI::Create(const TASKNAME& taskname_, const ObjectType& objecttype_, const Vec2& position_, const Point& scale_,const float& order_ ,bool flag)
@@ -153,6 +130,19 @@ void UI::Escape_Parameter()
 	this->draw->setTexture(rm->getTexture("エスケープロゴ"));
 	this->collider = Collider::Addcomponent(Collider::ShapeHitType::Cube, this->position,this->scale);
 }
+/*遊び方UIの設定を行います*/
+void UI::HowplayUI_Parameter()
+{
+	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0, 0, 602,133));
+	this->draw->setTexture(rm->getTexture("遊び方UI"));
+}
+/*タイトルへ戻るUIの設定を行います*/
+void UI::TotitleUI_Parameter()
+{
+	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0, 0, 606, 135));
+	this->draw->setTexture(rm->getTexture("タイトルへ戻る"));
+	this->collider = Collider::Addcomponent(Collider::ShapeHitType::Cube, this->position, this->scale);
+}
 //★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 
 /*無双アイテムを使用します*/
@@ -189,6 +179,7 @@ void UI::EnemiesKill()
 	auto game = taskSystem->GetTask_TaskName<Game>("インゲーム");
 
 	auto enemys = taskSystem->GetTasks_TaskName<Enemy>("ゴブリン");
+
 	if (enemys && game)
 	{
 		for (auto it = enemys->begin(); it != enemys->end(); ++it)
@@ -230,10 +221,10 @@ void UI::Receive_Player()
 		break;
 	}
 }
-/*左クリックが押されたかを判定します*/
+/*左クリックが押されたを判定します*/
 bool UI::MouseLclicked()
 {
-	return this->collider->MouseLeftPressed();
+	return this->collider->MouseLeftClicked();
 }
 /*UIと当たり判定を返します*/
 bool UI::Hit(const RectF& drawbace)
@@ -244,10 +235,8 @@ bool UI::Hit(const RectF& drawbace)
 	}
 	return false;
 }
-
-
-///*無双アイテムの当たり判定矩形を返します*/
-//RectF UI::getDrawBase_MusuoItem()const
-//{
-//	return this->collider->getHitBace();
-//}
+/*自身が持つオブジェクトタイプを返します*/
+UI::ObjectType UI::getObjecttype()const
+{
+	return this->objecttype;
+}

@@ -1,7 +1,7 @@
 #include "Task_Title.h"
 #include "../TaskSystem/TaskSystem.h"
 #include "../ResourceManager/ResourceManager.h"
-#include "../Task/Task_Game.h"
+#include "Task_HowPlay.h"
 #include "../Assets/UI.h"
 #include <iostream>
 using TASKNAME = std::pair<std::string, std::string>;
@@ -59,7 +59,7 @@ bool Title::Finalize()
 	}
 	if (System::Update())
 	{
-		auto game = Game::Create(TASKNAME("シーン","インゲーム"));
+		auto howplay = HowPlay::Create(TASKNAME("シーン","遊び方"));
 	}
 	return true;
 }

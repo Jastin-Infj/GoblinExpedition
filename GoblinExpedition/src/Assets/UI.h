@@ -24,6 +24,8 @@ public:
 		ResultRogo = 4,	//リザルトロゴ
 		TitleRogo  = 5, //タイトルロゴ
 		ESCAPERogo = 6, //エスケープ
+		HowPlayUI  = 7,	//遊び方UI
+		TitleSkip  = 8,	//タイトルへ戻る
 	};
 
 	/// <summary>
@@ -183,6 +185,17 @@ public:
 	void Escape_Parameter();
 
 
+	/// <summary>
+	/// 遊び方UIの設定を行います
+	/// </summary>
+	void HowplayUI_Parameter();
+
+
+	/// <summary>
+	/// タイトルへ戻る設定を行います
+	/// </summary>
+	void TotitleUI_Parameter();
+
 //外部クラスで使用するメソッド
 	
 
@@ -235,6 +248,15 @@ public:
 	/// 押された : true 押されていない false 
 	/// </returns>
 	bool MouseLclicked();
+
+
+	/// <summary>
+	/// 自身が持つオブジェクトタイプを返します
+	/// </summary>
+	/// <returns>
+	/// オブジェクトタイプ
+	/// </returns>
+	ObjectType getObjecttype()const;
 
 
 private:
