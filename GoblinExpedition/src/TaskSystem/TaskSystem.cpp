@@ -180,3 +180,8 @@ void TaskSystem::TaskObjectDelete()
 		}
 	}
 }
+/*アプリケーションを落とします*/
+void TaskSystem::Application_Exit()const
+{
+	System::Exit();
+}

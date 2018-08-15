@@ -44,19 +44,19 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 	{
 		//画像の指定
 		rm->setTexture("インゲーム背景", Texture(L"./data/image/doukutu.png"));
-		auto back = UI::Create(TASKNAME("背景", "インゲーム背景"),UI::ObjectType::Background ,Point(0, 0), Point(Window::Size().x, Window::Size().y), 0.1f);
+		auto back = UI::Create(TASKNAME("背景", "インゲーム背景"),UI::ObjectType::Background ,Point(0, 0), Point(Window::Size().x, Window::Size().y),UI::InitFormat::Normal,Rect(0,0,680,480) ,0.1f);
 	}
 	{
 		rm->setTexture("ゴブリン", Texture(L"./data/image/Goburin.png"));
 		rm->setSound("敵消滅SE", Sound(L"./data/BGM/Hit.wav"));
-		auto enemy = Enemy::Create(TASKNAME("モンスター", "ゴブリン") ,Enemy::ObjectType::Goburin ,Vec2(-48, Window::Size().y / 2), Point(64, 64), 0.8f);
+		auto enemy = Enemy::Create(TASKNAME("モンスター", "ゴブリン") ,Enemy::ObjectType::Goburin ,Vec2(-48, Window::Size().y / 2), Point(64, 64),0.8f);
 	}
 	{
 		auto player = Player::Create(TASKNAME("プレイヤ", "自キャラ"),Vec2(Window::Size().x - 32 ,Window::Size().y / 2), Point{32,32} , PLAYER_LIFE_INIT);
 	}
 	{
 		rm->setTexture("スコアUI", Texture(L"./data/image/Score.png"));
-		auto scoreui = UI::Create(TASKNAME("UI", "スコアUI"), UI::ObjectType::ScoreUI, Vec2(0, 0), Point(128, 64));
+		auto scoreui = UI::Create(TASKNAME("UI", "スコアUI"), UI::ObjectType::ScoreUI, Vec2(0, 0), Point(128, 64), UI::InitFormat::Normal,Rect(0,0,185,75));
 	}
 	{
 		rm->setTexture("スコア", Texture(L"./data/image/Math.png"));
@@ -68,7 +68,7 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 	}
 	{
 		rm->setTexture("エスケープロゴ", Texture(L"./data/image/escape.png"));
-		auto escape = UI::Create(TASKNAME("UI", "エスケープロゴ"), UI::ObjectType::ESCAPERogo, Vec2(Window::Size().x - 128, Window::Size().y - 48), Point(128, 48));
+		auto escape = UI::Create(TASKNAME("UI", "エスケープロゴ"), UI::ObjectType::ESCAPERogo, Vec2(Window::Size().x - 128, Window::Size().y - 48), Point(128, 48),UI::InitFormat::AddCollider,Rect(0,0,285,88));
 	}
 	rm->setTexture("無双アイテム",Texture(L"./data/image/musou.png"));
 	
@@ -180,11 +180,11 @@ void Game::MusouItem_Create()
 		{
 			//無双アイテムのサイズを取得する
 			int ms = (int)musouitem_size->size();
-			auto musouitem = UI::Create(TASKNAME("アイテム", "無双アイテム"), UI::ObjectType::MusouItem, Vec2(ms * 64, Window::Size().y - 64), Point(64, 64));
+			auto musouitem = UI::Create(TASKNAME("アイテム", "無双アイテム"), UI::ObjectType::MusouItem, Vec2(ms * 64, Window::Size().y - 64), Point(64, 64),UI::InitFormat::AddCollider,Rect(0,0,64,64));
 		}
 		else
 		{
-			auto musouitem = UI::Create(TASKNAME("アイテム", "無双アイテム"), UI::ObjectType::MusouItem, Vec2(0, Window::Size().y - 64), Point(64, 64));
+			auto musouitem = UI::Create(TASKNAME("アイテム", "無双アイテム"), UI::ObjectType::MusouItem, Vec2(0, Window::Size().y - 64), Point(64, 64),UI::InitFormat::AddCollider,Rect(0,0,64,64));
 		}
 	}
 }

@@ -231,6 +231,10 @@ public:
 		return temp.lock();
 	}
 
+	/// <summary>
+	/// アプリケーションを閉じます
+	/// </summary>
+	void Application_Exit()const;
 
 private:
 	///<summary>
@@ -291,7 +295,5 @@ private:
 	///存在する true 存在しない false
 	///</returns>
 	bool CheckKillTask()const;
-
-
 };
 extern TaskSystem* taskSystem;		//タスクシステムにアクセス用変数

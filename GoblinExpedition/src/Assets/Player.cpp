@@ -119,7 +119,7 @@ void Player::LifeUICreate()
 		rm->setTexture("プレイヤライフ", Texture(L"./data/image/heart.png"));
 		for (int i = 0; i < this->life; ++i)
 		{
-			auto player_life = UI::Create(TASKNAME("UI", "プレイヤライフ"), UI::ObjectType::PlayerLife, Vec2(Window::Size().x - 64 - i * 64, 0), Point(64, 48));
+			auto player_life = UI::Create(TASKNAME("UI", "プレイヤライフ"), UI::ObjectType::PlayerLife, Vec2(Window::Size().x - 64 - i * 64, 0), Point(64, 48), UI::InitFormat::Normal,Rect(0,0,64,48));
 		}
 	}
 }

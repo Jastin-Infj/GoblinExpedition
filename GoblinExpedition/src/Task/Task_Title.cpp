@@ -32,7 +32,13 @@ bool Title::Init(const std::pair<std::string,std::string>& taskname_)
 	//追加したいオブジェクトをここに記述する
 
 	rm->setTexture("タイトルロゴ",Texture(L"./data/image/Title.png"));
-	auto titlerogo = UI::Create(TASKNAME("UI", "タイトルロゴ"), UI::ObjectType::TitleRogo, Vec2(Window::Center().x - 256 / 2, 0), Point(256, 96));
+	auto titlerogo = UI::Create(TASKNAME("UI", "タイトルロゴ"), UI::ObjectType::TitleRogo, Vec2(Window::Center().x - 256 / 2, 0), Point(256, 96),UI::InitFormat::Normal,Rect(0,0,418,64));
+
+	rm->setTexture("タイトル用スタート", Texture(L"./data/image/Start.png"));
+	auto start = UI::Create(TASKNAME("UI", "タイトル用スタート"), UI::ObjectType::TitleStart, Vec2(Window::Center().x - 256 / 2, Window::Center().y - 96), Point(256, 96), UI::InitFormat::AddCollider,Rect(0,0,316,110));
+
+	rm->setTexture("タイトル用終了ボタン", Texture(L"./data/image/Exit.png"));
+	auto exit = UI::Create(TASKNAME("UI", "タイトル用終了ボタン"), UI::ObjectType::TitleExit, Vec2(Window::Center().x - 256 / 2, Window::Center().y + 96), Point(256, 96),UI::InitFormat::AddCollider,Rect(0,0,258,110));
 
 	return true;
 }

@@ -13,20 +13,36 @@ public:
 
 
 	/// <summary>
+	/// 雛形の描画フォーマットクラス
+	/// </summary>
+	enum class InitFormat
+	{
+		Normal,			//画像サイズのみの描画をする
+		AddCollider,	//当たり判定つきの設定
+	};
+
+
+	/// <summary>
 	/// オブジェクトタイプ
 	/// </summary>
 	enum class ObjectType
 	{
 		Background = 0,	//背景関係
-		PlayerLife = 1,	//Playerのライフ
+		PlayerLife = 2,	//Playerのライフ
 		ScoreUI    = 2, //スコアUI
 		MusouItem  = 3, //無双アイテム
 		ResultRogo = 4,	//リザルトロゴ
 		TitleRogo  = 5, //タイトルロゴ
 		ESCAPERogo = 6, //エスケープ
 		HowPlayUI  = 7,	//遊び方UI
-		TitleSkip  = 8,	//タイトルへ戻る
+		toTitle    = 8,	//タイトルへ戻る
+		toGame     = 9, //ゲームスタート
+		TitleStart = 10,//タイトルのスタート
+		TitleExit  = 11,//タイトルでの終了
 	};
+
+	
+
 
 	/// <summary>
 	/// コンストラクタ
@@ -55,6 +71,12 @@ public:
 	/// <param name="scale">
 	/// 大きさ(X座標 , Y座標)
 	/// </param>
+	/// <param name="initformat">
+	/// 初期化設定方法
+	/// </param>
+	/// <param name="src">
+	/// 画像元矩形
+	/// </param>
 	/// <param name="order">
 	/// 描画優先順位(0.0f ～ 1.0f)
 	/// </param>
@@ -65,7 +87,9 @@ public:
 		const TASKNAME&   taskname,
 		const ObjectType& objecttype  , 
 		const Vec2&       position, 
-		const Point&      scale, 
+		const Point&      scale,
+		const InitFormat& initformat,
+		const Rect&       src,
 		const float&      order
 		);
 
@@ -106,6 +130,12 @@ public:
 	/// <param name="scale">
 	/// 大きさ(横 , 縦)
 	/// </param>
+	/// <param name="initformat">
+	/// 初期化設定方法
+	/// </param>
+	/// <param name="src">
+	/// 画像元矩形
+	/// </param>
 	/// <param name="order">
 	/// 描画優先順位(0.0f ~ 1.0f)
 	/// </param>
@@ -119,35 +149,14 @@ public:
 		const TASKNAME&   taskname, 
 		const ObjectType& objecttype, 
 		const Vec2&       position, 
-		const Point&      scale, 
+		const Point&      scale,
+		const InitFormat& initformat,
+		const Rect&       src,
 		const float&      order = 1.0f, 
 		const bool        flag = true
 		);
 
-
-	/// <summary>
-	/// 背景の設定を行います
-	/// </summary>
-	void BackGround_Parameter();
-
-
-	/// <summary>
-	/// PlayerのライフUIの設定を行います
-	/// </summary>
-	void Player_Life_Parameter();
-
-
-	/// <summary>
-	/// スコアUIの設定を行います
-	/// </summary>
-	void ScoreUI_Parameter();
-
-
-	/// <summary>
-	/// 無双アイテムの設定を行います
-	/// </summary>
-	void MusouItem_Parameter();
-
+private:
 
 	/// <summary>
 	/// 無双アイテムを使用します
@@ -168,37 +177,45 @@ public:
 
 
 	/// <summary>
-	/// リザルトロゴの設定を行います
+	/// マウスで左クリックが押された後の処理を行います
 	/// </summary>
-	void ResultRogo_Parameter();
+	void TitleStartUI_LeftClicked();
+
+	
+	/// <summary>
+	/// マウスで左クリックが押された後の処理を行います
+	/// </summary>
+	void TitleExitUI_LeftClicked();
+	
+
+	/// <summary>
+	/// マウスで左クリックが押された後の処理を行います
+	/// </summary>
+	/// <param name="src_"></param>
+	/// <returns></returns>
+	void TotitleUI_LeftClicked();
 
 
 	/// <summary>
-	/// タイトルロゴの設定を行います
+	/// 初期設定で設定する雛形　画像サイズ分の描画をする
 	/// </summary>
-	void TitleRogo_Parameter();
+	/// <param name="src_">
+	/// 画像元矩形
+	/// </param>
+	void Normal(const Rect& src_);
 
 
 	/// <summary>
-	/// エスケープロゴの設定を行います
+	/// 初期設定で設定する雛形　当たり判定の設定と画像サイズ分の当たり判定を描画をします
 	/// </summary>
-	void Escape_Parameter();
-
-
-	/// <summary>
-	/// 遊び方UIの設定を行います
-	/// </summary>
-	void HowplayUI_Parameter();
-
-
-	/// <summary>
-	/// タイトルへ戻る設定を行います
-	/// </summary>
-	void TotitleUI_Parameter();
+	/// <param name="src_">
+	/// 画像元矩形
+	/// </param>
+	void AddCollider(const Rect& src_);
 
 //外部クラスで使用するメソッド
 	
-
+public:
 	/// <summary>
 	/// ウィンドウ内にあるかを判定します
 	/// </summary>

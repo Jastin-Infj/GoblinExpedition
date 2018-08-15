@@ -1,6 +1,8 @@
 #include "UI.h"
 #include "Enemy.h"
 #include "../Task/Task_Game.h"
+#include "../Task/Task_Title.h"
+#include "../Task/Task_Result.h"
 #include <iostream>
 /*コンストラクタ*/
 UI::UI()
@@ -18,7 +20,15 @@ UI::~UI()
 #endif // _DEBUG
 }
 /*パラメータの初期化をします*/
-bool UI::Init_Parameter(const TASKNAME& taskname_, const ObjectType& objecttype_, const Vec2& position_, const Point& scale_, const float& order_)
+bool UI::Init_Parameter(
+	const TASKNAME&   taskname_, 
+	const ObjectType& objecttype_, 
+	const Vec2&       position_, 
+	const Point&      scale_,
+	const InitFormat& initformat,
+	const Rect&       src,
+	const float&      order_
+	)
 {
 	/*タスク名を設定*/
 	__super::setTaskName(taskname_);
@@ -31,19 +41,12 @@ bool UI::Init_Parameter(const TASKNAME& taskname_, const ObjectType& objecttype_
 	this->killcheck = false;
 
 	//機能の設定
-	void(UI::*set_parametar[])() =
+	void(UI::*set_parametar[])(const Rect&) =
 	{
-		&UI::BackGround_Parameter,		//背景
-		&UI::Player_Life_Parameter,		//プレイヤライフ
-		&UI::ScoreUI_Parameter,			//スコア表示UI
-		&UI::MusouItem_Parameter,		//無双アイテム
-		&UI::ResultRogo_Parameter,		//リザルトロゴ
-		&UI::TitleRogo_Parameter,		//タイトルUI
-		&UI::Escape_Parameter,			//エスケープキー
-		&UI::HowplayUI_Parameter,		//遊び方UI
-		&UI::TotitleUI_Parameter		//タイトルへ戻るUI
+		&UI::Normal,
+		&UI::AddCollider
 	};
-	(this->*set_parametar[(int)this->objecttype])();
+	(this->*set_parametar[(int)initformat])(src);
 
 	return true;
 }
@@ -66,13 +69,22 @@ void UI::Render()
 	this->draw->TextureDraw(this->draw->getDrawBace(), this->draw->getSrcBace());
 }
 /*オブジェクトを生成します*/
-TaskObject::SP UI::Create(const TASKNAME& taskname_, const ObjectType& objecttype_, const Vec2& position_, const Point& scale_,const float& order_ ,bool flag)
+TaskObject::SP UI::Create(
+	const TASKNAME&   taskname_, 
+	const ObjectType& objecttype_, 
+	const Vec2&       position_, 
+	const Point&      scale_,
+	const InitFormat& initformat,
+	const Rect&       src,
+	const float&      order_ ,
+	bool              flag
+	)
 {
 	UI::SP ui = UI::SP(new UI());
 	if (ui)
 	{
 		ui->me = ui;
-		if (!ui->Init_Parameter(taskname_, objecttype_, position_, scale_, order_))
+		if (!ui->Init_Parameter(taskname_, objecttype_, position_, scale_,initformat,src,order_))
 		{
 			ui->Kill();
 		}
@@ -86,62 +98,41 @@ TaskObject::SP UI::Create(const TASKNAME& taskname_, const ObjectType& objecttyp
 }
 //★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 
-/*背景の設定を行います*/
-void UI::BackGround_Parameter()
+/*初期設定で設定する雛形　画像サイズ分の描画をする*/
+void UI::Normal(const Rect& src_)
 {
-	this->draw = DrawInterFace::Addcomponent(RectF (this->position, this->scale) , Rect(0, 0, 680, 480));
-	this->draw->setTexture(rm->getTexture("インゲーム背景"));
+	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), src_);
+	this->draw->setTexture(rm->getTexture(this->getTaskname().second));
 }
-/*Playerライフの設定を行います*/
-void UI::Player_Life_Parameter()
+/*当たり判定の設定もする雛形　画像サイズ分の当たり判定と描画をします*/
+void UI::AddCollider(const Rect& src_)
 {
-	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0, 0, 64, 48));
-	this->draw->setTexture(rm->getTexture("プレイヤライフ"));
+	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), src_);
+	this->draw->setTexture(rm->getTexture(this->getTaskname().second));
+	this->collider = Collider::Addcomponent(Collider::ShapeT::Rect,this->position, this->scale);
 }
-/*スコアUIの設定を行います*/
-void UI::ScoreUI_Parameter()
+/*左クリックが押された後の処理をまとめた関数*/
+void UI::TitleStartUI_LeftClicked()
 {
-	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0, 0, 185, 75));
-	this->draw->setTexture(rm->getTexture("スコアUI"));
+	auto title = taskSystem->GetTask_TaskName<Title>("タイトル");
+	if (title)
+	{
+		title->Kill();
+	}
 }
-/*無双アイテムの設定を行います*/
-void UI::MusouItem_Parameter()
+/*タイトルへ戻るUIが押された後の処理を行います*/
+void UI::TotitleUI_LeftClicked()
 {
-	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0, 0, 64, 64));
-	this->draw->setTexture(rm->getTexture("無双アイテム"));
-	this->collider = Collider::Addcomponent(Collider::ShapeT::RectF,this->position,this->scale);
+	auto result = taskSystem->GetTask_TaskName<Result>("リザルト");
+	if (result)
+	{
+		result->Kill();
+	}
 }
-/*リザルトロゴの設定を行います*/
-void UI::ResultRogo_Parameter()
+/*タイトル用終了ボタンUIの設定を行います*/
+void UI::TitleExitUI_LeftClicked()
 {
-	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0,0,536,106));
-	this->draw->setTexture(rm->getTexture("リザルトロゴ"));
-}
-/*タイトルロゴの設定を行います*/
-void UI::TitleRogo_Parameter()
-{
-	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0, 0, 418, 64));
-	this->draw->setTexture(rm->getTexture("タイトルロゴ"));
-}
-/*エスケープロゴの設定を行います*/
-void UI::Escape_Parameter()
-{
-	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0, 0, 285, 88));
-	this->draw->setTexture(rm->getTexture("エスケープロゴ"));
-	this->collider = Collider::Addcomponent(Collider::ShapeT::RectF, this->position,this->scale);
-}
-/*遊び方UIの設定を行います*/
-void UI::HowplayUI_Parameter()
-{
-	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0, 0, 602,133));
-	this->draw->setTexture(rm->getTexture("遊び方UI"));
-}
-/*タイトルへ戻るUIの設定を行います*/
-void UI::TotitleUI_Parameter()
-{
-	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale), Rect(0, 0, 606, 135));
-	this->draw->setTexture(rm->getTexture("タイトルへ戻る"));
-	this->collider = Collider::Addcomponent(Collider::ShapeT::RectF, this->position, this->scale);
+	taskSystem->Application_Exit();
 }
 //★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 
@@ -153,11 +144,10 @@ void UI::MusouItem_Use()
 /*ゲームを終了させます*/
 void UI::Escape_Use()
 {
-	Game::WP game = taskSystem->GetTask_TaskName<Game>("インゲーム");
-	if (!game.expired())
+	auto game = taskSystem->GetTask_TaskName<Game>("インゲーム");
+	if (game)
 	{
-		Game::SP temp = game.lock();
-		temp->ChengeGameState(Game::GameState::ESCAPE);
+		game->ChengeGameState(Game::GameState::ESCAPE);
 	}
 }
 /*ウィンドウ内にあるかを判定します*/
@@ -218,6 +208,14 @@ void UI::Receive_Player()
 		break;
 	case ObjectType::ESCAPERogo:	//エスケープが押された
 		this->Escape_Use();
+	case ObjectType::TitleStart:
+		this->TitleStartUI_LeftClicked();	//左クリックで押された後の処理
+		break;
+	case ObjectType::TitleExit:
+		this->TitleExitUI_LeftClicked();	//左クリックが押された後の処理
+		break;
+	case ObjectType::toTitle:
+		this->TotitleUI_LeftClicked();		//左クリックが押された後の処理
 		break;
 	}
 }

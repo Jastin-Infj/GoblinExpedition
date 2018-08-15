@@ -32,11 +32,11 @@ bool Result::Init(const std::pair<std::string, std::string>& taskname_ , const i
 	this->set_gameData(score_, destroyingcount_);
 	{
 		rm->setTexture("リザルトロゴ", Texture(L"./data/image/Result.png"));
-		auto resultrogo = UI::Create(TASKNAME("UI", "リザルトロゴ"), UI::ObjectType::ResultRogo, Vec2(Window::Center().x - 128 /2 , 0), Point(128, 90));
+		auto resultrogo = UI::Create(TASKNAME("UI", "リザルトロゴ"), UI::ObjectType::ResultRogo, Vec2(Window::Center().x - 128 /2 , 0), Point(128, 90),UI::InitFormat::Normal,Rect(0,0,536,106));
 	}
 	{
-		rm->setTexture("タイトルへ戻る", Texture(L"./data/image/TitleSkip.png"));
-		auto totitle = UI::Create(TASKNAME("UI","タイトルへ戻る"),UI::ObjectType::TitleSkip,Vec2(Window::Size().x - 128, Window::Size().y - 64),Point(128,64));
+		rm->setTexture("タイトルへ戻る", Texture(L"./data/image/toTitle.png"));
+		auto totitle = UI::Create(TASKNAME("UI","タイトルへ戻る"),UI::ObjectType::toTitle,Vec2(Window::Size().x - 256, Window::Size().y - 64),Point(256,64),UI::InitFormat::AddCollider,Rect(0,0,626,103));
 	}
 	{
 		for (int i = 0; i < 5; ++i)
