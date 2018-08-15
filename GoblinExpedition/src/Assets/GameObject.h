@@ -57,12 +57,52 @@ public:
 
 
 	/// <summary>
-	/// 引数値のベクトル分座標移動を行います
+	/// 当たり判定矩形を返します
 	/// </summary>
-	/// <param name="offset">
-	/// 移動させる座標値
-	/// </param>
-	void OffsetPosition(const Vec2& offset);
+	/// <returns></returns>
+	RectF getRecthitbace()const;
+
+
+	/// <summary>
+	/// 当たり判定の円型を返します
+	/// </summary>
+	Circle getCirclehitbace()const;
+
+
+	/// <summary>
+	/// 中身が空であるかを判定します
+	/// </summary>
+	/// <returns>
+	/// 空 true / 中身が存在する false
+	/// </returns>
+	bool isExpiredCollider()const;
+
+
+	/// <summary>
+	/// 中身が空であるかを判定します
+	/// </summary>
+	/// <returns>
+	/// 空 true / 中身が存在する false
+	/// </returns>
+	bool isExpiredDraw()const;
+
+
+	/// <summary>
+	/// 中身が空であるかを判定します
+	/// </summary>
+	/// <returns>
+	/// 空 true / 中身が存在する false
+	/// </returns>
+	bool isExpiredMove()const;
+
+
+	/// <summary>
+	/// 中身が空であるかを判定します
+	/// </summary>
+	/// <returns>
+	/// 空 true / 中身が存在する false
+	/// </returns>
+	bool isExpiredShapemouse()const;
 
 protected:
 	Vec2  position;					//現在の座標
@@ -75,3 +115,12 @@ protected:
 };
 
 
+
+
+///// <summary>
+///// 引数値のベクトル分座標移動を行います
+///// </summary>
+///// <param name="offset">
+///// 移動させる座標値
+///// </param>
+//void OffsetPosition(const Vec2& offset);

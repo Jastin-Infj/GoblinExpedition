@@ -6,7 +6,7 @@
 
 
 /// <summary>
-/// マウスカーソル図形を扱うクラスです
+/// マウスカーソル図形を扱うクラス
 /// </summary>
 class ShapeMouseCursor
 {
@@ -16,14 +16,17 @@ public:
 	/// <summary>
 	/// コンストラクタ(矩形設定あり)
 	/// </summary>
+	/// <param name="shapetype_">
+	/// 図形のタイプ
+	/// </param>
 	/// <param name="hitbaceScale_">
 	/// 当たり判定の大きさ
 	/// </param>
-	ShapeMouseCursor(const Point& hitbaceScale_)
+	ShapeMouseCursor(const ShapeT& shapetype_,const Point& hitbaceScale_)
 		:
 		position({}),
 		hitbaceRectSize(hitbaceScale_),
-		shapetype(ShapeT::Point)
+		shapetype(shapetype_)
 	{
 		this->collider = nullptr;
 		this->draw = nullptr;
@@ -33,14 +36,17 @@ public:
 	/// <summary>
 	/// コンストラクタ(円)
 	/// </summary>
+	/// <param name="shapetype_">
+	/// 図形のタイプ
+	/// </param>
 	/// <param name="hitbace_scale">
 	/// 当たり判定の大きさ
 	/// </param>
-	explicit ShapeMouseCursor(const double& hitbaceScale_)
+	explicit ShapeMouseCursor(const ShapeT& shapetype_, const double& hitbaceScale_)
 		:
 		position({}),
 		hitbaceCircleSize(hitbaceScale_),
-		shapetype(ShapeT::Circle)
+		shapetype(shapetype_)
 	{
 		this->collider = nullptr;
 		this->draw = nullptr;
@@ -64,6 +70,42 @@ public:
 		}
 	}
 
+
+	/// <summary>
+	/// マウスカーソル図形を生成します
+	/// </summary>
+	/// <param name="shapetype_">
+	/// 図形タイプ
+	/// </param>
+	/// <param name="scale">
+	/// マウス図形の当たり判定の範囲
+	/// </param>
+	/// <returns>
+	/// 生成したマウス図形クラスのアドレス値
+	/// </returns>
+	template <class Shape>
+	static ShapeMouseCursor* AddComponent(const ShapeT& shapetype_ ,const Shape& scale)
+	{
+		return new ShapeMouseCursor(shapetype_,scale);
+	}
+
+
+	/// <summary>
+	/// マウスカーソル円型の図形を生成します 
+	/// </summary>
+	/// <param name="shapetype_">
+	/// 図形のタイプ
+	/// </param>
+	/// <param name="scale">
+	/// マウスカーソル円型図形の当たり判定の範囲
+	/// </param>
+	/// <returns>
+	/// 生成したマウス図形クラスのアドレス値
+	/// </returns>
+	static ShapeMouseCursor* AddComponent(const ShapeT& shapetype_,const double& scale)
+	{
+		return new ShapeMouseCursor(shapetype_,scale);
+	}
 
 	/// <summary>
 	/// マウスの座標を更新します
@@ -108,7 +150,7 @@ public:
 	/// <returns>
 	/// 一致 している true / していない false
 	/// </returns>
-	bool istypeMatched(const ShapeT& checktype)
+	bool isTypeMatched(const ShapeT& checktype)
 	{
 		return this->shapetype == checktype ? true : false;
 	}
@@ -246,6 +288,30 @@ public:
 	bool RightReleased(const Shape& shape)const
 	{
 		return shape.rightReleased;
+	}
+
+
+	/// <summary>
+	/// 当たり判定図形を返します
+	/// </summary>
+	/// <returns>
+	/// マウスカーソルの当たり判定
+	/// </returns>
+	RectF getrectHitbace()const
+	{
+		return this->collider->gethitbaceRect();
+	}
+
+
+	/// <summary>
+	/// 当たり判定図形を返します
+	/// </summary>
+	/// <returns>
+	/// マウスカーソルの当たり判定
+	/// </returns>
+	Circle getcircleHitbace()const
+	{
+		return this->collider->gethitbaceCircle();
 	}
 private:
 	Vec2			position;			//現在のマウス座標

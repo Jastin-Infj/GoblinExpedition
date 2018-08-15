@@ -141,7 +141,7 @@ void Enemy::LeftRightInversion()
 	auto player = taskSystem->GetTask_TaskName<Player>("自キャラ");
 	if (player)
 	{
-		if (this->onHitbaceExit(player->getHitBace()) && !this->getleftrightinversionflag() && !this->isOpaque_Zero())
+		if (this->onHitbaceExit(player->getRecthitbace()) && !this->getleftrightinversionflag() && !this->isOpaque_Zero())
 		{
 			/*反転フラグをtrueにする*/
 			this->setleftrightinversionflag(true);
@@ -167,18 +167,14 @@ const int Enemy::getScore()
 /*マウスと敵の当たり判定を行います*/
 void Enemy::Mouse_Hit()
 {
-	Player::WP player = taskSystem->GetTask_TaskName<Player>("自キャラ");
-	if (!player.expired())
+	auto player = taskSystem->GetTask_TaskName<Player>("自キャラ");
+	if(player)
 	{
-		auto temp_player = player.lock();
 		//マウス処理
-		if (temp_player->MouseHit(this->collider->gethitbaceRect()))
+		if (player->MouseHit_toEnemy(this->getRecthitbace()))
 		{
-			if (this->collider->MouseLeftPressed())
-			{
-				this->SE_Play();
-				this->mouse_hitflag = true;
-			}	
+			this->SE_Play();
+			this->mouse_hitflag = true;
 		}
 		/*左クリックが押された後の処理*/
 		if (this->mouse_hitflag && !this->isOpaque_Zero())

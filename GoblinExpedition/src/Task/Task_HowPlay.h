@@ -70,6 +70,5 @@ public:
 
 
 private:
-
-private:
+	ShapeMouseCursor* shapemouse;		//図形ありマウスカーソル
 };

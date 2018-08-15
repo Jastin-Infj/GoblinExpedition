@@ -31,6 +31,7 @@ bool HowPlay::Init(const std::pair<std::string, std::string>& taskname_)
 	rm->setTexture("—V‚Ñ•ûUI", Texture(L"./data/image/—V‚Ñ•ûUI.png"));
 	auto howplayui = UI::Create(TASKNAME("UI", "—V‚Ñ•ûUI"), UI::ObjectType::HowPlayUI, Vec2(Window::Center().x - 256 / 2, 0), Point(256, 96));
 
+	this->shapemouse = ShapeMouseCursor::AddComponent<Point>(ShapeMouseCursor::ShapeT::Rect,Point(5,5));
 	return true;
 }
 /* XVˆ— */
@@ -41,7 +42,6 @@ void HowPlay::Update()
 	{
 		this->Kill();
 	}
-
 }
 /*•`‰æˆ—*/
 void HowPlay::Render()
@@ -58,6 +58,11 @@ bool HowPlay::Finalize()
 		{
 			(*it)->Kill();
 		}
+	}
+	if (this->shapemouse)
+	{
+		delete this->shapemouse;
+		this->shapemouse = nullptr;
 	}
 	if (System::Update())
 	{

@@ -130,12 +130,6 @@ public:
 
 
 	/// <summary>
-	/// マウスの座標値を取得します
-	/// </summary>
-	Vec2 Mouse_Pos()const;
-
-
-	/// <summary>
 	/// オブジェクトを生成します
 	/// </summary>
 	/// <param name="taskname">
@@ -176,27 +170,25 @@ public:
 	void Mousehitupdate();
 
 
-/*外部クラスでメソッド使用*/
-
 	/// <summary>
-	/// 当たり判定矩形を返します
+	/// 敵と当たり左クリックが押されたかどうかを判定します
 	/// </summary>
+	/// <param name="target">
+	/// ターゲットの敵
+	/// </param>
 	/// <returns>
-	/// 当たり判定矩形
+	/// 左クリックが押された true / false
 	/// </returns>
-	RectF getHitBace()const;
+	bool MouseHit_toEnemy(const Rect& target)const;
+
+
+/*外部クラスでメソッド使用*/
 
 
 	/// <summary>
 	/// ライフ値が負の記号または0かを判定します
 	/// </summary>
 	constexpr bool isLifeZero()const;
-
-
-	/// <summary>
-	/// マウスの座標値を返します
-	/// </summary>
-	Vec2 getMousePos()const;
 
 
 	/// <summary>
@@ -211,19 +203,7 @@ public:
 	void Receive_Enemy();
 
 
-	/// <summary>
-	/// マウスと当たり判定をします
-	/// </summary>
-	/// <param name="target">
-	/// 判定する矩形
-	/// </param>
-	/// <returns>
-	/// 接触 true / 接触していない false
-	/// </returns>
-	bool MouseHit(const RectF& target)const;
 
 private:
 	int            life;					//体力
-	Vec2		   mouse_cursor_position;	//マウスカーソル座標
-	Collider*      mouse_colider;			//マウス当たり判定
 };

@@ -33,9 +33,43 @@ GameObject::~GameObject()
 		this->shapemouse = nullptr;
 	}
 }
-/*引数値のベクトル分座標移動を行います*/
-void GameObject::OffsetPosition(const Vec2& offset)
+/*当たり判定矩形を返します*/
+RectF GameObject::getRecthitbace()const
 {
-	this->position += offset;
-	std::cout << this->position << std::endl;
+	return this->collider->gethitbaceRect();
 }
+/*当たり判定矩形を返します*/
+Circle GameObject::getCirclehitbace()const
+{
+	return this->collider->gethitbaceCircle();
+}
+/*中身が空であるかを判定します*/
+bool GameObject::isExpiredCollider()const
+{
+	return this->collider == nullptr ? true : false;
+}
+/*中身が空であるかを判定します*/
+bool GameObject::isExpiredDraw()const
+{
+	return this->draw == nullptr ? true : false;
+}
+/*中身が空であるかを判定します*/
+bool GameObject::isExpiredMove()const
+{
+	return this->move == nullptr ? true : false;
+}
+/*中身が空であるかを判定します*/
+bool GameObject::isExpiredShapemouse()const
+{
+	return this->shapemouse == nullptr ? true : false;
+}
+
+
+
+
+///*引数値のベクトル分座標移動を行います*/
+//void GameObject::OffsetPosition(const Vec2& offset)
+//{
+//	this->position += offset;
+//	std::cout << this->position << std::endl;
+//}
