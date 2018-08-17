@@ -202,8 +202,6 @@ public:
 	/// </summary>
 	void Receive_Enemy();
 
-
-
 private:
 	int            life;					//‘Ì—Í
 };

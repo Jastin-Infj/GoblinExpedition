@@ -145,7 +145,7 @@
       <Filter>ソース ファイル\Task\HowPlay</Filter>
     </ClCompile>
     <ClCompile Include="src\Task\Task_Result.cpp">
-      <Filter>ソース ファイル\Task\HowPlay</Filter>
+      <Filter>ソース ファイル\Task\Result</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -513,6 +513,9 @@
       <Filter>ソース ファイル\Task\HowPlay</Filter>
     </ClInclude>
     <ClInclude Include="src\InterFace\ShapeMouseCursor.hpp">
+      <Filter>ソース ファイル\InterFace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\InterFace\TextInterFace.hpp">
       <Filter>ソース ファイル\InterFace</Filter>
     </ClInclude>
   </ItemGroup>

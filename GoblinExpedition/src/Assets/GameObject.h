@@ -105,8 +105,8 @@ public:
 	bool isExpiredShapemouse()const;
 
 protected:
-	Vec2  position;					//現在の座標
-	Point scale;					//オブジェクトの大きさ
+	Vec2			  position;		//現在の座標
+	Point			  scale;		//オブジェクトの大きさ
 	float             order;		//描画優先順位
 	Collider*         collider;		//当たり判定
 	DrawInterFace*    draw;			//描画機能

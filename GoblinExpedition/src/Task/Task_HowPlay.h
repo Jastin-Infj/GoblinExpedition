@@ -1,6 +1,7 @@
 #pragma once
 #include "../TaskSystem/TaskObject.h"
 #include "../InterFace/ShapeMouseCursor.hpp"
+#include "../InterFace/TextInterFace.hpp"
 
 class HowPlay : public TaskObject
 {
@@ -75,4 +76,5 @@ public:
 	void MouseHitleftClicked_update();
 private:
 	ShapeMouseCursor* shapemouse;		//図形ありマウスカーソル
+	TextInterFace*    textfile;			//テキスト読み込み
 };

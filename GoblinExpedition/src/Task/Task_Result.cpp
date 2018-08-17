@@ -31,24 +31,24 @@ bool Result::Init(const std::pair<std::string, std::string>& taskname_ , const i
 	__super::setDrawOrder(1.0f);
 	this->set_gameData(score_, destroyingcount_);
 	{
-		rm->setTexture("リザルトロゴ", Texture(L"./data/image/Result.png"));
-		auto resultrogo = UI::Create(TASKNAME("UI", "リザルトロゴ"), UI::ObjectType::ResultRogo, Vec2(Window::Center().x - 128 /2 , 0), Point(128, 90),UI::InitFormat::Normal,Rect(0,0,536,106));
+		rm->setTexture("リザルトロゴ", Texture(L"./data/image/TextImage/Result.png"));
+		auto resultrogo = UI::Create(TASKNAME("UIfont", "リザルトロゴ"), UI::ObjectType::ResultRogo, Vec2(Window::Center().x - 128 /2 , 0), Point(128, 90),UI::InitFormat::Normal,Rect(0,0,536,106));
 	}
 	{
-		rm->setTexture("タイトルへ戻る", Texture(L"./data/image/toTitle.png"));
-		auto totitle = UI::Create(TASKNAME("UI","タイトルへ戻る"),UI::ObjectType::toTitle,Vec2(Window::Size().x - 256, Window::Size().y - 64),Point(256,64),UI::InitFormat::AddCollider,Rect(0,0,626,103));
+		rm->setTexture("タイトルへ戻る", Texture(L"./data/image/TextImage/toTitle.png"));
+		auto totitle = UI::Create(TASKNAME("UIfont","タイトルへ戻る"),UI::ObjectType::toTitle,Vec2(Window::Size().x - 256, Window::Size().y - 64),Point(256,64),UI::InitFormat::AddCollider,Rect(0,0,626,103));
 	}
 	{
 		for (int i = 0; i < 5; ++i)
 		{
 			//スコア表示
-			auto scores = Score::Create(TASKNAME("UI", "スコア"), Vec2(32 * i, Window::Size().y - 50), Point(32, 50), i + 1, this->score);
+			auto scores = Score::Create(TASKNAME("スコアUI", "スコア"), Vec2(32 * i, Window::Size().y - 50), Point(32, 50), i + 1, this->score);
 		}
 	}
 	{
 		for (int i = 0; i < 3; ++i)
 		{
-			auto scores = Score::Create(TASKNAME("UI", "撃退数"), Vec2(Window::Size().x - 32 * (3 - i), Window::Size().y - 50), Point(32, 50),i + 1,this->destroyingcount);
+			auto scores = Score::Create(TASKNAME("スコアUI", "撃退数"), Vec2(Window::Size().x - 32 * (3 - i), Window::Size().y - 50), Point(32, 50),i + 1,this->destroyingcount);
 		}
 	}
 	this->shapemouse = ShapeMouseCursor::AddComponent<Point>(ShapeMouseCursor::ShapeT::RectF, Point(5, 5));
@@ -73,12 +73,12 @@ void Result::Update()
 /*解放処理*/
 bool Result::Finalize()
 {
-	auto uis = taskSystem->GetTasks_GroupName<UI>("UI");
+	auto uis = taskSystem->GetTasks_GroupName<UI>("UIfont");
 	for (auto it = uis->begin(); it != uis->end(); ++it)
 	{
 		(*it)->Kill();
 	}
-	auto scores = taskSystem->GetTasks_GroupName<Score>("スコア");
+	auto scores = taskSystem->GetTasks_GroupName<Score>("スコアUI");
 	for (auto it = scores->begin(); it != scores->end(); ++it)
 	{
 		(*it)->Kill();

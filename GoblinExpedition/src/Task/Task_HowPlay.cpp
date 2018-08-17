@@ -28,11 +28,20 @@ bool HowPlay::Init(const std::pair<std::string, std::string>& taskname_)
 
 	//’Ç‰Á‚µ‚½‚¢ƒIƒuƒWƒFƒNƒg‚ð‚±‚±‚É‹Lq‚·‚é
 
-	rm->setTexture("—V‚Ñ•ûUI", Texture(L"./data/image/—V‚Ñ•ûUI.png"));
-	auto howplayui = UI::Create(TASKNAME("UI", "—V‚Ñ•ûUI"), UI::ObjectType::HowPlayUI, Vec2(Window::Center().x - 256 / 2, 0), Point(256, 96),UI::InitFormat::Normal,Rect(0,0,602,133));
+	rm->setTexture("—V‚Ñ•ûUI", Texture(L"./data/image/TextImage/—V‚Ñ•ûUI.png"));
+	auto howplayui = UI::Create(TASKNAME("UIfont", "—V‚Ñ•ûUI"), UI::ObjectType::HowPlayUI, Vec2(Window::Center().x - 256 / 2, 0), Point(256, 96),UI::InitFormat::Normal,Rect(0,0,602,133));
 
-	rm->setTexture("ƒQ[ƒ€‚Ö", Texture(L"./data/image/ƒQ[ƒ€ƒXƒ^[ƒg.png"));
-	auto gamestart = UI::Create(TASKNAME("UI", "ƒQ[ƒ€‚Ö"), UI::ObjectType::toGame, Vec2(Window::Width() - 256, Window::Height() - 96), Point(256, 96), UI::InitFormat::AddCollider, Rect(0, 0, 624, 101));
+	rm->setTexture("ƒQ[ƒ€‚Ö", Texture(L"./data/image/TextImage/ƒQ[ƒ€ƒXƒ^[ƒg.png"));
+	auto gamestart = UI::Create(TASKNAME("UIfont", "ƒQ[ƒ€‚Ö"), UI::ObjectType::toGame, Vec2(Window::Width() - 256, Window::Height() - 96), Point(256, 96), UI::InitFormat::AddCollider, Rect(0, 0, 624, 101));
+	rm->setTexture("¶ƒNƒŠƒbƒNfont", Texture(L"./data/image/TextImage/LeftClick.png"));
+	auto leftclick = UI::Create(TASKNAME("UIfont", "¶ƒNƒŠƒbƒNfont"), UI::ObjectType::Leftclickfont, Vec2(340, 220), Point(128, 64), UI::InitFormat::Normal, Rect(0, 0, 375, 105));
+	rm->setTexture("UŒ‚font", Texture(L"./data/image/TextImage/attackfont.png"));
+	auto attackfont = UI::Create(TASKNAME("UIfont", "UŒ‚font"), UI::ObjectType::Attackfont, Vec2(340 + 128 + 30, 220), Point(96, 64), UI::InitFormat::Normal, Rect(0, 0, 176, 106));
+
+	this->textfile = TextInterFace::Create("./data/Text/howplay1.c",TextInterFace::FormatText::TXT,Font(20,Typeface::Heavy));
+	this->textfile->setArrayString(this->textfile->ReadText(TextInterFace::ReaderType::TextLen));
+	this->textfile->StringAssignment(this->textfile->getArrayString(), 0);
+
 	this->shapemouse = ShapeMouseCursor::AddComponent<Point>(ShapeMouseCursor::ShapeT::Rect,Point(5,5));
 	this->shapemouse->MouseColliderAddComponent();
 	return true;
@@ -50,12 +59,12 @@ void HowPlay::Update()
 /*•`‰æˆ—*/
 void HowPlay::Render()
 {
-	
+	this->textfile->draw(Vec2(300, 400));
 }
 /*‰ð•úˆ—*/
 bool HowPlay::Finalize()
 {
-	auto uis = taskSystem->GetTasks_GroupName<UI>("UI");
+	auto uis = taskSystem->GetTasks_GroupName<UI>("UIfont");
 	if (uis)
 	{
 		for (auto it = uis->begin(); it != uis->end(); ++it)
@@ -67,6 +76,11 @@ bool HowPlay::Finalize()
 	{
 		delete this->shapemouse;
 		this->shapemouse = nullptr;
+	}
+	if (this->textfile)
+	{
+		delete this->textfile;
+		this->textfile = nullptr;
 	}
 	if (System::Update())
 	{

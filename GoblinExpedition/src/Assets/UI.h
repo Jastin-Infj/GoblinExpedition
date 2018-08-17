@@ -27,18 +27,20 @@ public:
 	/// </summary>
 	enum class ObjectType
 	{
-		Background = 0,	//背景関係
-		PlayerLife = 2,	//Playerのライフ
-		ScoreUI    = 2, //スコアUI
-		MusouItem  = 3, //無双アイテム
-		ResultRogo = 4,	//リザルトロゴ
-		TitleRogo  = 5, //タイトルロゴ
-		ESCAPERogo = 6, //エスケープ
-		HowPlayUI  = 7,	//遊び方UI
-		toTitle    = 8,	//タイトルへ戻る
-		toGame     = 9, //ゲームスタート
-		TitleStart = 10,//タイトルのスタート
-		TitleExit  = 11,//タイトルでの終了
+		Background,		//背景関係
+		PlayerLife,		//Playerのライフ
+		ScoreUI   ,		//スコアUI
+		MusouItem ,		//無双アイテム
+		ResultRogo,		//リザルトロゴ
+		TitleRogo ,		//タイトルロゴ
+		ESCAPERogo,		//エスケープ
+		HowPlayUI ,		//遊び方UI
+		toTitle   ,		//タイトルへ戻る
+		toGame    ,		//ゲームスタート
+		TitleStart,		//タイトルのスタート
+		TitleExit ,		//タイトルでの終了
+		Leftclickfont,	//左クリックフォント
+		Attackfont,		//攻撃フォント
 	};
 
 	
