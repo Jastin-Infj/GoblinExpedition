@@ -86,6 +86,10 @@ void Player::Mousehitupdate()
 			{
 				if (this->shapemouse->LeftClicked((*it)->getRecthitbace()))
 				{
+					if ((*musouitems_it)->isUseItem())
+					{
+						return;
+					}
 					(*musouitems_it)->Receive_Player();
 				}
 			}

@@ -19,13 +19,15 @@ Score::~Score()
 #endif // _DEBUG
 }
 /*スコアの初期化設定を行います*/
-bool Score::Score_Parameter(const TASKNAME& taskname_, const Vec2& position_, const Point& scale_,const int& digit_ ,const int& score_ , const float& order_)
+bool Score::Score_Parameter(const TASKNAME& taskname_,const  ObjectType& objecttype_ ,const Vec2& position_, const Point& scale_,const int& digit_ ,const int& score_ , const float& order_)
 {
 	__super::setTaskName(taskname_);
+	this->objecttype = objecttype_;
 	this->position = position_;
 	this->scale = scale_;
 	this->setDrawOrder((order = order_));
 	this->selectdigit = digit_;
+	this->effectcount = 0;
 
 	//各機能ごとの設定
 	this->draw = DrawInterFace::Addcomponent(RectF(this->position, this->scale));
@@ -56,14 +58,23 @@ bool Score::Finalize()
 /*スコアの計算を行います*/
 void Score::Score_UpDate()
 {
-	auto game = taskSystem->GetTask_TaskName<Game>("インゲーム");
-	if (game)
+	if (this->objecttype == ObjectType::InGameUI)
 	{
-		this->score = game->getScore();
+		auto game = taskSystem->GetTask_TaskName<Game>("インゲーム");
+		if (game)
+		{
+			this->score = game->getScore();
+		}
 	}
 
+	if (this->objecttype == ObjectType::KillEnemy)
+	{
+		this->KilledEnemy_update();
+	}
+	
+
 	//指定した桁数の数字を取得
-	std::string str = this->Digit();
+	std::string str = this->Digit(this->score);
 
 	if (str == "")
 	{
@@ -73,15 +84,25 @@ void Score::Score_UpDate()
 	this->setvalueSrc(str);
 }
 /*指定の桁数の数字を返します*/
-std::string Score::Digit()
+std::string Score::Digit(const int& score_)
 {
-	std::string str = std::to_string(this->score);
+	std::string str = std::to_string(score_);
 	if (this->selectdigit <= str.size())
 	{
 		str = str.substr(this->selectdigit - 1, 1);
 		return str;
 	}
 	return "";
+}
+/*敵が倒れたらスコアを生成します*/
+void Score::KilledEnemy_update()
+{
+	this->effectcount++;
+	if (this->effectcount >= 60)
+	{
+		this->Kill();
+	}
+	//後で記述
 }
 /*画像元矩形の作成*/
 void Score::setvalueSrc(const std::string& value)
@@ -132,12 +153,12 @@ void Score::setvalueSrc(const std::string& value)
 	}
 }
 /*スコアの生成をします*/
-TaskObject::SP Score::Create(const TASKNAME& taskname_, const Vec2& position_, const Point& scale_,const int& digit_ , const int& score_  ,const float& order_, bool flag)
+TaskObject::SP Score::Create(const TASKNAME& taskname_,const ObjectType& objecttype_ ,const Vec2& position_, const Point& scale_,const int& digit_ , const int& score_  ,const float& order_, bool flag)
 {
 	Score::SP score = Score::SP(new Score());
 	if (score)
 	{
-		if (!score->Score_Parameter(taskname_ , position_ , scale_ ,digit_ ,score_,order_))
+		if (!score->Score_Parameter(taskname_ ,objecttype_, position_ , scale_ ,digit_ ,score_,order_))
 		{
 			score->Kill();
 		}

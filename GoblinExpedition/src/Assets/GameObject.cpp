@@ -63,6 +63,17 @@ bool GameObject::isExpiredShapemouse()const
 {
 	return this->shapemouse == nullptr ? true : false;
 }
+/*À•W‚ð•Ô‚µ‚Ü‚·*/
+Vec2 GameObject::getPosition()const
+{
+	return this->position;
+}
+/*‘å‚«‚³‚ð•Ô‚µ‚Ü‚·*/
+Point GameObject::getScale()const
+{
+	return this->scale;
+}
+/*À•W*/
 
 
 

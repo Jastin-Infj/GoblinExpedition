@@ -13,7 +13,7 @@
 #define SCORE_MIN         0			//スコアの最小値
 #define SCORE_MAX         99999     //スコア最大値
 
-#define MUSOUITEM_CREATECOUNT  1	//無双アイテムを生成するタイミング
+#define MUSOUITEM_CREATECOUNT  5	//無双アイテムを生成するタイミング
 
 class Game : public TaskObject
 {

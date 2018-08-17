@@ -60,11 +60,10 @@ bool Game::Init(const std::pair<std::string,std::string>& taskname_)
 	}
 	{
 		rm->setTexture("スコア", Texture(L"./data/image/Math.png"));
-		auto score1 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130, 5), Point(32, 50),1);
-		auto score2 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 , 5), Point(32, 50),2);
-		auto score3 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 * 2, 5), Point(32, 50),3);
-		auto score4 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 * 3, 5), Point(32, 50),4);
-		auto score5 = Score::Create(TASKNAME("UI", "スコア"), Vec2(130 + 32 * 4, 5), Point(32, 50),5);
+		for (int i = 0; i < 5; ++i)
+		{
+			auto score = Score::Create(TASKNAME("UI", "スコア"), Score::ObjectType::InGameUI, Vec2(130 + i * 32, 5), Point(32, 50), i + 1);
+		}
 	}
 	{
 		rm->setTexture("エスケープロゴ", Texture(L"./data/image/escape.png"));
@@ -122,12 +121,24 @@ bool Game::Finalize()
 			(*it)->Kill();
 		}
 	}
-	auto scores = taskSystem->GetTasks_GroupName<TaskObject>("UI");
-	if (scores)
 	{
-		for (auto it = scores->begin(); it != scores->end(); ++it)
+		auto scores = taskSystem->GetTasks_GroupName<TaskObject>("UI");
+		if (scores)
 		{
-			(*it)->Kill();
+			for (auto it = scores->begin(); it != scores->end(); ++it)
+			{
+				(*it)->Kill();
+			}
+		}
+	}
+	{
+		auto scores = taskSystem->GetTasks_GroupName<TaskObject>("EffectUI");
+		if (scores)
+		{
+			for (auto it = scores->begin(); it != scores->end(); ++it)
+			{
+				(*it)->Kill();
+			}
 		}
 	}
 	auto items = taskSystem->GetTasks_GroupName<TaskObject>("アイテム");

@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "Score.h"
 #include <iostream>
 #include "../Task/Task_Game.h"
 /*コンストラクタ*/
@@ -103,17 +104,26 @@ void Enemy::Opaque_Decrement()
 	{
 		return;
 	}
-	this->opaque *= OPAQUE_DECREASERATE;
-	if (this->opaque <= OPAQUE_MIN)
+	double opa = this->opaque;
+	opa *= OPAQUE_DECREASERATE;
+	//例外処理 割合計算で計算したほうが高い場合
+	if (opa >= this->opaque)
 	{
 		this->opaque = OPAQUE_MIN;
 	}
-	std::cout << this->opaque << std::endl;
+	else
+	{
+		this->opaque = (int)opa;
+	}
+	if (this->isOpaque_Zero())
+	{
+		this->opaque = OPAQUE_MIN;
+	}
 }
-/*不透明度を0であるかを判定します*/
+/*不透明度を0以下であるかを判定します*/
 bool Enemy::isOpaque_Zero()const
 {
-	return (int)this->opaque == OPAQUE_MIN ? true : false;
+	return this->opaque == OPAQUE_MIN ? true : false;
 }
 /*Player当たり判定矩形と接触判定を行います*/
 bool Enemy::onHitbaceExit(const RectF& target)const
@@ -164,6 +174,12 @@ const int Enemy::getScore()
 {
 	return ENEMY_SCORE;
 }
+/*数字の桁数を計算します*/
+const size_t Enemy::Digit(const int& score_)
+{
+	std::string str = std::to_string(score_);
+	return str.size();
+}
 /*マウスと敵の当たり判定を行います*/
 void Enemy::Mouse_Hit()
 {
@@ -181,7 +197,7 @@ void Enemy::Mouse_Hit()
 		{
 			this->Opaque_Decrement();
 		}
-		else if (this->isOpaque_Zero() && !this->getleftrightinversionflag() && !this->musouitemkill)
+		if (this->isOpaque_Zero() && !this->getleftrightinversionflag() && !this->musouitemkill)
 		{
 			auto game = taskSystem->GetTask_TaskName<Game>("インゲーム");
 			if (game)
@@ -192,6 +208,8 @@ void Enemy::Mouse_Hit()
 				game->Enemy_DestroyingCount_Add(ENEMY_DESTROYINGSCORE);
 				//撃破アイテムの生成
 				game->MusouItem_Create();
+				//スコアの生成
+				this->KillScoreCreate();
 				this->Kill();
 			}
 		}
@@ -228,6 +246,15 @@ void Enemy::SE_Play_frame()
 			this->se_play = true;
 		}
 		std::cout << this->se_frametime << std::endl;
+	}
+}
+/*自身が倒された際にスコアを表示するUIを生成します*/
+void Enemy::KillScoreCreate()
+{
+	size_t scoresize = this->Digit(this->getScore());
+	for (size_t i = 0; i < scoresize; ++i)
+	{
+		auto scorecreate = Score::Create(TASKNAME("EffectUI", "スコアエフェクト"), Score::ObjectType::KillEnemy, Vec2(this->position.x + (64 * i), this->position.y - this->scale.y), Point(64, 48), (int)i + 1, this->getScore());
 	}
 }
 /*敵を生成します*/

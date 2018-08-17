@@ -189,10 +189,10 @@ public:
 
 
 	/// <summary>
-	/// 不透明度が0になっているかを判定をします
+	/// 不透明度が0以下かを判定をします
 	/// </summary>
 	/// <returns>
-	/// 0 true / 0以外 false
+	/// 0以下 true / 1以上 false
 	/// </returns>
 	bool isOpaque_Zero()const;
 
@@ -251,6 +251,24 @@ public:
 	/// 時間を指定してSEを流します
 	/// </summary>
 	void SE_Play_frame();
+
+
+	/// <summary>
+	/// 自身が消滅したらスコアを表示させます
+	/// </summary>
+	void KillScoreCreate();
+
+
+	/// <summary>
+	/// スコアの桁数を計算します
+	/// </summary>
+	/// <param name="score_">
+	/// スコア
+	/// </param>
+	/// <returns>
+	/// 数字の桁数
+	/// </returns>
+	const size_t  Digit(const int& score_);
 private:
 	ObjectType	objecttype;					//オブジェクトタイプ
 	bool leftrightinversionflag;			//左右反転フラグ

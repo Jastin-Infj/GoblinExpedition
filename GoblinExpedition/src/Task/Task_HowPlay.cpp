@@ -64,7 +64,7 @@ void HowPlay::Render()
 /*‰ð•úˆ—*/
 bool HowPlay::Finalize()
 {
-	auto uis = taskSystem->GetTasks_GroupName<UI>("UIfont");
+	auto uis = taskSystem->GetTasks_GroupName<TaskObject>("UIfont");
 	if (uis)
 	{
 		for (auto it = uis->begin(); it != uis->end(); ++it)

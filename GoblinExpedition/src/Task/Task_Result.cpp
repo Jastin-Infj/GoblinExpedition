@@ -42,13 +42,13 @@ bool Result::Init(const std::pair<std::string, std::string>& taskname_ , const i
 		for (int i = 0; i < 5; ++i)
 		{
 			//スコア表示
-			auto scores = Score::Create(TASKNAME("スコアUI", "スコア"), Vec2(32 * i, Window::Size().y - 50), Point(32, 50), i + 1, this->score);
+			auto scores = Score::Create(TASKNAME("スコアUI", "スコア"),Score::ObjectType::Result ,Vec2(32 * i, Window::Size().y - 50), Point(32, 50), i + 1, this->score);
 		}
 	}
 	{
 		for (int i = 0; i < 3; ++i)
 		{
-			auto scores = Score::Create(TASKNAME("スコアUI", "撃退数"), Vec2(Window::Size().x - 32 * (3 - i), Window::Size().y - 50), Point(32, 50),i + 1,this->destroyingcount);
+			auto scores = Score::Create(TASKNAME("スコアUI", "撃退数"),Score::ObjectType::Result ,Vec2(Window::Size().x - 32 * (3 - i), Window::Size().y - 50), Point(32, 50),i + 1,this->destroyingcount);
 		}
 	}
 	this->shapemouse = ShapeMouseCursor::AddComponent<Point>(ShapeMouseCursor::ShapeT::RectF, Point(5, 5));

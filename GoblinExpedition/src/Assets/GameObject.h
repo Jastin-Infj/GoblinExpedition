@@ -104,6 +104,23 @@ public:
 	/// </returns>
 	bool isExpiredShapemouse()const;
 
+
+	/// <summary>
+	/// 座標を返します
+	/// </summary>
+	/// <returns>
+	/// 座標
+	/// </returns>
+	Vec2  getPosition()const;
+
+
+	/// <summary>
+	/// 大きさを返します
+	/// </summary>
+	/// <returns>
+	/// 大きさ
+	/// </returns>
+	Point getScale()const;
 protected:
 	Vec2			  position;		//現在の座標
 	Point			  scale;		//オブジェクトの大きさ

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
-
+#include "Enemy.h"
 
 /// <summary>
 /// スコア出力クラス
@@ -11,6 +11,14 @@ class Score : public GameObject
 public:
 	typedef std::shared_ptr<Score> SP;		//シェアポインタ
 	typedef std::weak_ptr<Score>   WP;		//ウィークポインタ
+
+
+	enum class ObjectType
+	{
+		InGameUI,		//インゲーム内
+		KillEnemy,		//敵が倒したときに使用
+		Result,			//結果画面に表示するもの
+	};
 
 	/// <summary>
 	/// コンストラクタ
@@ -29,6 +37,9 @@ public:
 	/// </summary>
 	/// <param name="taskname_">
 	/// オブジェクト名(グループ名・タスク名)
+	/// </param>
+	/// <param name="objecttype_">
+	/// オブジェクトタイプ
 	/// </param>
 	/// <param name="position_">
 	/// 初期座標値(X座標 , Y座標)
@@ -50,6 +61,7 @@ public:
 	/// </returns>
 	bool Score_Parameter(
 		const TASKNAME&   taskname_,
+		const ObjectType& objecttype_,
 		const Vec2&       position_,
 		const Point&      scale_,
 		const int&        digit_,
@@ -63,6 +75,9 @@ public:
 	/// </summary>
 	/// <param name="taskname_">
 	/// オブジェクト名(グループ名・タスク名)
+	/// </param>
+	/// <param name="objecttype_">
+	/// オブジェクトタイプ
 	/// </param>
 	/// <param name="position_">
 	/// 初期座標値(X座標 , Y座標)
@@ -86,7 +101,8 @@ public:
 	/// 
 	/// </returns>
 	static TaskObject::SP Create(
-		const TASKNAME&   taskname_, 
+		const TASKNAME&   taskname_,
+		const ObjectType& objecttype_,
 		const Vec2&       position_, 
 		const Point&      scale_,
 		const int&        digit_,
@@ -126,13 +142,13 @@ public:
 	/// <summary>
 	/// 指定の桁数の数字を返します
 	/// </summary>
-	/// <param name="digit_">
+	/// <param name="score_">
 	/// 調べる桁数
 	/// </param>
 	/// <returns>
 	/// 対応した桁数の数字
 	/// </returns>
-	std::string Digit();
+	std::string Digit(const int& score_);
 
 
 	/// <summary>
@@ -143,7 +159,15 @@ public:
 	/// </param>
 	void setvalueSrc(const std::string& value);
 
+
+	/// <summary>
+	/// 敵が倒された場合のスコア更新処理
+	/// </summary>
+	void KilledEnemy_update();
+
 private:
-	int score;			//スコア
-	int selectdigit;	//対応させる桁数
+	ObjectType objecttype;	//オブジェクトタイプ
+	int score;				//スコア
+	int selectdigit;		//対応させる桁数
+	int effectcount;		//エフェクトカウント
 };

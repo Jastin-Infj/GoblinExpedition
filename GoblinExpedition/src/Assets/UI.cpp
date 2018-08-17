@@ -1,5 +1,4 @@
 #include "UI.h"
-#include "Enemy.h"
 #include "../Task/Task_Game.h"
 #include "../Task/Task_Title.h"
 #include "../Task/Task_Result.h"
@@ -40,6 +39,7 @@ bool UI::Init_Parameter(
 	this->scale = scale_;
 	this->objecttype = objecttype_;
 	this->killcheck = false;
+	this->itemuseflag = false;
 
 	//機能の設定
 	void(UI::*set_parametar[])(const Rect&) =
@@ -150,6 +150,14 @@ void UI::TitleExitUI_LeftClicked()
 void UI::MusouItem_Use()
 {
 	this->killcheck = true;
+	if (this->itemuseflag)
+	{
+		return;
+	}
+	else
+	{
+		this->itemuseflag = true;
+	}
 }
 /*ゲームを終了させます*/
 void UI::Escape_Use()
@@ -177,9 +185,7 @@ bool UI::isInWindow(const RectF& drawbase)
 void UI::EnemiesKill()
 {
 	auto game = taskSystem->GetTask_TaskName<Game>("インゲーム");
-
 	auto enemys = taskSystem->GetTasks_TaskName<Enemy>("ゴブリン");
-
 	if (enemys && game)
 	{
 		for (auto it = enemys->begin(); it != enemys->end(); ++it)
@@ -195,6 +201,11 @@ void UI::EnemiesKill()
 				{
 					//スコアを加算
 					game->ScoreAddition(ENEMY_SCORE);
+					if (!(*it)->getleftrightinversionflag())
+					{
+						//スコアの生成
+						(*it)->KillScoreCreate();
+					}
 					//撃破数を加算
 					game->Enemy_DestroyingCount_Add(ENEMY_DESTROYINGSCORE);
 					//モンスターの消滅フラグをtrue
@@ -206,6 +217,7 @@ void UI::EnemiesKill()
 				}
 			}
 		}
+		this->itemuseflag = false;
 	}
 }
 /*マウスの判定した後の処理*/
@@ -250,4 +262,9 @@ bool UI::Hit(const RectF& drawbace)
 UI::ObjectType UI::getObjecttype()const
 {
 	return this->objecttype;
+}
+/*アイテムを使用中かどうか判定します*/
+bool UI::isUseItem()const
+{
+	return this->itemuseflag;
 }

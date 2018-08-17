@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Enemy.h"
 
 //追加機能
 #include "../InterFace/DrawInterFace.hpp"
@@ -284,9 +285,15 @@ public:
 	ObjectType getObjecttype()const;
 
 
+	/// <summary>
+	/// アイテムを使用中かどうかを判定します
+	/// </summary>
+	/// <returns></returns>
+	bool isUseItem()const;
 private:
-	ObjectType objecttype;		//オブジェクトタイプ
-	bool       killcheck;		//死んでいるか？
+	ObjectType objecttype;				//オブジェクトタイプ
+	bool       killcheck;				//死んでいるか？
+	bool       itemuseflag;				//使用しているかどうか？
 };
 
 
