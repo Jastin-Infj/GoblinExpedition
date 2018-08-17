@@ -185,6 +185,12 @@ private:
 	/// <summary>
 	/// マウスで左クリックが押された後の処理を行います
 	/// </summary>
+	void ToGameUI_LeftClicked();
+
+
+	/// <summary>
+	/// マウスで左クリックが押された後の処理を行います
+	/// </summary>
 	void TitleExitUI_LeftClicked();
 	
 

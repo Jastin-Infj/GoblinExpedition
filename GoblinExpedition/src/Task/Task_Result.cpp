@@ -51,6 +51,8 @@ bool Result::Init(const std::pair<std::string, std::string>& taskname_ , const i
 			auto scores = Score::Create(TASKNAME("UI", "撃退数"), Vec2(Window::Size().x - 32 * (3 - i), Window::Size().y - 50), Point(32, 50),i + 1,this->destroyingcount);
 		}
 	}
+	this->shapemouse = ShapeMouseCursor::AddComponent<Point>(ShapeMouseCursor::ShapeT::RectF, Point(5, 5));
+	this->shapemouse->MouseColliderAddComponent();
 	return true;
 }
 /*ゲームデータを送ります*/
@@ -62,6 +64,7 @@ void Result::set_gameData(const int& score_, const int& destroyingcount_)
 /*更新処理*/
 void Result::Update()
 {
+	this->MouseHitleftClicked_update();
 	if (Input::KeyS.pressed)
 	{
 		this->Kill();
@@ -75,7 +78,16 @@ bool Result::Finalize()
 	{
 		(*it)->Kill();
 	}
-
+	auto scores = taskSystem->GetTasks_GroupName<Score>("スコア");
+	for (auto it = scores->begin(); it != scores->end(); ++it)
+	{
+		(*it)->Kill();
+	}
+	if (this->shapemouse)
+	{
+		delete this->shapemouse;
+		this->shapemouse = nullptr;
+	}
 	if (System::Update())
 	{
 		auto title = Title::Create(TASKNAME("シーン", "タイトル"));
@@ -99,4 +111,17 @@ TaskObject::SP Result::Create(const std::pair<std::string, std::string>& tasknam
 		return result;
 	}
 	return nullptr;
+}
+/*マウスと対象の図形との当たり判定を行います*/
+void Result::MouseHitleftClicked_update()
+{
+	auto totitle = taskSystem->GetTask_TaskName<UI>("タイトルへ戻る");
+	if (!totitle)
+	{
+		return;
+	}
+	if (this->shapemouse->LeftClicked(totitle->getRecthitbace()))
+	{
+		totitle->Receive_Player();
+	}
 }

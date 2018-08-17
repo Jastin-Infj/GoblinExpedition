@@ -69,6 +69,10 @@ public:
 	static TaskObject::SP Create(const std::pair<std::string, std::string>& taskname, bool flag = true);
 
 
+	/// <summary>
+	/// マウスと対象の図形との当たり判定を行います
+	/// </summary>
+	void MouseHitleftClicked_update();
 private:
 	ShapeMouseCursor* shapemouse;		//図形ありマウスカーソル
 };

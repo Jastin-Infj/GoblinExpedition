@@ -141,10 +141,10 @@
     <ClCompile Include="src\Assets\Score.cpp">
       <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
-    <ClCompile Include="src\Task\Task_Result.cpp">
-      <Filter>ソース ファイル\Task\Result</Filter>
-    </ClCompile>
     <ClCompile Include="src\Task\Task_HowPlay.cpp">
+      <Filter>ソース ファイル\Task\HowPlay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Task\Task_Result.cpp">
       <Filter>ソース ファイル\Task\HowPlay</Filter>
     </ClCompile>
   </ItemGroup>

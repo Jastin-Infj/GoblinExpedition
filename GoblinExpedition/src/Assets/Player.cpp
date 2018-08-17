@@ -75,35 +75,29 @@ void Player::Render()
 /*マウスの当たり判定を毎フレーム検知します*/
 void Player::Mousehitupdate()
 {
+	//無双アイテムの使用
+	auto musouitems = taskSystem->GetTasks_GroupName<UI>("アイテム");
+	auto musouitems_it = musouitems->rbegin();
+	if (musouitems)
 	{
-		//無双アイテムの使用
-		auto musouitems = taskSystem->GetTasks_GroupName<UI>("アイテム");
-		auto musouitems_it = musouitems->rbegin();
-		if (musouitems)
+		for (auto it = musouitems->begin(); it != musouitems->end(); ++it)
 		{
-			for (auto it = musouitems->begin(); it != musouitems->end(); ++it)
+			if ((*it)->Hit(this->shapemouse->getrectHitbace()))
 			{
-				if ((*it)->Hit(this->shapemouse->getrectHitbace()))
+				if (this->shapemouse->LeftClicked((*it)->getRecthitbace()))
 				{
-					if (this->shapemouse->LeftClicked((*it)->getRecthitbace()))
-					{
-						(*musouitems_it)->Receive_Player();
-					}
+					(*musouitems_it)->Receive_Player();
 				}
 			}
 		}
 	}
+	//エスケープキーを押した
+	auto escape = taskSystem->GetTask_TaskName<UI>("エスケープロゴ");
+	if (escape)
 	{
-		auto escape = taskSystem->GetTask_TaskName<UI>("エスケープロゴ");
-		if (escape)
+		if (this->shapemouse->LeftClicked(escape->getRecthitbace()))
 		{
-			if (escape->Hit(this->shapemouse->getrectHitbace()))
-			{
-				if (this->shapemouse->LeftClicked(escape->getRecthitbace()))
-				{
-					escape->Receive_Player();
-				}
-			}
+			escape->Receive_Player();
 		}
 	}
 }
@@ -119,7 +113,7 @@ void Player::LifeUICreate()
 		rm->setTexture("プレイヤライフ", Texture(L"./data/image/heart.png"));
 		for (int i = 0; i < this->life; ++i)
 		{
-			auto player_life = UI::Create(TASKNAME("UI", "プレイヤライフ"), UI::ObjectType::PlayerLife, Vec2(Window::Size().x - 64 - i * 64, 0), Point(64, 48), UI::InitFormat::Normal,Rect(0,0,64,48));
+			auto player_life = UI::Create(TASKNAME("UI", "プレイヤライフ"), UI::ObjectType::PlayerLife, Vec2(Window::Size().x - 64 - i * 64, 0), Point(64, 48), UI::InitFormat::Normal, Rect(0, 0, 64, 48));
 		}
 	}
 }

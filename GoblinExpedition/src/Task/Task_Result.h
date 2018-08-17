@@ -1,5 +1,6 @@
 #pragma once
 #include "../TaskSystem/TaskObject.h"
+#include "../InterFace/ShapeMouseCursor.hpp"
 
 class Result : public TaskObject
 {
@@ -90,7 +91,14 @@ public:
 	/// 敵の撃破数
 	/// </param>
 	void set_gameData(const int& score_ , const int& destroyingcount_);
+
+
+	/// <summary>
+	/// マウスと対象の図形との当たり判定を行います
+	/// </summary>
+	void MouseHitleftClicked_update();
 private:
-	int score;					//スコア
-	int destroyingcount;		//撃破数
+	int score;						//スコア
+	int destroyingcount;			//撃破数
+	ShapeMouseCursor*  shapemouse;	//マウス図形
 };

@@ -31,12 +31,16 @@ bool HowPlay::Init(const std::pair<std::string, std::string>& taskname_)
 	rm->setTexture("遊び方UI", Texture(L"./data/image/遊び方UI.png"));
 	auto howplayui = UI::Create(TASKNAME("UI", "遊び方UI"), UI::ObjectType::HowPlayUI, Vec2(Window::Center().x - 256 / 2, 0), Point(256, 96),UI::InitFormat::Normal,Rect(0,0,602,133));
 
+	rm->setTexture("ゲームへ", Texture(L"./data/image/ゲームスタート.png"));
+	auto gamestart = UI::Create(TASKNAME("UI", "ゲームへ"), UI::ObjectType::toGame, Vec2(Window::Width() - 256, Window::Height() - 96), Point(256, 96), UI::InitFormat::AddCollider, Rect(0, 0, 624, 101));
 	this->shapemouse = ShapeMouseCursor::AddComponent<Point>(ShapeMouseCursor::ShapeT::Rect,Point(5,5));
+	this->shapemouse->MouseColliderAddComponent();
 	return true;
 }
 /* 更新処理 */
 void HowPlay::Update()
 {
+	this->MouseHitleftClicked_update();
 	//仮処理
 	if (Input::KeyS.clicked)
 	{
@@ -90,4 +94,16 @@ TaskObject::SP HowPlay::Create(const std::pair<std::string, std::string>& taskna
 	}
 	return nullptr;
 }
-/**/
+/*マウスと対象の図形との当たり判定を行います*/
+void HowPlay::MouseHitleftClicked_update()
+{
+	auto toGame = taskSystem->GetTask_TaskName<UI>("ゲームへ");
+	if (!toGame)
+	{
+		return;
+	}
+	if (this->shapemouse->LeftClicked(toGame->getRecthitbace()))
+	{
+		toGame->Receive_Player();
+	}
+}

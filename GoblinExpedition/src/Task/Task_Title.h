@@ -1,5 +1,6 @@
 #pragma once
 #include "../TaskSystem/TaskObject.h"
+#include "../InterFace/ShapeMouseCursor.hpp"
 class Title : public TaskObject
 {
 public:
@@ -55,4 +56,10 @@ public:
 
 private:
 
+	/// <summary>
+	/// マウスと対象の図形との当たり判定を行います
+	/// </summary>
+	void MouseHitleftClicked_update();
+private:
+	ShapeMouseCursor* shapemouse;		//マウスカーソル図形
 };

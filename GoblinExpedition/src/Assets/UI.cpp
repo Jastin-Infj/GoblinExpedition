@@ -3,6 +3,7 @@
 #include "../Task/Task_Game.h"
 #include "../Task/Task_Title.h"
 #include "../Task/Task_Result.h"
+#include "../Task/Task_HowPlay.h"
 #include <iostream>
 /*コンストラクタ*/
 UI::UI()
@@ -120,6 +121,15 @@ void UI::TitleStartUI_LeftClicked()
 		title->Kill();
 	}
 }
+/*マウスで左クリックが押された後の処理を行います*/
+void UI::ToGameUI_LeftClicked()
+{
+	auto howplay = taskSystem->GetTask_TaskName<HowPlay>("遊び方");
+	if (howplay)
+	{
+		howplay->Kill();
+	}
+}
 /*タイトルへ戻るUIが押された後の処理を行います*/
 void UI::TotitleUI_LeftClicked()
 {
@@ -210,6 +220,9 @@ void UI::Receive_Player()
 		this->Escape_Use();
 	case ObjectType::TitleStart:
 		this->TitleStartUI_LeftClicked();	//左クリックで押された後の処理
+		break;
+	case ObjectType::toGame:
+		this->ToGameUI_LeftClicked();		//左クリックで押された後の処理
 		break;
 	case ObjectType::TitleExit:
 		this->TitleExitUI_LeftClicked();	//左クリックが押された後の処理
